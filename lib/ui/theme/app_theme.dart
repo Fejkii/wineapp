@@ -90,7 +90,7 @@ class AppThemes {
   //..............light Theme
   static ThemeData lightTheme = ThemeData(
     colorScheme: ColorScheme.light(
-      primary: AppColors.primary,
+      primary: AppColors.white,
       secondary: AppColors.primapryOpacity,
     ),
     iconTheme: IconThemeData(color: AppColors.primary),

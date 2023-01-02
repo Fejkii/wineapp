@@ -39,6 +39,7 @@ class _HomeViewState extends State<HomeView> {
     // TODO: Multi Bloc Provider
     return Scaffold(
       drawer: const AppSidebar(),
+      appBar: AppBar(),
       body: _pages[_currentPageIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentPageIndex,

@@ -24,7 +24,6 @@ class _SettingsViewState extends State<SettingsView> {
         return GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: Scaffold(
-            appBar: AppBar(),
             body: _getContentWidget(),
           ),
         );

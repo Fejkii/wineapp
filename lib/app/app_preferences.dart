@@ -12,9 +12,13 @@ enum AppPreferencesKeys {
 }
 
 class AppPreferences {
-  final SharedPreferences _sharedPreferences;
+  late SharedPreferences _sharedPreferences;
 
   AppPreferences(this._sharedPreferences);
+
+  Future<SharedPreferences> initSP() async {
+    return _sharedPreferences = await SharedPreferences.getInstance();
+  }
 
   Future<String> getAppLanguage() async {
     String? language = _sharedPreferences.getString(AppPreferencesKeys.language.name);
@@ -51,11 +55,11 @@ class AppPreferences {
     _sharedPreferences.remove(AppPreferencesKeys.project.name);
   }
 
-  bool? isUserLoggedIn() {
+  bool isUserLoggedIn() {
     if (_sharedPreferences.getString(AppPreferencesKeys.userToken.name) != null) {
       return true;
     }
-    return null;
+    return false;
   }
 
   String? getUserToken() {

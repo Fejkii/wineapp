@@ -16,11 +16,7 @@ Future<void> initAppDependences() async {
 
   instance.registerLazySingleton<DioFactory>(() => DioFactory(instance<AppPreferences>()));
 
-  // final dio = await instance<DioFactory>().getDio();
-  // instance.registerLazySingleton<ApiMethodsClient>(() => ApiMethodsClient(dio));
-
-  instance.registerLazySingleton<ThemeCubit>(() => ThemeCubit(instance()));
-  // instance.registerLazySingleton<ThemeCubit>(() => ThemeCubit(instance<AppPreferences>()));
+  instance.registerLazySingleton<ThemeCubit>(() => ThemeCubit(instance<AppPreferences>()));
 }
 
 // reset, because token is not refreshed in request after login

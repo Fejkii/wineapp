@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
+import 'package:wine_app/app/app_preferences.dart';
 import 'package:wine_app/app/dependency_injection.dart';
 import 'package:wine_app/bloc/app_bloc_observer.dart';
 import 'package:wine_app/bloc/theme/theme_cubit.dart';
@@ -8,10 +9,11 @@ import 'package:wine_app/const/app_routes.dart';
 import 'package:wine_app/services/route_service.dart';
 import 'package:wine_app/ui/theme/app_theme.dart';
 
-void main() {
+void main() async {
   Bloc.observer = AppBlocObserver();
   WidgetsFlutterBinding.ensureInitialized();
-  initAppDependences();
+  await initAppDependences();
+  await instance<AppPreferences>().initSP();
 
   runApp(const MyApp());
 }
@@ -48,7 +50,7 @@ class _MyAppState extends State<MyApp> {
             return MaterialApp(
               // theme: getAppTheme(),
               // TODO: make colors in themes
-              theme: themeCubit.isLightTheme ? AppThemes.lightTheme : AppThemes.darkTheme,
+              theme: themeCubit.getAppTheme() ? AppThemes.lightTheme : AppThemes.darkTheme,
               onGenerateRoute: RouteGenerator.onGenerateRoute,
               initialRoute: AppRoutes.splashRoute,
               debugShowCheckedModeBanner: false,

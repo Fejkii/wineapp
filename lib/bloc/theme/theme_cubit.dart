@@ -6,11 +6,11 @@ part 'theme_state.dart';
 
 class ThemeCubit extends Cubit<ThemeState> {
   AppPreferences appPreferences;
-  ThemeCubit(this.appPreferences) : super(const ThemeInitial());
+  ThemeCubit(this.appPreferences) : super(ThemeInitial(appPreferences.getAppTheme()));
 
   static ThemeCubit get(context) => BlocProvider.of<ThemeCubit>(context);
 
-  bool isLightTheme = true;
+  late bool isLightTheme = appPreferences.getAppTheme();
 
   void changeAppTheme() async {
     isLightTheme = !isLightTheme;
@@ -18,7 +18,7 @@ class ThemeCubit extends Cubit<ThemeState> {
     emit(ChangeAppThemeState(isLightTheme));
   }
 
-  void getAppTheme() {
-    appPreferences.getAppTheme();
+  bool getAppTheme() {
+    return appPreferences.getAppTheme();
   }
 }

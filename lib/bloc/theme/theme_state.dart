@@ -1,19 +1,19 @@
 part of 'theme_cubit.dart';
 
 abstract class ThemeState extends Equatable {
-  final bool newTheme;
+  final bool isLightTehem;
   const ThemeState(
-    this.newTheme,
+    this.isLightTehem,
   );
 
   @override
-  List<Object> get props => [newTheme];
+  List<Object> get props => [isLightTehem];
 }
 
 class ThemeInitial extends ThemeState {
-  const ThemeInitial() : super(true);
+  const ThemeInitial(super.isLightTehem);
 }
 
 class ChangeAppThemeState extends ThemeState {
-  const ChangeAppThemeState(super.newTheme);
+  const ChangeAppThemeState(super.isLightTehem);
 }

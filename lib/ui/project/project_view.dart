@@ -12,7 +12,6 @@ class _ProjectViewState extends State<ProjectView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
       body: Column(
         children: const [
           Center(child: Text(AppStrings.projectName)),
