@@ -40,3 +40,5 @@ class AppConstant {
 
   static const int RECENTLY_ACTIVE = 2;
 }
+
+enum ToastStates { success, error, warning }
