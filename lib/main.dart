@@ -4,6 +4,7 @@ import 'package:sizer/sizer.dart';
 import 'package:wine_app/app/app_preferences.dart';
 import 'package:wine_app/app/dependency_injection.dart';
 import 'package:wine_app/bloc/app_bloc_observer.dart';
+import 'package:wine_app/bloc/login/auth_cubit.dart';
 import 'package:wine_app/bloc/theme/theme_cubit.dart';
 import 'package:wine_app/const/app_routes.dart';
 import 'package:wine_app/services/route_service.dart';
@@ -38,9 +39,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<ThemeCubit>(
-          create: (context) => instance<ThemeCubit>(),
-        ),
+        BlocProvider<ThemeCubit>(create: (context) => instance<ThemeCubit>()),
+        BlocProvider<AuthCubit>(create: (context) => instance<AuthCubit>()),
       ],
       child: BlocBuilder<ThemeCubit, ThemeState>(
         builder: (context, state) {
