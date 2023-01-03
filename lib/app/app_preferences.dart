@@ -1,6 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:wine_app/model/project_model.dart';
-import 'package:wine_app/model/user_model.dart';
+import 'package:wine_app/model/base/project_model.dart';
+import 'package:wine_app/model/base/user_model.dart';
 import 'package:wine_app/services/language_service.dart';
 
 enum AppPreferencesKeys {

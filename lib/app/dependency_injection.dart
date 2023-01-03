@@ -1,7 +1,8 @@
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:wine_app/api/dio_factory.dart';
+import 'package:wine_app/api/api_factory.dart';
 import 'package:wine_app/app/app_preferences.dart';
+import 'package:wine_app/bloc/login/auth_cubit.dart';
 import 'package:wine_app/bloc/theme/theme_cubit.dart';
 
 final instance = GetIt.instance;
@@ -11,12 +12,13 @@ Future<void> initAppDependences() async {
   final sharedPreferences = await SharedPreferences.getInstance();
   instance.registerLazySingleton<SharedPreferences>(() => sharedPreferences);
 
-  // app preferences instance
   instance.registerLazySingleton<AppPreferences>(() => AppPreferences(instance<SharedPreferences>()));
 
-  instance.registerLazySingleton<DioFactory>(() => DioFactory(instance<AppPreferences>()));
+  instance.registerLazySingleton<ApiFactory>(() => ApiFactory(instance<AppPreferences>()));
 
   instance.registerLazySingleton<ThemeCubit>(() => ThemeCubit(instance<AppPreferences>()));
+  
+  instance.registerLazySingleton<AuthCubit>(() => AuthCubit(instance<AppPreferences>()));
 }
 
 // reset, because token is not refreshed in request after login

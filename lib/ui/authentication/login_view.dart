@@ -1,28 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wine_app/app/app_functions.dart';
 import 'package:wine_app/app/dependency_injection.dart';
-import 'package:wine_app/bloc/theme/theme_cubit.dart';
+import 'package:wine_app/bloc/login/auth_cubit.dart';
 import 'package:wine_app/const/app_routes.dart';
 import 'package:wine_app/const/app_strings.dart';
 import 'package:wine_app/const/app_values.dart';
 import 'package:wine_app/ui/theme/app_colors.dart';
 import 'package:wine_app/ui/widgets/app_buttons.dart';
+import 'package:wine_app/ui/widgets/app_loading_indicator.dart';
 import 'package:wine_app/ui/widgets/app_texts.dart';
+import 'package:wine_app/ui/widgets/app_toast_messages.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
 
   @override
-  _LoginViewState createState() => _LoginViewState();
+  State<LoginView> createState() => _LoginViewState();
 }
 
 class _LoginViewState extends State<LoginView> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
   final _formKey = GlobalKey<FormState>();
-
-  final ThemeCubit themeCubit = instance<ThemeCubit>();
+  late AuthCubit authCubit = instance<AuthCubit>();
 
   @override
   void initState() {
@@ -31,12 +32,14 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ThemeCubit, ThemeState>(
+    return BlocBuilder<AuthCubit, AuthState>(
       builder: (context, state) {
         return GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -109,6 +112,14 @@ class _LoginViewState extends State<LoginView> {
                 obscureText: true,
                 controller: _passwordController,
                 style: TextStyle(color: AppColors.black),
+                validator: (value) {
+                  if (_passwordController.text.isEmpty) {
+                    return "empty";
+                  } else if (isEmailValid(_passwordController.text)) {
+                    return "validita";
+                  }
+                  return null;
+                },
                 decoration: InputDecoration(
                     prefixIcon: Icon(
                       Icons.lock,
@@ -121,16 +132,36 @@ class _LoginViewState extends State<LoginView> {
             },
           ),
           const SizedBox(height: AppMargin.m20),
-          StreamBuilder<bool>(
-            builder: (context, snapshot) {
-              return ElevatedButton(
+          BlocConsumer<AuthCubit, AuthState>(
+            listener: (context, state) {
+              if (state is LoginSuccessState) {
+                Navigator.pushNamedAndRemoveUntil(context, AppRoutes.homeRoute, (route) => false);
+              } else if (state is LoginFailureState) {
+                AppToastMessage().showToastMsg(
+                  state.errorMessage,
+                  ToastStates.error,
+                );
+              }
+            },
+            builder: (context, state) {
+              if (state is LoginLoadingState) {
+                return const AppLoadingIndicator();
+              } else {
+                return ElevatedButton(
                   onPressed: () {
-                    Navigator.popAndPushNamed(context, AppRoutes.homeRoute);
+                    if (_formKey.currentState!.validate()) {
+                      authCubit.login(
+                        _emailController.text,
+                        _passwordController.text,
+                      );
+                    }
                   },
                   child: Text(
                     AppStrings.login,
                     style: Theme.of(context).textTheme.button,
-                  ));
+                  ),
+                );
+              }
             },
           ),
           const SizedBox(height: AppMargin.m20),

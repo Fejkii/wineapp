@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:wine_app/model/user_model.dart';
+import 'package:wine_app/model/base/user_model.dart';
 
 class MainProjectModel {
   ProjectModel project;
