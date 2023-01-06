@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:wine_app/app/dependency_injection.dart';
+import 'package:wine_app/bloc/login/auth_cubit.dart';
 import 'package:wine_app/const/app_routes.dart';
 import 'package:wine_app/const/app_strings.dart';
 
@@ -13,6 +15,7 @@ class SplashView extends StatefulWidget {
 
 class _SplashViewState extends State<SplashView> {
   Timer? _timer;
+  late AuthCubit authCubit = instance<AuthCubit>();
 
   @override
   void initState() {
@@ -31,13 +34,14 @@ class _SplashViewState extends State<SplashView> {
   }
 
   _goNext() {
-    // TODO: if isIsUserLoggedIn route to home page
-    {
-      Navigator.pushReplacementNamed(
-        context,
-        // Routes.homeRoute,
-        AppRoutes.loginRoute, // TODO: after completed login, change route to loginRoute
-      );
+    if (authCubit.isUserLoggedIn()) {
+      if (authCubit.hasUserProject()) {
+        Navigator.pushNamedAndRemoveUntil(context, AppRoutes.homeRoute, (route) => false);
+      } else {
+        Navigator.pushNamedAndRemoveUntil(context, AppRoutes.createProjectRoute, (route) => false);
+      }
+    } else {
+      Navigator.pushNamedAndRemoveUntil(context, AppRoutes.loginRoute, (route) => false);
     }
   }
 

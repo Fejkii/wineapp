@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wine_app/app/app_preferences.dart';
 import 'package:wine_app/app/dependency_injection.dart';
 import 'package:wine_app/bloc/login/auth_cubit.dart';
 import 'package:wine_app/const/app_routes.dart';
 import 'package:wine_app/const/app_strings.dart';
-import 'package:wine_app/const/app_values.dart';
 import 'package:wine_app/ui/widgets/app_loading_indicator.dart';
-import 'package:wine_app/ui/widgets/app_toast_messages.dart';
 
 class AppSidebar extends StatelessWidget {
   AppSidebar({Key? key}) : super(key: key);
@@ -18,18 +17,22 @@ class AppSidebar extends StatelessWidget {
       builder: (context, state) {
         return Drawer(
           child: ListView(
-            // padding: EdgeInsets.zero,
             children: <Widget>[
-              const DrawerHeader(
-                child: Text(
-                  AppStrings.appName,
-                  style: TextStyle(fontSize: 25),
+              DrawerHeader(
+                child: Column(
+                  children: [
+                    const Text(AppStrings.appName, style: TextStyle(fontSize: 25)),
+                    const SizedBox(height: 20),
+                    Text(instance<AppPreferences>().getProject() != null ? instance<AppPreferences>().getProject()!.title : ""),
+                  ],
                 ),
               ),
               ListTile(
-                leading: const Icon(Icons.verified_user),
-                title: const Text(AppStrings.profile),
-                onTap: () {},
+                leading: const Icon(Icons.dataset_outlined),
+                title: const Text(AppStrings.project),
+                onTap: () {
+                  Navigator.popAndPushNamed(context, AppRoutes.projectRoute);
+                },
               ),
               ListTile(
                 leading: const Icon(Icons.settings),
@@ -43,14 +46,11 @@ class AppSidebar extends StatelessWidget {
                   if (state is LogoutSuccesState) {
                     Navigator.pushNamedAndRemoveUntil(context, AppRoutes.loginRoute, (route) => false);
                   } else if (state is LogoutFailureState) {
-                    AppToastMessage().showToastMsg(
-                      state.errorMessage,
-                      ToastStates.error,
-                    );
+                    Navigator.pushNamedAndRemoveUntil(context, AppRoutes.loginRoute, (route) => false);
                   }
                 },
                 builder: (context, state) {
-                  if (state is LoginLoadingState) {
+                  if (state is AuthLoadingState) {
                     return const AppLoadingIndicator();
                   } else {
                     return ListTile(

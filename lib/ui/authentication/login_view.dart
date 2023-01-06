@@ -27,6 +27,8 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   void initState() {
+    _emailController.text = "petr@test.cz";
+    _passwordController.text = "password";
     super.initState();
   }
 
@@ -135,16 +137,17 @@ class _LoginViewState extends State<LoginView> {
           BlocConsumer<AuthCubit, AuthState>(
             listener: (context, state) {
               if (state is LoginSuccessState) {
-                Navigator.pushNamedAndRemoveUntil(context, AppRoutes.homeRoute, (route) => false);
+                if (state.hasUserProject) {
+                  Navigator.pushNamedAndRemoveUntil(context, AppRoutes.homeRoute, (route) => false);
+                } else {
+                  Navigator.pushNamedAndRemoveUntil(context, AppRoutes.createProjectRoute, (route) => false);
+                }
               } else if (state is LoginFailureState) {
-                AppToastMessage().showToastMsg(
-                  state.errorMessage,
-                  ToastStates.error,
-                );
+                AppToastMessage().showToastMsg(state.errorMessage, ToastStates.error);
               }
             },
             builder: (context, state) {
-              if (state is LoginLoadingState) {
+              if (state is AuthLoadingState) {
                 return const AppLoadingIndicator();
               } else {
                 return ElevatedButton(

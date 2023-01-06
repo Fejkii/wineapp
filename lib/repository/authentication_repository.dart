@@ -4,8 +4,6 @@ import 'package:wine_app/app/dependency_injection.dart';
 import 'package:wine_app/const/api_endpoints.dart';
 
 class LoginRepository {
-  LoginRepository();
-
   Future<ApiResults> loginUser(
     String email,
     String password,
@@ -23,5 +21,22 @@ class LoginRepository {
 
   Future<ApiResults> logoutUser() async {
     return await instance<ApiFactory>().getData(ApiEndpoints.logoutUrl);
+  }
+
+  Future<ApiResults> registerUser(
+    String name,
+    String email,
+    String password,
+    String deviceName,
+  ) async {
+    return await instance<ApiFactory>().postData(
+      ApiEndpoints.registerUrl,
+      data: {
+        "name": name,
+        "email": email,
+        "password": password,
+        "device_name": deviceName,
+      },
+    );
   }
 }

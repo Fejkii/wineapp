@@ -6,7 +6,8 @@ class AppRoutes {
   static const String homeRoute = "/home";
   static const String settingsRoute = "/settings";
   static const String projectRoute = "/project";
-  // static const String userProjectRoute = "/userProject";
+  static const String createProjectRoute = "/createProject";
+  static const String userProjectListRoute = "/userProjectList";
   static const String vineyardListRoute = "/vineyardList";
   // static const String vineyardDetailRoute = "/vineyardDetail";
   static const String wineRoute = "/wine";

@@ -8,9 +8,10 @@ class ApiEndpoints {
   static const String logoutUrl = "logout";
   static const String userUrl = "user/";
   static const String forgotPasswordUrl = "${userUrl}forgotPassword";
-  static const String projectdUrl = "project";
+  static const String projectUrl = "project";
   static const String userProjectUrl = "userProject";
-  static const String userProjectListUrl = "userProjectList";
+  static const String userProjectListUrl = "userProjects";
+  static const String projectUserListUrl = "projectUsers";
   static const String addUserToProjectUrl = "addUserToProject";
 
   static const String vineyardUrl = "vineyard";

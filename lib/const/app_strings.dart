@@ -9,8 +9,10 @@ class AppStrings {
   static const String save = "Save";
   static const String title = "Title";
   static const String titleError = "Invalid Title";
+  static const String emptyData = "No Result Found";
 
-  // Login
+  // Authentication
+  static const String name = "Name";
   static const String email = "Email";
   static const String emailError = "Invalid Email";
   static const String password = "Password";
@@ -18,19 +20,19 @@ class AppStrings {
   static const String login = "Login";
   static const String logout = "Logout";
 
-  // Register
   static const String registration = "Registration";
   static const String register = "Register";
-  static const String passwordAgain = "Password again";
+  static const String passwordConfirmation = "Password confirmation";
 
-  // Forget Password
   static const String forgetPassword = "Forget Password";
   static const String resetPasswordTitle = "Do you forget your password?";
   static const String resetPasswordText = "Enter your email address for reset password.";
   static const String resetPasswordButton = "Reset password";
 
   // Project
-  static const String noProject = "You don't have any projects yet. \n Create your own or share with your friends.";
+  static const String noProject = "You don't have any projects created yet.\nCreate your own project or ask a friend to share.";
+  static const String nextProject = "You can create another project.";
+  static const String project = "Project";
   static const String createProject = "Create project";
   static const String updateProject = "Update project";
   static const String projectName = "Project name";
@@ -38,7 +40,7 @@ class AppStrings {
   static const String isProjectDefault = "Set project as default";
   static const String isProjectDefaultSubtitle = "This project will be automatically open after login";
   static const String showUserProject = "Show user project";
-  static const String showUserProjectList = "Show user project list";
+  static const String showUserProjectList = "Show my all projects";
   static const String shareProject = "You can share project to other users";
   static const String shareProjectButton = "Share project";
   static const String userProjectSharedList = "This project is shared with users";

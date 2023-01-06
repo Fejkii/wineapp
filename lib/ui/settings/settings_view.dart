@@ -7,7 +7,6 @@ import 'package:wine_app/const/app_routes.dart';
 import 'package:wine_app/const/app_strings.dart';
 import 'package:wine_app/const/app_values.dart';
 import 'package:wine_app/ui/widgets/app_loading_indicator.dart';
-import 'package:wine_app/ui/widgets/app_toast_messages.dart';
 
 class SettingsView extends StatefulWidget {
   const SettingsView({Key? key}) : super(key: key);
@@ -27,6 +26,9 @@ class _SettingsViewState extends State<SettingsView> {
         return GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: Scaffold(
+            appBar: AppBar(
+              title: const Text(AppStrings.settings),
+            ),
             body: _getContentWidget(),
           ),
         );
@@ -59,14 +61,11 @@ class _SettingsViewState extends State<SettingsView> {
                 if (state is LogoutSuccesState) {
                   Navigator.pushNamedAndRemoveUntil(context, AppRoutes.loginRoute, (route) => false);
                 } else if (state is LogoutFailureState) {
-                  AppToastMessage().showToastMsg(
-                    state.errorMessage,
-                    ToastStates.error,
-                  );
+                  Navigator.pushNamedAndRemoveUntil(context, AppRoutes.loginRoute, (route) => false);
                 }
               },
               builder: (context, state) {
-                if (state is LoginLoadingState) {
+                if (state is AuthLoadingState) {
                   return const AppLoadingIndicator();
                 } else {
                   return ElevatedButton(
