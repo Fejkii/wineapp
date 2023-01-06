@@ -11,4 +11,6 @@ class AppRoutes {
   static const String vineyardListRoute = "/vineyardList";
   // static const String vineyardDetailRoute = "/vineyardDetail";
   static const String wineRoute = "/wine";
+  static const String wineVarietyRoute = "/wineVariety";
+  static const String wineVarietyListRoute = "/wineVarietyList";
 }

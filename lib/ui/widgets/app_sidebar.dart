@@ -28,6 +28,13 @@ class AppSidebar extends StatelessWidget {
                 ),
               ),
               ListTile(
+                leading: const Icon(Icons.key_sharp),
+                title: const Text(AppStrings.wineVarieties),
+                onTap: () {
+                  Navigator.popAndPushNamed(context, AppRoutes.wineVarietyListRoute);
+                },
+              ),
+              ListTile(
                 leading: const Icon(Icons.dataset_outlined),
                 title: const Text(AppStrings.project),
                 onTap: () {

@@ -7,7 +7,12 @@ class AppStrings {
   static const String retryAgain = "Retry again";
   static const String ok = "OK";
   static const String save = "Save";
+  static const String create = "Create";
+  static const String created = "Successfully created";
+  static const String update = "Update";
+  static const String updated = "Successfully updated";
   static const String title = "Title";
+  static const String code = "Code";
   static const String titleError = "Invalid Title";
   static const String emptyData = "No Result Found";
 
@@ -58,6 +63,8 @@ class AppStrings {
 
   // Wines
   static const String wines = "Wines";
+  static const String wineVarieties = "Wine Varieties";
+  static const String createWineVariety = "New Wine Varietiy";
 
   // Vineyards
   static const String vineyards = "Vineyards";
