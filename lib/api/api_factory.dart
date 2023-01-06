@@ -15,19 +15,20 @@ const String DEFAULT_LANGUAGE = "language";
 
 class ApiFactory {
   final AppPreferences _appPreferences;
-  late Dio dio;
 
-  ApiFactory(this._appPreferences) {
+  ApiFactory(this._appPreferences);
+
+  Dio getDio() {
     int timeOut = 10 * 1000; // 5 second
-    // TODO: langugages in requests
-    // String language = _appPreferences.getAppLanguage();
+    String language = _appPreferences.getAppLanguage();
     String token = _appPreferences.getUserToken() ?? "";
+    Dio dio;
 
     Map<String, String> headers = {
       CONTENT_TYPE: APPLICATION_JSON,
       ACCEPT: APPLICATION_JSON,
       AUTHORIZATION: "Bearer $token",
-      // DEFAULT_LANGUAGE: language,
+      DEFAULT_LANGUAGE: language,
     };
 
     BaseOptions baseOptions = BaseOptions(
@@ -47,6 +48,8 @@ class ApiFactory {
         responseBody: true,
       ));
     }
+
+    return dio;
   }
 
   Future<ApiResults> getData(
@@ -54,7 +57,10 @@ class ApiFactory {
     Map<String, dynamic>? queryParameters,
   }) async {
     try {
-      var response = await dio.get(endpoint, queryParameters: queryParameters);
+      var response = await getDio().get(
+        endpoint,
+        queryParameters: queryParameters,
+      );
 
       BaseResponse baseResponse = BaseResponse.fromMap(response.data);
 
@@ -78,7 +84,7 @@ class ApiFactory {
     Map<String, dynamic>? queryParameters,
   }) async {
     try {
-      var response = await dio.post(
+      var response = await getDio().post(
         endpoint,
         data: data,
         queryParameters: queryParameters,
@@ -102,7 +108,7 @@ class ApiFactory {
     Map<String, dynamic>? queryParameters,
   }) async {
     try {
-      var response = await dio.put(
+      var response = await getDio().put(
         endpoint,
         data: data,
         queryParameters: queryParameters,
@@ -127,7 +133,7 @@ class ApiFactory {
     Map<String, dynamic>? queryParameters,
   }) async {
     try {
-      var response = await dio.delete(
+      var response = await getDio().delete(
         endpoint,
         data: data,
         queryParameters: queryParameters,

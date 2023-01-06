@@ -1,7 +1,7 @@
 abstract class ApiResults {}
 
 class ApiSuccess extends ApiResults {
-  Map<String, dynamic> data;
+  dynamic data;
   int? statusCode;
 
   ApiSuccess(this.data, this.statusCode);

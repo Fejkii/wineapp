@@ -3,5 +3,9 @@ class DeviceInfoModel {
   String identifier;
   String version;
 
-  DeviceInfoModel(this.name, this.identifier, this.version);
+  DeviceInfoModel(
+    this.name,
+    this.identifier,
+    this.version,
+  );
 }

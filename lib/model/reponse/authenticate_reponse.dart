@@ -6,18 +6,18 @@ import 'package:wine_app/model/base/user_model.dart';
 class LoginResponse {
   String rememberToken;
   UserModel user;
-  ProjectModel project;
+  ProjectModel? project;
   LoginResponse({
     required this.rememberToken,
     required this.user,
-    required this.project,
+    this.project,
   });
 
   Map<String, dynamic> toMap() {
     return {
       'remember_token': rememberToken,
       'user': user.toMap(),
-      'project': project.toMap(),
+      'project': project?.toMap(),
     };
   }
 
@@ -25,7 +25,7 @@ class LoginResponse {
     return LoginResponse(
       rememberToken: map['remember_token'] ?? '',
       user: UserModel.fromMap(map['user']),
-      project: ProjectModel.fromMap(map['project']),
+      project: map['project'] != null ? ProjectModel.fromMap(map['project']) : null,
     );
   }
 

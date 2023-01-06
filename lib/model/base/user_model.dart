@@ -2,7 +2,7 @@ import 'dart:convert';
 
 class UserModel {
   int id;
-  String? name;
+  String name;
   String email;
   String? emailVarificationAt;
   String createdAt;
@@ -42,10 +42,4 @@ class UserModel {
   String toJson() => json.encode(toMap());
 
   factory UserModel.fromJson(String source) => UserModel.fromMap(json.decode(source));
-}
-
-class UserListModel {
-  List<UserModel?> users;
-
-  UserListModel(this.users);
 }

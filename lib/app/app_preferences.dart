@@ -20,7 +20,7 @@ class AppPreferences {
     return _sharedPreferences = await SharedPreferences.getInstance();
   }
 
-  Future<String> getAppLanguage() async {
+  String getAppLanguage() {
     String? language = _sharedPreferences.getString(AppPreferencesKeys.language.name);
     if (language != null && language.isNotEmpty) {
       return language;
@@ -56,10 +56,10 @@ class AppPreferences {
   }
 
   bool isUserLoggedIn() {
-    if (_sharedPreferences.getString(AppPreferencesKeys.userToken.name) != null) {
-      return true;
-    }
-    return false;
+    return _sharedPreferences.getString(AppPreferencesKeys.userToken.name) != null &&
+            _sharedPreferences.getString(AppPreferencesKeys.userToken.name)!.isNotEmpty
+        ? true
+        : false;
   }
 
   String? getUserToken() {
@@ -77,11 +77,8 @@ class AppPreferences {
     _sharedPreferences.setString(AppPreferencesKeys.project.name, project.toJson());
   }
 
-  bool? hasProject() {
-    if (_sharedPreferences.getString(AppPreferencesKeys.project.name) != null) {
-      return true;
-    }
-    return null;
+  bool hasUserProject() {
+    return _sharedPreferences.getString(AppPreferencesKeys.project.name) != null ? true : false;
   }
 
   ProjectModel? getProject() {
