@@ -64,7 +64,7 @@ class _UserProjectDetailViewState extends State<UserProjectDetailView> {
   Widget _getContentWidget() {
     return SafeArea(
       child: Container(
-        padding: const EdgeInsets.all(AppPadding.p20),
+        padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20),
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

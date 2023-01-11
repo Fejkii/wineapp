@@ -13,6 +13,42 @@ part 'wine_state.dart';
 class WineCubit extends Cubit<WineState> {
   WineCubit() : super(WineInitial());
 
+  AppPreferences appPreferences = instance<AppPreferences>();
+
+  void getWineList() async {
+    emit(WineLoadingState());
+    ApiResults apiResults = await WineRepository().getWineList(appPreferences.getProject()!.id);
+    if (apiResults is ApiSuccess) {
+      List<WineModel> wineList = [];
+      (jsonDecode(json.encode(apiResults.data))).forEach((element) {
+        wineList.add(WineModel.fromMap(element));
+      });
+      emit(WineListSuccessState(wineList));
+    } else if (apiResults is ApiFailure) {
+      emit(WineFailureState(apiResults.message));
+    }
+  }
+
+  void createWine(String title, int wineVarietyId) async {
+    emit(WineLoadingState());
+    ApiResults apiResults = await WineRepository().createWine(appPreferences.getProject()!.id, wineVarietyId, title);
+    if (apiResults is ApiSuccess) {
+      emit(WineSuccessState());
+    } else if (apiResults is ApiFailure) {
+      emit(WineFailureState(apiResults.message));
+    }
+  }
+
+  void updateWine(int wineId, int wineVarietyId, String title) async {
+    emit(WineLoadingState());
+    ApiResults apiResults = await WineRepository().updateWine(wineId, wineVarietyId, title);
+    if (apiResults is ApiSuccess) {
+      emit(WineSuccessState());
+    } else if (apiResults is ApiFailure) {
+      emit(WineFailureState(apiResults.message));
+    }
+  }
+
   void getWineVarietyList(int projectId) async {
     emit(WineLoadingState());
     ApiResults apiResults = await WineRepository().getWineVarietyList(projectId);
@@ -21,6 +57,7 @@ class WineCubit extends Cubit<WineState> {
       (jsonDecode(json.encode(apiResults.data))).forEach((element) {
         wineVarietyList.add(WineVarietyModel.fromMap(element));
       });
+      appPreferences.setWineVarieties(apiResults.data);
       emit(WineVarietyListSuccessState(wineVarietyList));
     } else if (apiResults is ApiFailure) {
       emit(WineFailureState(apiResults.message));
@@ -28,7 +65,8 @@ class WineCubit extends Cubit<WineState> {
   }
 
   void createWineVariety(String title, String code) async {
-    ApiResults apiResults = await WineRepository().createWineVariety(instance<AppPreferences>().getProject()!.id, title, code);
+    emit(WineLoadingState());
+    ApiResults apiResults = await WineRepository().createWineVariety(appPreferences.getProject()!.id, title, code);
     if (apiResults is ApiSuccess) {
       emit(WineVarietySuccessState());
     } else if (apiResults is ApiFailure) {
@@ -37,9 +75,78 @@ class WineCubit extends Cubit<WineState> {
   }
 
   void updateWineVariety(int wineVarietyId, String title, String code) async {
+    emit(WineLoadingState());
     ApiResults apiResults = await WineRepository().updateWineVariety(wineVarietyId, title, code);
     if (apiResults is ApiSuccess) {
       emit(WineVarietySuccessState());
+    } else if (apiResults is ApiFailure) {
+      emit(WineFailureState(apiResults.message));
+    }
+  }
+
+  void getWineClassificationList() async {
+    emit(WineLoadingState());
+    ApiResults apiResults = await WineRepository().getWineClassificationList();
+    if (apiResults is ApiSuccess) {
+      List<WineClassificationModel> wineClassificationList = [];
+      (jsonDecode(json.encode(apiResults.data))).forEach((element) {
+        wineClassificationList.add(WineClassificationModel.fromMap(element));
+      });
+      appPreferences.setWineClassifications(apiResults.data);
+      emit(WineClassificationListSuccessState(wineClassificationList));
+    } else if (apiResults is ApiFailure) {
+      emit(WineFailureState(apiResults.message));
+    }
+  }
+
+  void getWineRecordTypeList() async {
+    emit(WineLoadingState());
+    ApiResults apiResults = await WineRepository().getWineRecordTypeList();
+    if (apiResults is ApiSuccess) {
+      List<WineRecordTypeModel> wineRecordTypeList = [];
+      (jsonDecode(json.encode(apiResults.data))).forEach((element) {
+        wineRecordTypeList.add(WineRecordTypeModel.fromMap(element));
+      });
+      appPreferences.setWineRecordTypes(apiResults.data);
+      emit(WineRecordTypeListSuccessState(wineRecordTypeList));
+    } else if (apiResults is ApiFailure) {
+      emit(WineFailureState(apiResults.message));
+    }
+  }
+
+  void createWineEvidence(int wineId, int? classificationId, String title, double volume, int year, double? alcohol, double? acid,
+      double? sugar, String? note) async {
+    emit(WineLoadingState());
+    ApiResults apiResults = await WineRepository()
+        .createWineEvidence(appPreferences.getProject()!.id, wineId, classificationId, title, volume, year, alcohol, acid, sugar, note);
+    if (apiResults is ApiSuccess) {
+      emit(WineEvidenceSuccessState());
+    } else if (apiResults is ApiFailure) {
+      emit(WineFailureState(apiResults.message));
+    }
+  }
+
+  void updateWineEvidence(int wineEvidenceId, int wineId, int? classificationId, String title, double volume, int year, double? alcohol, double? acid,
+      double? sugar, String? note) async {
+    emit(WineLoadingState());
+    ApiResults apiResults = await WineRepository()
+        .updateWineEvidence(wineEvidenceId, wineId, classificationId, title, volume, year, alcohol, acid, sugar, note);
+    if (apiResults is ApiSuccess) {
+      emit(WineEvidenceSuccessState());
+    } else if (apiResults is ApiFailure) {
+      emit(WineFailureState(apiResults.message));
+    }
+  }
+
+  void getWineEvidenceList() async {
+    emit(WineLoadingState());
+    ApiResults apiResults = await WineRepository().getWineEvidenceList(appPreferences.getProject()!.id);
+    if (apiResults is ApiSuccess) {
+      List<WineEvidenceModel> wineEvidenceList = [];
+      (jsonDecode(json.encode(apiResults.data))).forEach((element) {
+        wineEvidenceList.add(WineEvidenceModel.fromMap(element));
+      });
+      emit(WineEvidenceListSuccessState(wineEvidenceList));
     } else if (apiResults is ApiFailure) {
       emit(WineFailureState(apiResults.message));
     }

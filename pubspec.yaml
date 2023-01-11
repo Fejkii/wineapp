@@ -49,6 +49,7 @@ dependencies:
   # UI
   sizer: ^2.0.15 # Responzive
   fluttertoast: ^8.1.2 # Error messages
+  dropdown_search: ^5.0.5 # Slect box
 
 dev_dependencies:
   flutter_test:

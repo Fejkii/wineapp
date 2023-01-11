@@ -1,8 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:wine_app/app/app_preferences.dart';
 import 'package:wine_app/app/dependency_injection.dart';
-import 'package:wine_app/bloc/login/auth_cubit.dart';
+import 'package:wine_app/bloc/wine/wine_cubit.dart';
 import 'package:wine_app/const/app_routes.dart';
 import 'package:wine_app/const/app_strings.dart';
 
@@ -15,11 +16,17 @@ class SplashView extends StatefulWidget {
 
 class _SplashViewState extends State<SplashView> {
   Timer? _timer;
-  late AuthCubit authCubit = instance<AuthCubit>();
+  late AppPreferences appPreferences = instance<AppPreferences>();
+  late WineCubit wineCubit = instance<WineCubit>();
 
   @override
   void initState() {
     super.initState();
+    if (appPreferences.hasUserProject()) {
+      wineCubit.getWineVarietyList(appPreferences.getProject()!.id);
+      wineCubit.getWineClassificationList();
+      wineCubit.getWineRecordTypeList();
+    }
     _startDelay();
   }
 
@@ -34,8 +41,8 @@ class _SplashViewState extends State<SplashView> {
   }
 
   _goNext() {
-    if (authCubit.isUserLoggedIn()) {
-      if (authCubit.hasUserProject()) {
+    if (appPreferences.isUserLoggedIn()) {
+      if (appPreferences.hasUserProject()) {
         Navigator.pushNamedAndRemoveUntil(context, AppRoutes.homeRoute, (route) => false);
       } else {
         Navigator.pushNamedAndRemoveUntil(context, AppRoutes.createProjectRoute, (route) => false);

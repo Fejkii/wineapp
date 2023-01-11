@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wine_app/app/app_preferences.dart';
 import 'package:wine_app/app/dependency_injection.dart';
 import 'package:wine_app/bloc/wine/wine_cubit.dart';
 import 'package:wine_app/const/app_strings.dart';
@@ -8,24 +7,25 @@ import 'package:wine_app/const/app_values.dart';
 import 'package:wine_app/model/base/wine_model.dart';
 import 'package:wine_app/ui/widgets/app_list_view.dart';
 import 'package:wine_app/ui/widgets/app_loading_indicator.dart';
+import 'package:wine_app/ui/widgets/app_sidebar.dart';
 import 'package:wine_app/ui/widgets/app_toast_messages.dart';
-import 'package:wine_app/ui/wine/wine_variety_view.dart';
+import 'package:wine_app/ui/wine/wine_view.dart';
 
-class WineVarietyListView extends StatefulWidget {
-  const WineVarietyListView({super.key});
+class WineListView extends StatefulWidget {
+  const WineListView({super.key});
 
   @override
-  State<WineVarietyListView> createState() => _WineVarietyListViewState();
+  State<WineListView> createState() => _WineListViewState();
 }
 
-class _WineVarietyListViewState extends State<WineVarietyListView> {
+class _WineListViewState extends State<WineListView> {
   WineCubit wineCubit = instance<WineCubit>();
-  late List<WineVarietyModel> wineVarietyList;
+  late List<WineModel> wineList;
 
   @override
   void initState() {
-    wineVarietyList = [];
-    wineCubit.getWineVarietyList(instance<AppPreferences>().getProject()!.id);
+    wineList = [];
+    wineCubit.getWineList();
     super.initState();
   }
 
@@ -39,15 +39,16 @@ class _WineVarietyListViewState extends State<WineVarietyListView> {
     return BlocBuilder<WineCubit, WineState>(
       builder: (context, state) {
         return Scaffold(
+          drawer: AppSidebar(),
           appBar: AppBar(
-            title: const Text(AppStrings.wineVarieties),
+            title: const Text(AppStrings.wines),
             actions: [
               IconButton(
                 onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const WineVarietyView(),
+                      builder: (context) => const WineView(wine: null),
                     ),
                   );
                 },
@@ -81,8 +82,8 @@ class _WineVarietyListViewState extends State<WineVarietyListView> {
   Widget _wineVarietyList() {
     return BlocConsumer<WineCubit, WineState>(
       listener: (context, state) {
-        if (state is WineVarietyListSuccessState) {
-          wineVarietyList = state.wineVarietyList;
+        if (state is WineListSuccessState) {
+          wineList = state.wineList;
         } else if (state is WineFailureState) {
           AppToastMessage().showToastMsg(state.errorMessage, ToastStates.error);
         }
@@ -91,7 +92,7 @@ class _WineVarietyListViewState extends State<WineVarietyListView> {
         if (state is WineLoadingState) {
           return const AppLoadingIndicator();
         } else {
-          return AppListView(listData: wineVarietyList, itemBuilder: _itemBuilder);
+          return AppListView(listData: wineList, itemBuilder: _itemBuilder);
         }
       },
     );
@@ -102,15 +103,15 @@ class _WineVarietyListViewState extends State<WineVarietyListView> {
       itemBody: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(wineVarietyList[index].title),
-          Text(wineVarietyList[index].code),
+          Text(wineList[index].title),
+          Text(wineList[index].wineVariety.title),
         ],
       ),
       onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => WineVarietyView(wineVariety: wineVarietyList[index]),
+            builder: (context) => WineView(wine: wineList[index]),
           ),
         );
       },

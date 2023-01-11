@@ -38,7 +38,7 @@ class _SettingsViewState extends State<SettingsView> {
 
   Widget _getContentWidget() {
     return Container(
-      padding: const EdgeInsets.all(AppPadding.p20),
+      padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20),
       child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

@@ -8,19 +8,24 @@ class AppStrings {
   static const String ok = "OK";
   static const String save = "Save";
   static const String create = "Create";
-  static const String created = "Successfully created";
+  static const String created = "Created";
+  static const String createdSuccessfully = "Successfully created";
   static const String update = "Update";
-  static const String updated = "Successfully updated";
+  static const String updated = "Updated";
+  static const String updatedSuccessfully = "Successfully updated";
   static const String title = "Title";
   static const String code = "Code";
-  static const String titleError = "Invalid Title";
+  static const String titleEmpty = "Please enter some Title";
+  static const String inputEmpty = "Input must not be empty";
   static const String emptyData = "No Result Found";
 
   // Authentication
   static const String name = "Name";
   static const String email = "Email";
+  static const String emailEmpty = "Email must not be empty";
   static const String emailError = "Invalid Email";
   static const String password = "Password";
+  static const String passwordEmpty = "Password must not be empty";
   static const String passwordError = "Invalid Password";
   static const String login = "Login";
   static const String logout = "Logout";
@@ -63,8 +68,20 @@ class AppStrings {
 
   // Wines
   static const String wines = "Wines";
+  static const String createWine = "New Wine";
+  static const String wineVariety = "Wine Variety";
+  static const String wineVarietySelect = "Select Wine Variety";
   static const String wineVarieties = "Wine Varieties";
+  static const String wineClassificationSelect = "Select Classification Variety";
+  static const String wineClassification = "Wine Classification";
   static const String createWineVariety = "New Wine Varietiy";
+  static const String wineEvidence = "Wine Evidence";
+  static const String volume = "Amount of wine in l";
+  static const String year = "Year of manufacture";
+  static const String alcohol = "Alcohol in %";
+  static const String acid = "Acid in g for 1l";
+  static const String sugar = "Residual sugar in g for 1l";
+  static const String note = "Note";
 
   // Vineyards
   static const String vineyards = "Vineyards";

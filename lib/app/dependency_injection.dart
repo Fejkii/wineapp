@@ -25,7 +25,7 @@ Future<void> initAppDependences() async {
   instance.registerLazySingleton<AuthCubit>(() => AuthCubit(instance<AppPreferences>()));
 
   instance.registerLazySingleton<ProjectCubit>(() => ProjectCubit(instance<AppPreferences>()));
-  
+
   instance.registerLazySingleton<UserProjectCubit>(() => UserProjectCubit());
 
   instance.registerLazySingleton<WineCubit>(() => WineCubit());

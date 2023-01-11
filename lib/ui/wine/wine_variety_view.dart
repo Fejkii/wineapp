@@ -62,7 +62,7 @@ class _WineVarietyViewState extends State<WineVarietyView> {
   Widget _getContentWidget() {
     return SafeArea(
       child: Container(
-        padding: const EdgeInsets.all(AppPadding.p20),
+        padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20),
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -90,14 +90,16 @@ class _WineVarietyViewState extends State<WineVarietyView> {
                 keyboardType: TextInputType.text,
                 controller: _titleController,
                 style: TextStyle(color: AppColors.black),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return AppStrings.titleEmpty;
+                  }
+                  return null;
+                },
                 decoration: InputDecoration(
-                    prefixIcon: Icon(
-                      Icons.email,
-                      color: Theme.of(context).iconTheme.color,
-                    ),
                     labelText: AppStrings.title,
                     border: const OutlineInputBorder(),
-                    errorText: (snapshot.data ?? true) ? null : AppStrings.titleError),
+                    errorText: (snapshot.data ?? true) ? null : AppStrings.titleEmpty),
               );
             },
           ),
@@ -108,14 +110,16 @@ class _WineVarietyViewState extends State<WineVarietyView> {
                 keyboardType: TextInputType.text,
                 controller: _codeController,
                 style: TextStyle(color: AppColors.black),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return AppStrings.inputEmpty;
+                  }
+                  return null;
+                },
                 decoration: InputDecoration(
-                    prefixIcon: Icon(
-                      Icons.email,
-                      color: Theme.of(context).iconTheme.color,
-                    ),
                     labelText: AppStrings.code,
                     border: const OutlineInputBorder(),
-                    errorText: (snapshot.data ?? true) ? null : AppStrings.titleError),
+                    errorText: (snapshot.data ?? true) ? null : AppStrings.titleEmpty),
               );
             },
           ),
@@ -125,8 +129,8 @@ class _WineVarietyViewState extends State<WineVarietyView> {
               if (state is WineVarietySuccessState) {
                 setState(() {
                   widget.wineVariety != null
-                      ? AppToastMessage().showToastMsg(AppStrings.created, ToastStates.success)
-                      : AppToastMessage().showToastMsg(AppStrings.updated, ToastStates.success);
+                      ? AppToastMessage().showToastMsg(AppStrings.createdSuccessfully, ToastStates.success)
+                      : AppToastMessage().showToastMsg(AppStrings.updatedSuccessfully, ToastStates.success);
                 });
               } else if (state is WineFailureState) {
                 AppToastMessage().showToastMsg(state.errorMessage, ToastStates.error);

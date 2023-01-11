@@ -57,7 +57,7 @@ class _UserProjectListViewState extends State<UserProjectListView> {
   Widget _getContentWidget() {
     return SafeArea(
       child: Container(
-        padding: const EdgeInsets.all(AppPadding.p20),
+        padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20),
         child: BlocConsumer<UserProjectCubit, UserProjectState>(
           listener: (context, state) {
             if (state is UserProjectListSuccessState) {

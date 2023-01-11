@@ -30,14 +30,6 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  bool isUserLoggedIn() {
-    return appPreferences.isUserLoggedIn();
-  }
-
-  bool hasUserProject() {
-    return appPreferences.hasUserProject();
-  }
-
   void logout() async {
     emit(AuthLoadingState());
     ApiResults apiResults = await LoginRepository().logoutUser();

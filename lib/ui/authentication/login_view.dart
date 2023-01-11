@@ -55,7 +55,7 @@ class _LoginViewState extends State<LoginView> {
 
   Widget _getContentWidget() {
     return Container(
-      padding: const EdgeInsets.all(AppPadding.p20),
+      padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20),
       child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -95,6 +95,14 @@ class _LoginViewState extends State<LoginView> {
                 keyboardType: TextInputType.emailAddress,
                 controller: _emailController,
                 style: TextStyle(color: AppColors.black),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return AppStrings.emailEmpty;
+                  } else if (!isEmailValid(value)) {
+                    return AppStrings.emailError;
+                  }
+                  return null;
+                },
                 decoration: InputDecoration(
                     prefixIcon: Icon(
                       Icons.email,
@@ -115,10 +123,10 @@ class _LoginViewState extends State<LoginView> {
                 controller: _passwordController,
                 style: TextStyle(color: AppColors.black),
                 validator: (value) {
-                  if (_passwordController.text.isEmpty) {
-                    return "empty";
-                  } else if (isEmailValid(_passwordController.text)) {
-                    return "validita";
+                  if (value == null || value.isEmpty) {
+                    return AppStrings.passwordEmpty;
+                  } else if (!isPasswordValid(value)) {
+                    return AppStrings.passwordError;
                   }
                   return null;
                 },

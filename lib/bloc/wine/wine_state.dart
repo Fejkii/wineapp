@@ -11,6 +11,16 @@ class WineInitial extends WineState {}
 
 class WineLoadingState extends WineState {}
 
+class WineFailureState extends WineState {
+  final String errorMessage;
+  const WineFailureState(this.errorMessage);
+}
+
+class WineListSuccessState extends WineState {
+  final List<WineModel> wineList;
+  const WineListSuccessState(this.wineList);
+}
+
 class WineSuccessState extends WineState {}
 
 class WineVarietySuccessState extends WineState {}
@@ -20,7 +30,19 @@ class WineVarietyListSuccessState extends WineState {
   const WineVarietyListSuccessState(this.wineVarietyList);
 }
 
-class WineFailureState extends WineState {
-  final String errorMessage;
-  const WineFailureState(this.errorMessage);
+class WineEvidenceSuccessState extends WineState {}
+
+class WineEvidenceListSuccessState extends WineState {
+  final List<WineEvidenceModel> wineEvidenceList;
+  const WineEvidenceListSuccessState(this.wineEvidenceList);
+}
+
+class WineClassificationListSuccessState extends WineState {
+  final List<WineClassificationModel> wineClassificationList;
+  const WineClassificationListSuccessState(this.wineClassificationList);
+}
+
+class WineRecordTypeListSuccessState extends WineState {
+  final List<WineRecordTypeModel> wineRecordTypeList;
+  const WineRecordTypeListSuccessState(this.wineRecordTypeList);
 }

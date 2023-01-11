@@ -1,13 +1,15 @@
 import 'dart:convert';
 
+import 'package:wine_app/model/base/project_model.dart';
+
 class WineModel {
   int id;
-  int projectId;
+  ProjectModel project;
   WineVarietyModel wineVariety;
   String title;
   WineModel({
     required this.id,
-    required this.projectId,
+    required this.project,
     required this.wineVariety,
     required this.title,
   });
@@ -15,8 +17,8 @@ class WineModel {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'projectId': projectId,
-      'wineVariety': wineVariety.toMap(),
+      'project': project.toMap(),
+      'wine_variety': wineVariety.toMap(),
       'title': title,
     };
   }
@@ -24,8 +26,8 @@ class WineModel {
   factory WineModel.fromMap(Map<String, dynamic> map) {
     return WineModel(
       id: map['id']?.toInt() ?? 0,
-      projectId: map['projectId']?.toInt() ?? 0,
-      wineVariety: WineVarietyModel.fromMap(map['wineVariety']),
+      project: ProjectModel.fromMap(map['project']),
+      wineVariety: WineVarietyModel.fromMap(map['wine_variety']),
       title: map['title'] ?? '',
     );
   }
@@ -33,6 +35,41 @@ class WineModel {
   String toJson() => json.encode(toMap());
 
   factory WineModel.fromJson(String source) => WineModel.fromMap(json.decode(source));
+}
+
+class WineBaseModel {
+  int id;
+  int projectId;
+  int wineVarietyId;
+  String title;
+  WineBaseModel({
+    required this.id,
+    required this.projectId,
+    required this.wineVarietyId,
+    required this.title,
+  });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'project_id': projectId,
+      'wine_variety_id': wineVarietyId,
+      'title': title,
+    };
+  }
+
+  factory WineBaseModel.fromMap(Map<String, dynamic> map) {
+    return WineBaseModel(
+      id: map['id']?.toInt() ?? 0,
+      projectId: map['project_id']?.toInt() ?? 0,
+      wineVarietyId: map['wine_variety_id']?.toInt() ?? 0,
+      title: map['title'] ?? '',
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory WineBaseModel.fromJson(String source) => WineBaseModel.fromMap(json.decode(source));
 }
 
 class WineVarietyModel {
@@ -69,7 +106,7 @@ class WineVarietyModel {
 class WineEvidenceModel {
   int id;
   int projectId;
-  WineModel wine;
+  WineBaseModel wine;
   WineClassificationModel wineClassification;
   String title;
   double volume;
@@ -78,6 +115,8 @@ class WineEvidenceModel {
   double acid;
   double sugar;
   String note;
+  DateTime createdAt;
+  DateTime? updatedAt;
   WineEvidenceModel({
     required this.id,
     required this.projectId,
@@ -90,14 +129,16 @@ class WineEvidenceModel {
     required this.acid,
     required this.sugar,
     required this.note,
+    required this.createdAt,
+    this.updatedAt,
   });
 
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'projectId': projectId,
+      'project_id': projectId,
       'wine': wine.toMap(),
-      'wineClassification': wineClassification.toMap(),
+      'wine_classification': wineClassification.toMap(),
       'title': title,
       'volume': volume,
       'year': year,
@@ -105,15 +146,17 @@ class WineEvidenceModel {
       'acid': acid,
       'sugar': sugar,
       'note': note,
+      'created_at': createdAt.millisecondsSinceEpoch,
+      'updatedAt': updatedAt?.millisecondsSinceEpoch,
     };
   }
 
   factory WineEvidenceModel.fromMap(Map<String, dynamic> map) {
     return WineEvidenceModel(
       id: map['id']?.toInt() ?? 0,
-      projectId: map['projectId']?.toInt() ?? 0,
-      wine: WineModel.fromMap(map['wine']),
-      wineClassification: WineClassificationModel.fromMap(map['wineClassification']),
+      projectId: map['project_id']?.toInt() ?? 0,
+      wine: WineBaseModel.fromMap(map['wine']),
+      wineClassification: WineClassificationModel.fromMap(map['wine_classification']),
       title: map['title'] ?? '',
       volume: map['volume']?.toDouble() ?? 0.0,
       year: map['year']?.toInt() ?? 0,
@@ -121,6 +164,8 @@ class WineEvidenceModel {
       acid: map['acid']?.toDouble() ?? 0.0,
       sugar: map['sugar']?.toDouble() ?? 0.0,
       note: map['note'] ?? '',
+      createdAt: DateTime.parse(map['created_at']),
+      updatedAt: map['updated_at'] != null ? DateTime.parse(map['updated_at']) : null,
     );
   }
 
@@ -172,7 +217,7 @@ class WineRecordModel {
   DateTime date;
   String note;
   DateTime createdAt;
-  DateTime updatedAt;
+  DateTime? updatedAt;
   WineRecordModel({
     required this.id,
     required this.wineEvidence,
@@ -181,32 +226,32 @@ class WineRecordModel {
     required this.date,
     required this.note,
     required this.createdAt,
-    required this.updatedAt,
+    this.updatedAt,
   });
 
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'wineEvidence': wineEvidence.toMap(),
-      'wineRecordType': wineRecordType.toMap(),
+      'wine_evidence': wineEvidence.toMap(),
+      'wine_record_type': wineRecordType.toMap(),
       'title': title,
       'date': date.millisecondsSinceEpoch,
       'note': note,
-      'createdAt': createdAt.millisecondsSinceEpoch,
-      'updatedAt': updatedAt.millisecondsSinceEpoch,
+      'created_at': createdAt.millisecondsSinceEpoch,
+      'updated_at': updatedAt?.millisecondsSinceEpoch,
     };
   }
 
   factory WineRecordModel.fromMap(Map<String, dynamic> map) {
     return WineRecordModel(
       id: map['id']?.toInt() ?? 0,
-      wineEvidence: WineEvidenceModel.fromMap(map['wineEvidence']),
-      wineRecordType: WineRecordTypeModel.fromMap(map['wineRecordType']),
+      wineEvidence: WineEvidenceModel.fromMap(map['wine_evidence']),
+      wineRecordType: WineRecordTypeModel.fromMap(map['wine_record_type']),
       title: map['title'] ?? '',
       date: DateTime.fromMillisecondsSinceEpoch(map['date']),
       note: map['note'] ?? '',
-      createdAt: DateTime.fromMillisecondsSinceEpoch(map['createdAt']),
-      updatedAt: DateTime.fromMillisecondsSinceEpoch(map['updatedAt']),
+      createdAt: DateTime.parse(map['created_at']),
+      updatedAt: map['updated_at'] != null ? DateTime.parse(map['updated_at']) : null,
     );
   }
 

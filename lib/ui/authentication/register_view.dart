@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wine_app/app/app_functions.dart';
 import 'package:wine_app/app/dependency_injection.dart';
 import 'package:wine_app/bloc/login/auth_cubit.dart';
 import 'package:wine_app/const/app_routes.dart';
@@ -52,7 +53,7 @@ class _RegisterViewState extends State<RegisterView> {
 
   Widget _getContentWidget() {
     return Container(
-      padding: const EdgeInsets.all(AppPadding.p20),
+      padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20),
       child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -82,6 +83,12 @@ class _RegisterViewState extends State<RegisterView> {
                 controller: _nameController,
                 keyboardType: TextInputType.name,
                 style: TextStyle(color: AppColors.black),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return AppStrings.titleEmpty;
+                  }
+                  return null;
+                },
                 decoration: InputDecoration(
                     prefixIcon: Icon(
                       Icons.text_fields_outlined,
@@ -100,6 +107,14 @@ class _RegisterViewState extends State<RegisterView> {
                 controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
                 style: TextStyle(color: AppColors.black),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return AppStrings.emailEmpty;
+                  } else if (!isEmailValid(value)) {
+                    return AppStrings.emailError;
+                  }
+                  return null;
+                },
                 decoration: InputDecoration(
                     prefixIcon: Icon(
                       Icons.email,
@@ -119,6 +134,14 @@ class _RegisterViewState extends State<RegisterView> {
                 keyboardType: TextInputType.visiblePassword,
                 obscureText: true,
                 style: TextStyle(color: AppColors.black),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return AppStrings.passwordEmpty;
+                  } else if (!isPasswordValid(value)) {
+                    return AppStrings.passwordError;
+                  }
+                  return null;
+                },
                 decoration: InputDecoration(
                     prefixIcon: Icon(
                       Icons.lock,
@@ -138,6 +161,14 @@ class _RegisterViewState extends State<RegisterView> {
                 keyboardType: TextInputType.visiblePassword,
                 obscureText: true,
                 style: TextStyle(color: AppColors.black),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return AppStrings.passwordEmpty;
+                  } else if (!isPasswordValid(value)) {
+                    return AppStrings.passwordError;
+                  }
+                  return null;
+                },
                 decoration: InputDecoration(
                     prefixIcon: Icon(
                       Icons.lock,

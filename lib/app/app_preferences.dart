@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wine_app/model/base/project_model.dart';
 import 'package:wine_app/model/base/user_model.dart';
+import 'package:wine_app/model/base/wine_model.dart';
 import 'package:wine_app/services/language_service.dart';
 
 enum AppPreferencesKeys {
@@ -9,6 +12,9 @@ enum AppPreferencesKeys {
   userToken,
   user,
   project,
+  wineVarieties,
+  wineClassifications,
+  wineRecordTypes,
 }
 
 class AppPreferences {
@@ -86,5 +92,44 @@ class AppPreferences {
       return ProjectModel.fromJson(_sharedPreferences.getString(AppPreferencesKeys.project.name)!);
     }
     return null;
+  }
+
+  Future<void> setWineVarieties(List wineVarietyList) async {
+    var wineVarieties = jsonEncode(wineVarietyList);
+    _sharedPreferences.setString(AppPreferencesKeys.wineVarieties.name, wineVarieties);
+  }
+
+  List<WineVarietyModel>? getWineVarietyList() {
+    List<WineVarietyModel> wineVarietyList = [];
+    (jsonDecode(_sharedPreferences.getString(AppPreferencesKeys.wineVarieties.name)!)).forEach((element) {
+      wineVarietyList.add(WineVarietyModel.fromMap(element));
+    });
+    return wineVarietyList;
+  }
+
+  Future<void> setWineClassifications(List wineClassificationList) async {
+    var wineClassifications = jsonEncode(wineClassificationList);
+    _sharedPreferences.setString(AppPreferencesKeys.wineClassifications.name, wineClassifications);
+  }
+
+  List<WineClassificationModel>? getWineClassificationList() {
+    List<WineClassificationModel> wineClassificationList = [];
+    (jsonDecode(_sharedPreferences.getString(AppPreferencesKeys.wineClassifications.name)!)).forEach((element) {
+      wineClassificationList.add(WineClassificationModel.fromMap(element));
+    });
+    return wineClassificationList;
+  }
+
+  Future<void> setWineRecordTypes(List wineRecordTypeList) async {
+    var wineRecordTypes = jsonEncode(wineRecordTypeList);
+    _sharedPreferences.setString(AppPreferencesKeys.wineRecordTypes.name, wineRecordTypes);
+  }
+
+  List<WineRecordTypeModel>? getWineRecordTypeList() {
+    List<WineRecordTypeModel> wineRecordTypeList = [];
+    (jsonDecode(_sharedPreferences.getString(AppPreferencesKeys.wineRecordTypes.name)!)).forEach((element) {
+      wineRecordTypeList.add(WineRecordTypeModel.fromMap(element));
+    });
+    return wineRecordTypeList;
   }
 }

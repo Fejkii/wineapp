@@ -20,7 +20,7 @@ class _ProjectDashboardViewState extends State<ProjectDashboardView> {
         title: Text(instance<AppPreferences>().getProject()!.title),
       ),
       body: Container(
-        padding: const EdgeInsets.all(AppPadding.p20),
+        padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20),
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
