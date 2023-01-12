@@ -25,13 +25,17 @@ class _WineListViewState extends State<WineListView> {
   @override
   void initState() {
     wineList = [];
-    wineCubit.getWineList();
+    _getData();
     super.initState();
   }
 
   @override
   void dispose() {
     super.dispose();
+  }
+
+  void _getData() {
+    wineCubit.getWineList();
   }
 
   @override
@@ -113,7 +117,7 @@ class _WineListViewState extends State<WineListView> {
           MaterialPageRoute(
             builder: (context) => WineView(wine: wineList[index]),
           ),
-        );
+        ).then((value) => _getData());
       },
     );
   }

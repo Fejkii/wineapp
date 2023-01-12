@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wine_app/app/app_functions.dart';
 import 'package:wine_app/app/dependency_injection.dart';
 import 'package:wine_app/bloc/login/auth_cubit.dart';
 import 'package:wine_app/const/app_routes.dart';
 import 'package:wine_app/const/app_strings.dart';
 import 'package:wine_app/const/app_values.dart';
-import 'package:wine_app/ui/theme/app_colors.dart';
 import 'package:wine_app/ui/widgets/app_loading_indicator.dart';
-import 'package:wine_app/ui/widgets/app_texts.dart';
+import 'package:wine_app/ui/widgets/app_text_form_field.dart';
 import 'package:wine_app/ui/widgets/app_toast_messages.dart';
 
 class RegisterView extends StatefulWidget {
@@ -45,7 +43,9 @@ class _RegisterViewState extends State<RegisterView> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          title: const Text(AppStrings.registration),
+        ),
         body: _getContentWidget(),
       ),
     );
@@ -59,7 +59,6 @@ class _RegisterViewState extends State<RegisterView> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const SizedBox(height: 80),
             _registerForm(context),
           ],
         ),
@@ -74,111 +73,35 @@ class _RegisterViewState extends State<RegisterView> {
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          const AppTitleText(text: AppStrings.register),
-          const SizedBox(height: AppMargin.m20),
-          StreamBuilder<bool>(
-            builder: (context, snapshot) {
-              return TextFormField(
-                controller: _nameController,
-                keyboardType: TextInputType.name,
-                style: TextStyle(color: AppColors.black),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return AppStrings.titleEmpty;
-                  }
-                  return null;
-                },
-                decoration: InputDecoration(
-                    prefixIcon: Icon(
-                      Icons.text_fields_outlined,
-                      color: Theme.of(context).iconTheme.color,
-                    ),
-                    labelText: AppStrings.name,
-                    border: const OutlineInputBorder(),
-                    errorText: (snapshot.data ?? true) ? null : AppStrings.emailError),
-              );
-            },
+        children: [
+          const SizedBox(height: AppMargin.m10),
+          AppTextFormField(
+            controller: _nameController,
+            label: AppStrings.name,
+            isRequired: true,
+            icon: Icons.text_fields_outlined,
           ),
           const SizedBox(height: AppMargin.m20),
-          StreamBuilder<bool>(
-            builder: (context, snapshot) {
-              return TextFormField(
-                controller: _emailController,
-                keyboardType: TextInputType.emailAddress,
-                style: TextStyle(color: AppColors.black),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return AppStrings.emailEmpty;
-                  } else if (!isEmailValid(value)) {
-                    return AppStrings.emailError;
-                  }
-                  return null;
-                },
-                decoration: InputDecoration(
-                    prefixIcon: Icon(
-                      Icons.email,
-                      color: Theme.of(context).iconTheme.color,
-                    ),
-                    labelText: AppStrings.email,
-                    border: const OutlineInputBorder(),
-                    errorText: (snapshot.data ?? true) ? null : AppStrings.emailError),
-              );
-            },
+          AppTextFormField(
+            controller: _emailController,
+            label: AppStrings.email,
+            keyboardType: TextInputType.emailAddress,
+            isRequired: true,
+            inputType: InputType.email,
           ),
           const SizedBox(height: AppMargin.m20),
-          StreamBuilder<bool>(
-            builder: (context, snapshot) {
-              return TextFormField(
-                controller: _passwordController,
-                keyboardType: TextInputType.visiblePassword,
-                obscureText: true,
-                style: TextStyle(color: AppColors.black),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return AppStrings.passwordEmpty;
-                  } else if (!isPasswordValid(value)) {
-                    return AppStrings.passwordError;
-                  }
-                  return null;
-                },
-                decoration: InputDecoration(
-                    prefixIcon: Icon(
-                      Icons.lock,
-                      color: Theme.of(context).iconTheme.color,
-                    ),
-                    labelText: AppStrings.password,
-                    border: const OutlineInputBorder(),
-                    errorText: (snapshot.data ?? true) ? null : AppStrings.passwordError),
-              );
-            },
+          AppTextFormField(
+            controller: _passwordController,
+            label: AppStrings.password,
+            isRequired: true,
+            inputType: InputType.password,
           ),
           const SizedBox(height: AppMargin.m20),
-          StreamBuilder<bool>(
-            builder: (context, snapshot) {
-              return TextFormField(
-                controller: _passwordConfirmController,
-                keyboardType: TextInputType.visiblePassword,
-                obscureText: true,
-                style: TextStyle(color: AppColors.black),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return AppStrings.passwordEmpty;
-                  } else if (!isPasswordValid(value)) {
-                    return AppStrings.passwordError;
-                  }
-                  return null;
-                },
-                decoration: InputDecoration(
-                    prefixIcon: Icon(
-                      Icons.lock,
-                      color: Theme.of(context).iconTheme.color,
-                    ),
-                    labelText: AppStrings.passwordConfirmation,
-                    border: const OutlineInputBorder(),
-                    errorText: (snapshot.data ?? true) ? null : AppStrings.passwordError),
-              );
-            },
+          AppTextFormField(
+            controller: _passwordConfirmController,
+            label: AppStrings.passwordConfirmation,
+            isRequired: true,
+            inputType: InputType.password,
           ),
           const SizedBox(height: AppMargin.m20),
           BlocConsumer<AuthCubit, AuthState>(

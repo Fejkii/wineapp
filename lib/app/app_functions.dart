@@ -45,7 +45,7 @@ bool isPasswordValid(String password) {
 }
 
 bool isTitleValid(String title) {
-  return RegExp("").hasMatch(title);
+  return RegExp(r"^.{2,}$").hasMatch(title);
 }
 
 String appFormatDate(DateTime time, {bool dateOnly = false}) {

@@ -5,8 +5,9 @@ import 'package:wine_app/bloc/wine/wine_cubit.dart';
 import 'package:wine_app/const/app_strings.dart';
 import 'package:wine_app/const/app_values.dart';
 import 'package:wine_app/model/base/wine_model.dart';
-import 'package:wine_app/ui/theme/app_colors.dart';
+import 'package:wine_app/ui/widgets/app_buttons.dart';
 import 'package:wine_app/ui/widgets/app_loading_indicator.dart';
+import 'package:wine_app/ui/widgets/app_text_form_field.dart';
 import 'package:wine_app/ui/widgets/app_toast_messages.dart';
 
 class WineVarietyView extends StatefulWidget {
@@ -51,6 +52,34 @@ class _WineVarietyViewState extends State<WineVarietyView> {
           child: Scaffold(
             appBar: AppBar(
               title: Text(widget.wineVariety != null ? widget.wineVariety!.title : AppStrings.createWineVariety),
+              actions: [
+                BlocConsumer<WineCubit, WineState>(
+                  listener: (context, state) {
+                    if (state is WineSuccessState) {
+                      setState(() {
+                        widget.wineVariety != null
+                            ? AppToastMessage().showToastMsg(AppStrings.updatedSuccessfully, ToastStates.success)
+                            : AppToastMessage().showToastMsg(AppStrings.createdSuccessfully, ToastStates.success);
+                      });
+                    } else if (state is WineFailureState) {
+                      AppToastMessage().showToastMsg(state.errorMessage, ToastStates.error);
+                    }
+                  },
+                  builder: (context, state) {
+                    if (state is WineLoadingState) {
+                      return const AppLoadingIndicator();
+                    } else {
+                      return AppSaveIconButton(onPress: (() {
+                        if (_formKey.currentState!.validate()) {
+                          widget.wineVariety != null
+                              ? wineCubit.updateWineVariety(widget.wineVariety!.id, _titleController.text, _codeController.text)
+                              : wineCubit.createWineVariety(_titleController.text, _codeController.text);
+                        }
+                      }));
+                    }
+                  },
+                ),
+              ],
             ),
             body: _getContentWidget(),
           ),
@@ -84,78 +113,19 @@ class _WineVarietyViewState extends State<WineVarietyView> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          StreamBuilder<bool>(
-            builder: (context, snapshot) {
-              return TextFormField(
-                keyboardType: TextInputType.text,
-                controller: _titleController,
-                style: TextStyle(color: AppColors.black),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return AppStrings.titleEmpty;
-                  }
-                  return null;
-                },
-                decoration: InputDecoration(
-                    labelText: AppStrings.title,
-                    border: const OutlineInputBorder(),
-                    errorText: (snapshot.data ?? true) ? null : AppStrings.titleEmpty),
-              );
-            },
+          const SizedBox(height: 10),
+          AppTextFormField(
+            controller: _titleController,
+            isRequired: true,
+            label: AppStrings.title,
           ),
           const SizedBox(height: 20),
-          StreamBuilder<bool>(
-            builder: (context, snapshot) {
-              return TextFormField(
-                keyboardType: TextInputType.text,
-                controller: _codeController,
-                style: TextStyle(color: AppColors.black),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return AppStrings.inputEmpty;
-                  }
-                  return null;
-                },
-                decoration: InputDecoration(
-                    labelText: AppStrings.code,
-                    border: const OutlineInputBorder(),
-                    errorText: (snapshot.data ?? true) ? null : AppStrings.titleEmpty),
-              );
-            },
+          AppTextFormField(
+            controller: _codeController,
+            isRequired: true,
+            label: AppStrings.code,
           ),
           const SizedBox(height: AppMargin.m20),
-          BlocConsumer<WineCubit, WineState>(
-            listener: (context, state) {
-              if (state is WineVarietySuccessState) {
-                setState(() {
-                  widget.wineVariety != null
-                      ? AppToastMessage().showToastMsg(AppStrings.createdSuccessfully, ToastStates.success)
-                      : AppToastMessage().showToastMsg(AppStrings.updatedSuccessfully, ToastStates.success);
-                });
-              } else if (state is WineFailureState) {
-                AppToastMessage().showToastMsg(state.errorMessage, ToastStates.error);
-              }
-            },
-            builder: (context, state) {
-              if (state is WineLoadingState) {
-                return const AppLoadingIndicator();
-              } else {
-                return ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      widget.wineVariety != null
-                          ? wineCubit.updateWineVariety(widget.wineVariety!.id, _titleController.text, _codeController.text)
-                          : wineCubit.createWineVariety(_titleController.text, _codeController.text);
-                    }
-                  },
-                  child: Text(
-                    widget.wineVariety != null ? AppStrings.update : AppStrings.create,
-                    style: Theme.of(context).textTheme.button,
-                  ),
-                );
-              }
-            },
-          ),
         ],
       ),
     );

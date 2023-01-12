@@ -38,3 +38,19 @@ class AppTextButton extends StatelessWidget {
     );
   }
 }
+
+class AppSaveIconButton extends StatelessWidget {
+  final Function() onPress;
+  const AppSaveIconButton({
+    Key? key,
+    required this.onPress,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: onPress,
+      icon: const Icon(Icons.save),
+    );
+  }
+}

@@ -1,14 +1,15 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:wine_app/app/app_preferences.dart';
 import 'package:wine_app/app/dependency_injection.dart';
 import 'package:wine_app/bloc/wine/wine_cubit.dart';
 import 'package:wine_app/const/app_strings.dart';
 import 'package:wine_app/const/app_values.dart';
 import 'package:wine_app/model/base/wine_model.dart';
+import 'package:wine_app/ui/widgets/app_buttons.dart';
 import 'package:wine_app/ui/widgets/app_loading_indicator.dart';
+import 'package:wine_app/ui/widgets/app_text_form_field.dart';
 import 'package:wine_app/ui/widgets/app_toast_messages.dart';
 
 class WineView extends StatefulWidget {
@@ -49,7 +50,6 @@ class _WineViewState extends State<WineView> {
 
   @override
   Widget build(BuildContext context) {
-    Navigator.pop(context, true);
     return BlocBuilder<WineCubit, WineState>(
       builder: (context, state) {
         return GestureDetector(
@@ -57,6 +57,34 @@ class _WineViewState extends State<WineView> {
           child: Scaffold(
             appBar: AppBar(
               title: Text(widget.wine != null ? widget.wine!.title : AppStrings.createWine),
+              actions: [
+                BlocConsumer<WineCubit, WineState>(
+                  listener: (context, state) {
+                    if (state is WineSuccessState) {
+                      setState(() {
+                        widget.wine != null
+                            ? AppToastMessage().showToastMsg(AppStrings.updatedSuccessfully, ToastStates.success)
+                            : AppToastMessage().showToastMsg(AppStrings.createdSuccessfully, ToastStates.success);
+                      });
+                    } else if (state is WineFailureState) {
+                      AppToastMessage().showToastMsg(state.errorMessage, ToastStates.error);
+                    }
+                  },
+                  builder: (context, state) {
+                    if (state is WineLoadingState) {
+                      return const AppLoadingIndicator();
+                    } else {
+                      return AppSaveIconButton(onPress: (() {
+                        if (_formKey.currentState!.validate()) {
+                          widget.wine != null
+                              ? wineCubit.updateWine(widget.wine!.id, selectedWineVariety!.id, _titleController.text)
+                              : wineCubit.createWine(_titleController.text, selectedWineVariety!.id);
+                        }
+                      }));
+                    }
+                  },
+                ),
+              ],
             ),
             body: _getContentWidget(),
           ),
@@ -74,6 +102,7 @@ class _WineViewState extends State<WineView> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              const SizedBox(height: AppMargin.m10),
               _form(context),
             ],
           ),
@@ -90,23 +119,12 @@ class _WineViewState extends State<WineView> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          StreamBuilder<bool>(
-            builder: (context, snapshot) {
-              return TextFormField(
-                keyboardType: TextInputType.text,
-                controller: _titleController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return AppStrings.titleEmpty;
-                  }
-                  return null;
-                },
-                decoration: InputDecoration(
-                    labelText: AppStrings.title,
-                    border: const OutlineInputBorder(),
-                    errorText: (snapshot.data ?? true) ? null : AppStrings.titleEmpty),
-              );
-            },
+          AppTextFormField(
+            controller: _titleController,
+            label: AppStrings.title,
+            inputType: InputType.title,
+            isRequired: true,
+            icon: Icons.abc,
           ),
           const SizedBox(height: AppMargin.m20),
           DropdownSearch<WineVarietyModel>(
@@ -130,39 +148,7 @@ class _WineViewState extends State<WineView> {
               return null;
             },
             clearButtonProps: const ClearButtonProps(isVisible: true),
-          ),
-          const SizedBox(height: AppMargin.m20),
-          BlocConsumer<WineCubit, WineState>(
-            listener: (context, state) {
-              if (state is WineSuccessState) {
-                setState(() {
-                  widget.wine != null
-                      ? AppToastMessage().showToastMsg(AppStrings.updatedSuccessfully, ToastStates.success)
-                      : AppToastMessage().showToastMsg(AppStrings.createdSuccessfully, ToastStates.success);
-                });
-              } else if (state is WineFailureState) {
-                AppToastMessage().showToastMsg(state.errorMessage, ToastStates.error);
-              }
-            },
-            builder: (context, state) {
-              if (state is WineLoadingState) {
-                return const AppLoadingIndicator();
-              } else {
-                return ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      widget.wine != null
-                          ? wineCubit.updateWine(widget.wine!.id, selectedWineVariety!.id, _titleController.text)
-                          : wineCubit.createWine(_titleController.text, selectedWineVariety!.id);
-                    }
-                  },
-                  child: Text(
-                    widget.wine != null ? AppStrings.update : AppStrings.create,
-                    style: Theme.of(context).textTheme.button,
-                  ),
-                );
-              }
-            },
+            autoValidateMode: AutovalidateMode.onUserInteraction,
           ),
         ],
       ),

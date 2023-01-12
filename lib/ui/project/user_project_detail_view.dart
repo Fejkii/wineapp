@@ -11,6 +11,7 @@ import 'package:wine_app/ui/theme/app_fonts.dart';
 import 'package:wine_app/ui/theme/app_text_styles.dart';
 import 'package:wine_app/ui/widgets/app_list_view.dart';
 import 'package:wine_app/ui/widgets/app_loading_indicator.dart';
+import 'package:wine_app/ui/widgets/app_text_form_field.dart';
 import 'package:wine_app/ui/widgets/app_texts.dart';
 import 'package:wine_app/ui/widgets/app_toast_messages.dart';
 
@@ -93,22 +94,12 @@ class _UserProjectDetailViewState extends State<UserProjectDetailView> {
         children: <Widget>[
           const AppContentTitleText(text: AppStrings.shareProject),
           const SizedBox(height: 20),
-          StreamBuilder<bool>(
-            builder: (context, snapshot) {
-              return TextFormField(
-                keyboardType: TextInputType.emailAddress,
-                controller: _emailController,
-                style: TextStyle(color: AppColors.black),
-                decoration: InputDecoration(
-                    prefixIcon: Icon(
-                      Icons.email,
-                      color: Theme.of(context).iconTheme.color,
-                    ),
-                    labelText: AppStrings.email,
-                    border: const OutlineInputBorder(),
-                    errorText: (snapshot.data ?? true) ? null : AppStrings.emailError),
-              );
-            },
+          AppTextFormField(
+            controller: _emailController,
+            label: AppStrings.email,
+            keyboardType: TextInputType.emailAddress,
+            isRequired: true,
+            inputType: InputType.email,
           ),
           const SizedBox(height: AppMargin.m20),
           BlocConsumer<UserProjectCubit, UserProjectState>(

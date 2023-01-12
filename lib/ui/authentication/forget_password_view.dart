@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wine_app/const/app_strings.dart';
 import 'package:wine_app/const/app_values.dart';
-import 'package:wine_app/ui/theme/app_colors.dart';
+import 'package:wine_app/ui/widgets/app_text_form_field.dart';
 import 'package:wine_app/ui/widgets/app_texts.dart';
 
 class ForgetPasswordView extends StatefulWidget {
@@ -12,7 +12,19 @@ class ForgetPasswordView extends StatefulWidget {
 }
 
 class _ForgetPasswordViewState extends State<ForgetPasswordView> {
+  final TextEditingController _emailController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,21 +65,12 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
           const SizedBox(height: AppMargin.m20),
           const AppContentText(text: AppStrings.resetPasswordText),
           const SizedBox(height: AppMargin.m20),
-          StreamBuilder<bool>(
-            builder: (context, snapshot) {
-              return TextFormField(
-                keyboardType: TextInputType.emailAddress,
-                style: TextStyle(color: AppColors.black),
-                decoration: InputDecoration(
-                    prefixIcon: Icon(
-                      Icons.email,
-                      color: Theme.of(context).iconTheme.color,
-                    ),
-                    labelText: AppStrings.email,
-                    border: const OutlineInputBorder(),
-                    errorText: (snapshot.data ?? true) ? null : AppStrings.emailError),
-              );
-            },
+          AppTextFormField(
+            controller: _emailController,
+            label: AppStrings.email,
+            keyboardType: TextInputType.emailAddress,
+            isRequired: true,
+            inputType: InputType.email,
           ),
           const SizedBox(height: AppMargin.m20),
           StreamBuilder<bool>(

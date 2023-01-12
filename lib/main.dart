@@ -56,8 +56,6 @@ class _MyAppState extends State<MyApp> {
             themeCubit = instance<ThemeCubit>();
             themeCubit.getAppTheme;
             return MaterialApp(
-              // theme: getAppTheme(),
-              // TODO: make colors in themes
               theme: themeCubit.getAppTheme() ? AppThemes.lightTheme : AppThemes.darkTheme,
               onGenerateRoute: RouteGenerator.onGenerateRoute,
               initialRoute: AppRoutes.splashRoute,

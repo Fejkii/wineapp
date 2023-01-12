@@ -15,8 +15,10 @@ class AppStrings {
   static const String updatedSuccessfully = "Successfully updated";
   static const String title = "Title";
   static const String code = "Code";
-  static const String titleEmpty = "Please enter some Title";
-  static const String inputEmpty = "Input must not be empty";
+  static const String titleError = "Invalid title";
+  static const String inputEmpty = "Please enter some value";
+  static const String selectInSelectBox = "Select some value";
+  static const String selectBoxEmpty = "Please slect some value";
   static const String emptyData = "No Result Found";
 
   // Authentication

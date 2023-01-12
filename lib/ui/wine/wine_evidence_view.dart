@@ -8,7 +8,9 @@ import 'package:wine_app/bloc/wine/wine_cubit.dart';
 import 'package:wine_app/const/app_strings.dart';
 import 'package:wine_app/const/app_values.dart';
 import 'package:wine_app/model/base/wine_model.dart';
+import 'package:wine_app/ui/widgets/app_buttons.dart';
 import 'package:wine_app/ui/widgets/app_loading_indicator.dart';
+import 'package:wine_app/ui/widgets/app_text_form_field.dart';
 import 'package:wine_app/ui/widgets/app_toast_messages.dart';
 
 class WineEvidenceView extends StatefulWidget {
@@ -79,6 +81,57 @@ class _WineEvidenceViewState extends State<WineEvidenceView> {
           child: Scaffold(
             appBar: AppBar(
               title: Text(wineEvidence != null ? wineEvidence!.title : AppStrings.createWine),
+              actions: [
+                BlocConsumer<WineCubit, WineState>(
+                  listener: (context, state) {
+                    if (state is WineEvidenceSuccessState) {
+                      setState(() {
+                        wineEvidence != null
+                            ? AppToastMessage().showToastMsg(AppStrings.updatedSuccessfully, ToastStates.success)
+                            : AppToastMessage().showToastMsg(AppStrings.createdSuccessfully, ToastStates.success);
+                      });
+                    } else if (state is WineFailureState) {
+                      AppToastMessage().showToastMsg(state.errorMessage, ToastStates.error);
+                    }
+                  },
+                  builder: (context, state) {
+                    if (state is WineLoadingState) {
+                      return const AppLoadingIndicator();
+                    } else {
+                      return AppSaveIconButton(
+                        onPress: () {
+                          if (_formKey.currentState!.validate()) {
+                            wineEvidence != null
+                                ? wineCubit.updateWineEvidence(
+                                    wineEvidence!.id,
+                                    wineEvidence!.wine.id,
+                                    selectedWineClassification!.id,
+                                    _titleController.text,
+                                    double.parse(_volumeController.text),
+                                    int.parse(_yearController.text),
+                                    double.parse(_alcoholController.text),
+                                    double.parse(_acidController.text),
+                                    double.parse(_sugarController.text),
+                                    _noteController.text,
+                                  )
+                                : wineCubit.createWineEvidence(
+                                    1,
+                                    selectedWineClassification!.id,
+                                    _titleController.text,
+                                    double.parse(_volumeController.text),
+                                    int.parse(_yearController.text),
+                                    double.parse(_alcoholController.text),
+                                    double.parse(_acidController.text),
+                                    double.parse(_sugarController.text),
+                                    _noteController.text,
+                                  );
+                          }
+                        },
+                      );
+                    }
+                  },
+                ),
+              ],
             ),
             body: _getContentWidget(),
           ),
@@ -129,23 +182,10 @@ class _WineEvidenceViewState extends State<WineEvidenceView> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          StreamBuilder<bool>(
-            builder: (context, snapshot) {
-              return TextFormField(
-                keyboardType: TextInputType.text,
-                controller: _titleController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return AppStrings.titleEmpty;
-                  }
-                  return null;
-                },
-                decoration: const InputDecoration(
-                  labelText: AppStrings.title,
-                  border: OutlineInputBorder(),
-                ),
-              );
-            },
+          AppTextFormField(
+            controller: _titleController,
+            label: AppStrings.title,
+            isRequired: true,
           ),
           const SizedBox(height: AppMargin.m20),
           DropdownSearch<WineClassificationModel>(
@@ -167,148 +207,43 @@ class _WineEvidenceViewState extends State<WineEvidenceView> {
             clearButtonProps: const ClearButtonProps(isVisible: true),
           ),
           const SizedBox(height: AppMargin.m20),
-          StreamBuilder<bool>(
-            builder: (context, snapshot) {
-              return TextFormField(
-                keyboardType: TextInputType.number,
-                controller: _volumeController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return AppStrings.inputEmpty;
-                  }
-                  return null;
-                },
-                decoration: const InputDecoration(
-                  labelText: AppStrings.volume,
-                  border: OutlineInputBorder(),
-                ),
-              );
-            },
+          AppTextFormField(
+            controller: _volumeController,
+            label: AppStrings.volume,
+            isRequired: true,
+            keyboardType: TextInputType.number,
           ),
           const SizedBox(height: AppMargin.m20),
-          StreamBuilder<bool>(
-            builder: (context, snapshot) {
-              return TextFormField(
-                keyboardType: TextInputType.number,
-                controller: _yearController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return AppStrings.inputEmpty;
-                  }
-                  return null;
-                },
-                decoration: const InputDecoration(
-                  labelText: AppStrings.year,
-                  border: OutlineInputBorder(),
-                ),
-              );
-            },
+          AppTextFormField(
+            controller: _yearController,
+            label: AppStrings.year,
+            isRequired: true,
+            keyboardType: TextInputType.number,
           ),
           const SizedBox(height: AppMargin.m20),
-          StreamBuilder<bool>(
-            builder: (context, snapshot) {
-              return TextFormField(
-                keyboardType: TextInputType.number,
-                controller: _alcoholController,
-                decoration: const InputDecoration(
-                  labelText: AppStrings.alcohol,
-                  border: OutlineInputBorder(),
-                ),
-              );
-            },
+          AppTextFormField(
+            controller: _alcoholController,
+            label: AppStrings.alcohol,
+            keyboardType: TextInputType.number,
           ),
           const SizedBox(height: AppMargin.m20),
-          StreamBuilder<bool>(
-            builder: (context, snapshot) {
-              return TextFormField(
-                keyboardType: TextInputType.number,
-                controller: _acidController,
-                decoration: const InputDecoration(
-                  labelText: AppStrings.acid,
-                  border: OutlineInputBorder(),
-                ),
-              );
-            },
+          AppTextFormField(
+            controller: _acidController,
+            label: AppStrings.acid,
+            keyboardType: TextInputType.number,
           ),
           const SizedBox(height: AppMargin.m20),
-          StreamBuilder<bool>(
-            builder: (context, snapshot) {
-              return TextFormField(
-                keyboardType: TextInputType.number,
-                controller: _sugarController,
-                decoration: const InputDecoration(
-                  labelText: AppStrings.sugar,
-                  border: OutlineInputBorder(),
-                ),
-              );
-            },
+          AppTextFormField(
+            controller: _sugarController,
+            label: AppStrings.sugar,
+            keyboardType: TextInputType.number,
           ),
           const SizedBox(height: AppMargin.m20),
-          StreamBuilder<bool>(
-            builder: (context, snapshot) {
-              return TextFormField(
-                keyboardType: TextInputType.text,
-                controller: _noteController,
-                decoration: const InputDecoration(
-                  labelText: AppStrings.note,
-                  border: OutlineInputBorder(),
-                ),
-              );
-            },
-          ),
-          const SizedBox(height: AppMargin.m20),
-          BlocConsumer<WineCubit, WineState>(
-            listener: (context, state) {
-              if (state is WineEvidenceSuccessState) {
-                setState(() {
-                  wineEvidence != null
-                      ? AppToastMessage().showToastMsg(AppStrings.updatedSuccessfully, ToastStates.success)
-                      : AppToastMessage().showToastMsg(AppStrings.createdSuccessfully, ToastStates.success);
-                });
-              } else if (state is WineFailureState) {
-                AppToastMessage().showToastMsg(state.errorMessage, ToastStates.error);
-              }
-            },
-            builder: (context, state) {
-              if (state is WineLoadingState) {
-                return const AppLoadingIndicator();
-              } else {
-                return ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      wineEvidence != null
-                          ? wineCubit.updateWineEvidence(
-                              wineEvidence!.id,
-                              wineEvidence!.wine.id,
-                              selectedWineClassification!.id,
-                              _titleController.text,
-                              double.parse(_volumeController.text),
-                              int.parse(_yearController.text),
-                              double.parse(_alcoholController.text),
-                              double.parse(_acidController.text),
-                              double.parse(_sugarController.text),
-                              _noteController.text,
-                            )
-                          : wineCubit.createWineEvidence(
-                              1,
-                              selectedWineClassification!.id,
-                              _titleController.text,
-                              double.parse(_volumeController.text),
-                              int.parse(_yearController.text),
-                              double.parse(_alcoholController.text),
-                              double.parse(_acidController.text),
-                              double.parse(_sugarController.text),
-                              _noteController.text,
-                            );
-                    }
-                  },
-                  child: Text(
-                    wineEvidence != null ? AppStrings.update : AppStrings.create,
-                    style: Theme.of(context).textTheme.button,
-                  ),
-                );
-              }
-            },
+          AppTextFormField(
+            controller: _noteController,
+            label: AppStrings.note,
+            keyboardType: TextInputType.number,
+            inputType: InputType.note,
           ),
         ],
       ),

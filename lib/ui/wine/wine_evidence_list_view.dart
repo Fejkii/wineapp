@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wine_app/app/app_preferences.dart';
 import 'package:wine_app/app/dependency_injection.dart';
 import 'package:wine_app/bloc/wine/wine_cubit.dart';
 import 'package:wine_app/const/app_strings.dart';
@@ -26,13 +25,17 @@ class _WineEvidenceListViewState extends State<WineEvidenceListView> {
   @override
   void initState() {
     wineEvidenceList = [];
-    wineCubit.getWineEvidenceList();
+    _getData();
     super.initState();
   }
 
   @override
   void dispose() {
     super.dispose();
+  }
+
+  void _getData() {
+    wineCubit.getWineEvidenceList();
   }
 
   @override
@@ -115,12 +118,8 @@ class _WineEvidenceListViewState extends State<WineEvidenceListView> {
           MaterialPageRoute(
             builder: (context) => WineEvidenceView(wineEvidence: wineEvidenceList[index]),
           ),
-        ).then((value) => _onGoBack());
+        ).then((value) => _getData());
       },
     );
-  }
-
-  void _onGoBack() {
-    wineCubit.getWineEvidenceList();
   }
 }

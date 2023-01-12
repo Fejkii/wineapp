@@ -7,8 +7,8 @@ import 'package:wine_app/bloc/project/project_cubit.dart';
 import 'package:wine_app/const/app_routes.dart';
 import 'package:wine_app/const/app_strings.dart';
 import 'package:wine_app/const/app_values.dart';
-import 'package:wine_app/ui/theme/app_colors.dart';
 import 'package:wine_app/ui/widgets/app_loading_indicator.dart';
+import 'package:wine_app/ui/widgets/app_text_form_field.dart';
 import 'package:wine_app/ui/widgets/app_texts.dart';
 import 'package:wine_app/ui/widgets/app_toast_messages.dart';
 
@@ -91,22 +91,12 @@ class _CreateProjectViewState extends State<CreateProjectView> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          StreamBuilder<bool>(
-            builder: (context, snapshot) {
-              return TextFormField(
-                controller: _titleController,
-                style: TextStyle(color: AppColors.black),
-                decoration: InputDecoration(
-                  prefixIcon: Icon(
-                    Icons.tag,
-                    color: Theme.of(context).iconTheme.color,
-                  ),
-                  labelText: AppStrings.projectName,
-                  border: const OutlineInputBorder(),
-                  errorText: (snapshot.data ?? true) ? null : AppStrings.nameError,
-                ),
-              );
-            },
+          AppTextFormField(
+            controller: _titleController,
+            label: AppStrings.projectName,
+            isRequired: true,
+            inputType: InputType.title,
+            icon: Icons.tag,
           ),
           const SizedBox(height: AppMargin.m20),
           CheckboxListTile(

@@ -27,7 +27,7 @@ class BaseResponse {
       map['status'] ?? '',
       map['code']?.toInt() ?? 0,
       map['message'] ?? '',
-      map['data'] ?? null,
+      map['data'],
     );
   }
 

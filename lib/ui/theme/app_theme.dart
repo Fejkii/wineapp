@@ -57,14 +57,14 @@ ThemeData getAppTheme() {
     ),
 
     textButtonTheme: TextButtonThemeData(
-      style: TextButton.styleFrom(primary: AppColors.red),
+      style: TextButton.styleFrom(foregroundColor: AppColors.red),
     ),
 
     // Elevated Button theme
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         textStyle: getRegularStyle(color: AppColors.white),
-        primary: AppColors.primary,
+        backgroundColor: AppColors.primary,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppSize.s15),
         ),
@@ -104,14 +104,14 @@ class AppThemes {
     ),
 
     textButtonTheme: TextButtonThemeData(
-      style: TextButton.styleFrom(primary: AppColors.red),
+      style: TextButton.styleFrom(foregroundColor: AppColors.red),
     ),
 
     // Elevated Button theme
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         textStyle: getRegularStyle(color: AppColors.white),
-        primary: AppColors.primary,
+        backgroundColor: AppColors.primary,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppSize.s15),
         ),
@@ -172,14 +172,14 @@ class AppThemes {
     ),
 
     textButtonTheme: TextButtonThemeData(
-      style: TextButton.styleFrom(primary: AppColors.red),
+      style: TextButton.styleFrom(foregroundColor: AppColors.red),
     ),
 
     // Elevated Button theme
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         textStyle: getRegularStyle(color: AppColors.white),
-        primary: AppColors.primary,
+        backgroundColor: AppColors.primary,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppSize.s15),
         ),
