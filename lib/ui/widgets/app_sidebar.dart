@@ -48,6 +48,7 @@ class AppSidebar extends StatelessWidget {
                   Navigator.popAndPushNamed(context, AppRoutes.wineVarietyListRoute);
                 },
               ),
+              const Divider(),
               ListTile(
                 leading: const Icon(Icons.settings),
                 title: const Text(AppStrings.settings),
@@ -55,6 +56,7 @@ class AppSidebar extends StatelessWidget {
                   Navigator.popAndPushNamed(context, AppRoutes.settingsRoute);
                 },
               ),
+              const Divider(),
               BlocConsumer<AuthCubit, AuthState>(
                 listener: (context, state) {
                   if (state is LogoutSuccesState) {
