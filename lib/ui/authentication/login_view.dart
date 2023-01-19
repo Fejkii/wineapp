@@ -64,10 +64,10 @@ class _LoginViewState extends State<LoginView> {
 
   Widget _logo() {
     return Column(
-      children: [
-        Icon(Icons.wine_bar, color: AppColors.white, size: 80),
-        const SizedBox(height: 10),
-        const AppTitleText(text: AppStrings.appName),
+      children: const [
+        Icon(Icons.wine_bar, size: 80),
+        SizedBox(height: 10),
+        AppTitleText(text: AppStrings.appName),
       ],
     );
   }

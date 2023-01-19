@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-
 import 'package:wine_app/const/app_strings.dart';
 import 'package:wine_app/const/app_values.dart';
+import 'package:wine_app/ui/theme/app_colors.dart';
 import 'package:wine_app/ui/widgets/app_texts.dart';
 
 class AppListView extends StatelessWidget {
@@ -53,7 +53,7 @@ class AppListViewItem extends StatelessWidget {
       onTap: onTap,
       child: Card(
         child: Center(
-          heightFactor: 4,
+          heightFactor: 2.5,
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20),
             child: itemBody,

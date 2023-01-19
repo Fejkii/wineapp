@@ -24,12 +24,10 @@ class AppTitleText extends StatelessWidget {
 class AppContentTitleText extends StatelessWidget {
   final String text;
   final double size;
-  final Color color;
   const AppContentTitleText({
     Key? key,
     required this.text,
     this.size = 16,
-    this.color = Colors.white,
   }) : super(key: key);
 
   @override
@@ -37,7 +35,6 @@ class AppContentTitleText extends StatelessWidget {
     return Text(
       text,
       style: TextStyle(
-        color: color,
         fontSize: size,
         fontWeight: FontWeight.bold,
       ),
@@ -48,12 +45,10 @@ class AppContentTitleText extends StatelessWidget {
 class AppContentText extends StatelessWidget {
   final String text;
   final double size;
-  final Color color;
   const AppContentText({
     Key? key,
     required this.text,
     this.size = 16,
-    this.color = Colors.black,
   }) : super(key: key);
 
   @override
@@ -61,7 +56,6 @@ class AppContentText extends StatelessWidget {
     return Text(
       text,
       style: TextStyle(
-        color: color,
         fontSize: size,
         fontWeight: FontWeight.normal,
       ),
