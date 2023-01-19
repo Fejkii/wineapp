@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wine_app/ui/widgets/app_scaffold_layout.dart';
 
 class VineyardDetailView extends StatefulWidget {
   const VineyardDetailView({Key? key}) : super(key: key);
@@ -10,13 +11,17 @@ class VineyardDetailView extends StatefulWidget {
 class _VineyardDetailViewState extends State<VineyardDetailView> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return AppScaffoldLayout(
+      body: _bodyWidget(),
       appBar: AppBar(),
-      body: Column(
-        children: const [
-          Center(child: Text("Vineyard detail")),
-        ],
-      ),
+    );
+  }
+
+  Widget _bodyWidget() {
+    return Column(
+      children: const [
+        Center(child: Text("Vineyard detail")),
+      ],
     );
   }
 }

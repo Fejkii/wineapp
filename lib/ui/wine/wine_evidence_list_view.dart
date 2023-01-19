@@ -7,7 +7,7 @@ import 'package:wine_app/const/app_values.dart';
 import 'package:wine_app/model/base/wine_model.dart';
 import 'package:wine_app/ui/widgets/app_list_view.dart';
 import 'package:wine_app/ui/widgets/app_loading_indicator.dart';
-import 'package:wine_app/ui/widgets/app_sidebar.dart';
+import 'package:wine_app/ui/widgets/app_scaffold_layout.dart';
 import 'package:wine_app/ui/widgets/app_toast_messages.dart';
 import 'package:wine_app/ui/wine/wine_evidence_detail_view.dart';
 import 'package:wine_app/ui/wine/wine_evidence_view.dart';
@@ -43,8 +43,9 @@ class _WineEvidenceListViewState extends State<WineEvidenceListView> {
   Widget build(BuildContext context) {
     return BlocBuilder<WineCubit, WineState>(
       builder: (context, state) {
-        return Scaffold(
-          drawer: AppSidebar(),
+        return AppScaffoldLayout(
+          body: _list(),
+          hasSidebar: true,
           appBar: AppBar(
             title: const Text(AppStrings.wineEvidence),
             actions: [
@@ -61,26 +62,8 @@ class _WineEvidenceListViewState extends State<WineEvidenceListView> {
               ),
             ],
           ),
-          body: _getContentWidget(),
         );
       },
-    );
-  }
-
-  Widget _getContentWidget() {
-    return SafeArea(
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              _list(),
-            ],
-          ),
-        ),
-      ),
     );
   }
 

@@ -8,6 +8,7 @@ import 'package:wine_app/const/app_routes.dart';
 import 'package:wine_app/const/app_strings.dart';
 import 'package:wine_app/const/app_values.dart';
 import 'package:wine_app/ui/widgets/app_loading_indicator.dart';
+import 'package:wine_app/ui/widgets/app_scaffold_layout.dart';
 import 'package:wine_app/ui/widgets/app_text_form_field.dart';
 import 'package:wine_app/ui/widgets/app_texts.dart';
 import 'package:wine_app/ui/widgets/app_toast_messages.dart';
@@ -43,43 +44,31 @@ class _CreateProjectViewState extends State<CreateProjectView> {
   Widget build(BuildContext context) {
     return BlocBuilder<ProjectCubit, ProjectState>(
       builder: (context, state) {
-        return GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: Scaffold(
-            appBar: AppBar(
-              actions: [
-                IconButton(
-                  onPressed: (() {
-                    authCubit.logout();
-                    Navigator.pushNamedAndRemoveUntil(context, AppRoutes.loginRoute, (route) => false);
-                  }),
-                  icon: const Icon(Icons.exit_to_app),
-                ),
-              ],
-            ),
-            body: _getContentWidget(),
+        return AppScaffoldLayout(
+          body: _bodyWidget(),
+          appBar: AppBar(
+            actions: [
+              IconButton(
+                onPressed: (() {
+                  authCubit.logout();
+                  Navigator.pushNamedAndRemoveUntil(context, AppRoutes.loginRoute, (route) => false);
+                }),
+                icon: const Icon(Icons.exit_to_app),
+              ),
+            ],
           ),
         );
       },
     );
   }
 
-  Widget _getContentWidget() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20),
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            AppTitleText(
-              text: hasUserProject ? AppStrings.nextProject : AppStrings.noProject,
-            ),
-            const SizedBox(height: 80),
-            _form(context),
-          ],
-        ),
-      ),
+  Widget _bodyWidget() {
+    return Column(
+      children: [
+        AppTitleText(text: hasUserProject ? AppStrings.nextProject : AppStrings.noProject),
+        const SizedBox(height: 50),
+        _form(context),
+      ],
     );
   }
 

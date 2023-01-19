@@ -6,6 +6,7 @@ import 'package:wine_app/const/app_routes.dart';
 import 'package:wine_app/const/app_strings.dart';
 import 'package:wine_app/const/app_values.dart';
 import 'package:wine_app/ui/widgets/app_loading_indicator.dart';
+import 'package:wine_app/ui/widgets/app_scaffold_layout.dart';
 import 'package:wine_app/ui/widgets/app_text_form_field.dart';
 import 'package:wine_app/ui/widgets/app_toast_messages.dart';
 
@@ -40,28 +41,10 @@ class _RegisterViewState extends State<RegisterView> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text(AppStrings.registration),
-        ),
-        body: _getContentWidget(),
-      ),
-    );
-  }
-
-  Widget _getContentWidget() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20),
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            _registerForm(context),
-          ],
-        ),
+    return AppScaffoldLayout(
+      body: _registerForm(context),
+      appBar: AppBar(
+        title: const Text(AppStrings.registration),
       ),
     );
   }

@@ -5,8 +5,10 @@ import 'package:wine_app/bloc/login/auth_cubit.dart';
 import 'package:wine_app/const/app_routes.dart';
 import 'package:wine_app/const/app_strings.dart';
 import 'package:wine_app/const/app_values.dart';
+import 'package:wine_app/ui/theme/app_colors.dart';
 import 'package:wine_app/ui/widgets/app_buttons.dart';
 import 'package:wine_app/ui/widgets/app_loading_indicator.dart';
+import 'package:wine_app/ui/widgets/app_scaffold_layout.dart';
 import 'package:wine_app/ui/widgets/app_text_form_field.dart';
 import 'package:wine_app/ui/widgets/app_texts.dart';
 import 'package:wine_app/ui/widgets/app_toast_messages.dart';
@@ -42,40 +44,30 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     return BlocBuilder<AuthCubit, AuthState>(
       builder: (context, state) {
-        return GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: Scaffold(
-            body: _getContentWidget(),
-          ),
+        return AppScaffoldLayout(
+          body: _bodyWidget(),
         );
       },
     );
   }
 
-  Widget _getContentWidget() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20),
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(height: 80),
-            _logo(),
-            const SizedBox(height: 80),
-            _loginForm(context),
-          ],
-        ),
-      ),
+  Widget _bodyWidget() {
+    return Column(
+      children: [
+        const SizedBox(height: 80),
+        _logo(),
+        const SizedBox(height: 80),
+        _loginForm(context),
+      ],
     );
   }
 
   Widget _logo() {
     return Column(
-      children: const [
-        FlutterLogo(size: 128),
-        SizedBox(height: 10),
-        AppTitleText(text: AppStrings.appName),
+      children: [
+        Icon(Icons.wine_bar, color: AppColors.white, size: 80),
+        const SizedBox(height: 10),
+        const AppTitleText(text: AppStrings.appName),
       ],
     );
   }

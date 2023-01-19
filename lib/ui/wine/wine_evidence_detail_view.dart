@@ -8,6 +8,7 @@ import 'package:wine_app/const/app_strings.dart';
 import 'package:wine_app/const/app_values.dart';
 import 'package:wine_app/model/base/wine_model.dart';
 import 'package:wine_app/ui/widgets/app_buttons.dart';
+import 'package:wine_app/ui/widgets/app_scaffold_layout.dart';
 import 'package:wine_app/ui/wine/wine_evidence_view.dart';
 import 'package:wine_app/ui/wine/wine_record_detail.dart';
 import 'package:wine_app/ui/wine/wine_record_list.dart';
@@ -36,11 +37,6 @@ class _WineEvidenceDetailViewState extends State<WineEvidenceDetailView> {
     super.initState();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   void _getData() {
     wineCubit.getWineEvidence(wineEvidence.id);
   }
@@ -49,66 +45,53 @@ class _WineEvidenceDetailViewState extends State<WineEvidenceDetailView> {
   Widget build(BuildContext context) {
     return BlocBuilder<WineCubit, WineState>(
       builder: (context, state) {
-        return GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: Scaffold(
-            appBar: AppBar(
-              title: Text(wineEvidence.title),
-              actions: [
-                AppIconButton(
-                    iconButtonType: IconButtonType.edit,
-                    onPress: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => WineEvidenceView(wineEvidence: wineEvidence),
-                        ),
-                      ).then((value) => _getData());
-                    })
-              ],
-            ),
-            body: _getContentWidget(),
+        return AppScaffoldLayout(
+          body: _bodyWidget(),
+          appBar: AppBar(
+            title: Text(wineEvidence.title),
+            actions: [
+              AppIconButton(
+                iconButtonType: IconButtonType.edit,
+                onPress: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => WineEvidenceView(wineEvidence: wineEvidence),
+                    ),
+                  ).then((value) => _getData());
+                },
+              ),
+            ],
           ),
         );
       },
     );
   }
 
-  Widget _getContentWidget() {
-    return SafeArea(
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(height: AppMargin.m10),
-              _otherInfo(),
-              const SizedBox(height: AppMargin.m20),
-              AppLoginButton(
-                title: AppStrings.addRecord,
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => WineRecordDetailView(wineEvidenceId: wineEvidence.id),
-                    ),
-                  ).then((value) => _getData());
-                },
+  Widget _bodyWidget() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        const SizedBox(height: AppMargin.m10),
+        _otherInfo(),
+        const SizedBox(height: AppMargin.m20),
+        AppLoginButton(
+          title: AppStrings.addRecord,
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => WineRecordDetailView(wineEvidenceId: wineEvidence.id),
               ),
-              const SizedBox(height: AppMargin.m10),
-              _wineRedordList(),
-              const SizedBox(height: AppMargin.m20),
-            ],
-          ),
+            ).then((value) => _getData());
+          },
         ),
-      ),
+        const SizedBox(height: AppMargin.m10),
+        WineRecordList(wineEvidenceId: wineEvidence.id),
+        const SizedBox(height: AppMargin.m20),
+      ],
     );
-  }
-
-  Widget _wineRedordList() {
-    return WineRecordList(wineEvidenceId: wineEvidence.id);
   }
 
   Widget _otherInfo() {

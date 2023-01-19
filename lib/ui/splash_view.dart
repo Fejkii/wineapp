@@ -6,6 +6,7 @@ import 'package:wine_app/app/dependency_injection.dart';
 import 'package:wine_app/bloc/wine/wine_cubit.dart';
 import 'package:wine_app/const/app_routes.dart';
 import 'package:wine_app/const/app_strings.dart';
+import 'package:wine_app/ui/theme/app_colors.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({Key? key}) : super(key: key);
@@ -55,14 +56,14 @@ class _SplashViewState extends State<SplashView> {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: AppStrings.appName,
       home: Scaffold(
         body: Center(
           child: SizedBox(
             height: 200,
             width: 200,
-            child: FlutterLogo(size: 128),
+            child: Icon(Icons.wine_bar, color: AppColors.darkPrimary, size: 120),
           ),
         ),
       ),

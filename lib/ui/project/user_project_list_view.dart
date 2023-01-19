@@ -3,11 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wine_app/app/dependency_injection.dart';
 import 'package:wine_app/bloc/user_project/user_project_cubit.dart';
 import 'package:wine_app/const/app_routes.dart';
+import 'package:wine_app/const/app_strings.dart';
 import 'package:wine_app/const/app_values.dart';
 import 'package:wine_app/model/base/project_model.dart';
 import 'package:wine_app/ui/project/user_project_detail_view.dart';
 import 'package:wine_app/ui/widgets/app_list_view.dart';
 import 'package:wine_app/ui/widgets/app_loading_indicator.dart';
+import 'package:wine_app/ui/widgets/app_scaffold_layout.dart';
 import 'package:wine_app/ui/widgets/app_toast_messages.dart';
 
 class UserProjectListView extends StatefulWidget {
@@ -37,8 +39,10 @@ class _UserProjectListViewState extends State<UserProjectListView> {
   Widget build(BuildContext context) {
     return BlocBuilder<UserProjectCubit, UserProjectState>(
       builder: (context, state) {
-        return Scaffold(
+        return AppScaffoldLayout(
+          body: _getContentWidget(),
           appBar: AppBar(
+            title: const Text(AppStrings.yourProjects),
             actions: [
               IconButton(
                 onPressed: () {
@@ -48,7 +52,6 @@ class _UserProjectListViewState extends State<UserProjectListView> {
               ),
             ],
           ),
-          body: _getContentWidget(),
         );
       },
     );

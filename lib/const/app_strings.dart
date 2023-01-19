@@ -48,6 +48,7 @@ class AppStrings {
   static const String noProject = "You don't have any projects created yet.\nCreate your own project or ask a friend to share.";
   static const String nextProject = "You can create another project.";
   static const String project = "Project";
+  static const String yourProjects = "Your Projects";
   static const String createProject = "Create project";
   static const String updateProject = "Update project";
   static const String projectName = "Project name";
@@ -55,7 +56,7 @@ class AppStrings {
   static const String isProjectDefault = "Set project as default";
   static const String isProjectDefaultSubtitle = "This project will be automatically open after login";
   static const String showUserProject = "Show user project";
-  static const String showUserProjectList = "Show my all projects";
+  static const String showUserProjectList = "Show all my projects";
   static const String shareProject = "You can share project to other users";
   static const String shareProjectButton = "Share project";
   static const String userProjectSharedList = "This project is shared with users";

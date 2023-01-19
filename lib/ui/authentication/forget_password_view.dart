@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wine_app/const/app_strings.dart';
 import 'package:wine_app/const/app_values.dart';
+import 'package:wine_app/ui/widgets/app_scaffold_layout.dart';
 import 'package:wine_app/ui/widgets/app_text_form_field.dart';
 import 'package:wine_app/ui/widgets/app_texts.dart';
 
@@ -28,28 +29,20 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: Scaffold(
-        appBar: AppBar(),
-        body: _getContentWidget(),
+    return AppScaffoldLayout(
+      body: _bodyWidget(),
+      appBar: AppBar(
+        title: const Text(AppStrings.forgetPassword),
       ),
     );
   }
 
-  Widget _getContentWidget() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20),
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(height: 80),
-            _forgetPasswordForm(context),
-          ],
-        ),
-      ),
+  Widget _bodyWidget() {
+    return Column(
+      children: [
+        const SizedBox(height: 80),
+        _forgetPasswordForm(context),
+      ],
     );
   }
 

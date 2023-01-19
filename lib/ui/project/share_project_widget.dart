@@ -49,20 +49,16 @@ class _ShareProjectWidgetState extends State<ShareProjectWidget> {
   Widget build(BuildContext context) {
     return BlocBuilder<UserProjectCubit, UserProjectState>(
       builder: (context, state) {
-        return GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: SafeArea(
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const Divider(height: 40),
-                  addUserToProject(context),
-                  const Divider(height: 40),
-                  _usersInProject(),
-                ],
-              ),
+        return SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                addUserToProject(context),
+                const Divider(height: 40),
+                _usersInProject(),
+              ],
             ),
           ),
         );

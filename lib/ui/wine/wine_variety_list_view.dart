@@ -8,6 +8,7 @@ import 'package:wine_app/const/app_values.dart';
 import 'package:wine_app/model/base/wine_model.dart';
 import 'package:wine_app/ui/widgets/app_list_view.dart';
 import 'package:wine_app/ui/widgets/app_loading_indicator.dart';
+import 'package:wine_app/ui/widgets/app_scaffold_layout.dart';
 import 'package:wine_app/ui/widgets/app_toast_messages.dart';
 import 'package:wine_app/ui/wine/wine_variety_view.dart';
 
@@ -38,7 +39,8 @@ class _WineVarietyListViewState extends State<WineVarietyListView> {
   Widget build(BuildContext context) {
     return BlocBuilder<WineCubit, WineState>(
       builder: (context, state) {
-        return Scaffold(
+        return AppScaffoldLayout(
+          body: _wineVarietyList(),
           appBar: AppBar(
             title: const Text(AppStrings.wineVarieties),
             actions: [
@@ -55,26 +57,8 @@ class _WineVarietyListViewState extends State<WineVarietyListView> {
               ),
             ],
           ),
-          body: _getContentWidget(),
         );
       },
-    );
-  }
-
-  Widget _getContentWidget() {
-    return SafeArea(
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              _wineVarietyList(),
-            ],
-          ),
-        ),
-      ),
     );
   }
 

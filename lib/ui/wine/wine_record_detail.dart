@@ -10,6 +10,7 @@ import 'package:wine_app/model/base/wine_model.dart';
 import 'package:wine_app/ui/widgets/app_buttons.dart';
 import 'package:wine_app/ui/widgets/app_date_picker.dart';
 import 'package:wine_app/ui/widgets/app_loading_indicator.dart';
+import 'package:wine_app/ui/widgets/app_scaffold_layout.dart';
 import 'package:wine_app/ui/widgets/app_text_form_field.dart';
 import 'package:wine_app/ui/widgets/app_toast_messages.dart';
 
@@ -66,78 +67,56 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
   Widget build(BuildContext context) {
     return BlocBuilder<WineCubit, WineState>(
       builder: (context, state) {
-        return GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: Scaffold(
-            appBar: AppBar(
-              title: Text(wineRecord != null ? wineRecord!.title : AppStrings.addRecord),
-              actions: [
-                BlocConsumer<WineCubit, WineState>(
-                  listener: (context, state) {
-                    if (state is WineRecordSuccessState) {
-                      setState(() {
-                        wineRecord != null
-                            ? AppToastMessage().showToastMsg(AppStrings.updatedSuccessfully, ToastStates.success)
-                            : AppToastMessage().showToastMsg(AppStrings.createdSuccessfully, ToastStates.success);
-                      });
-                    } else if (state is WineFailureState) {
-                      AppToastMessage().showToastMsg(state.errorMessage, ToastStates.error);
-                    }
-                  },
-                  builder: (context, state) {
-                    if (state is WineLoadingState) {
-                      return const AppLoadingIndicator();
-                    } else {
-                      return AppIconButton(
-                        iconButtonType: IconButtonType.save,
-                        onPress: () {
-                          if (_formKey.currentState!.validate()) {
-                            wineRecord != null
-                                ? wineCubit.updateWineRecord(
-                                    wineRecord!.id,
-                                    selectedWineRecordType!.id,
-                                    _titleController.text,
-                                    DateTime.parse(_dateController.text),
-                                    _noteController.text,
-                                  )
-                                : wineCubit.createWineRecord(
-                                    wineEvidenceId,
-                                    selectedWineRecordType!.id,
-                                    _titleController.text,
-                                    DateTime.parse(_dateController.text),
-                                    _noteController.text,
-                                  );
-                          }
-                        },
-                      );
-                    }
-                  },
-                ),
-              ],
-            ),
-            body: _getContentWidget(),
+        return AppScaffoldLayout(
+          body: _form(context),
+          appBar: AppBar(
+            title: Text(wineRecord != null ? wineRecord!.title : AppStrings.addRecord),
+            actions: [
+              BlocConsumer<WineCubit, WineState>(
+                listener: (context, state) {
+                  if (state is WineRecordSuccessState) {
+                    setState(() {
+                      wineRecord != null
+                          ? AppToastMessage().showToastMsg(AppStrings.updatedSuccessfully, ToastStates.success)
+                          : AppToastMessage().showToastMsg(AppStrings.createdSuccessfully, ToastStates.success);
+                    });
+                  } else if (state is WineFailureState) {
+                    AppToastMessage().showToastMsg(state.errorMessage, ToastStates.error);
+                  }
+                },
+                builder: (context, state) {
+                  if (state is WineLoadingState) {
+                    return const AppLoadingIndicator();
+                  } else {
+                    return AppIconButton(
+                      iconButtonType: IconButtonType.save,
+                      onPress: () {
+                        if (_formKey.currentState!.validate()) {
+                          wineRecord != null
+                              ? wineCubit.updateWineRecord(
+                                  wineRecord!.id,
+                                  selectedWineRecordType!.id,
+                                  _titleController.text,
+                                  DateTime.parse(_dateController.text),
+                                  _noteController.text,
+                                )
+                              : wineCubit.createWineRecord(
+                                  wineEvidenceId,
+                                  selectedWineRecordType!.id,
+                                  _titleController.text,
+                                  DateTime.parse(_dateController.text),
+                                  _noteController.text,
+                                );
+                        }
+                      },
+                    );
+                  }
+                },
+              ),
+            ],
           ),
         );
       },
-    );
-  }
-
-  Widget _getContentWidget() {
-    return SafeArea(
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(height: AppMargin.m10),
-              _form(context),
-              const SizedBox(height: AppMargin.m10),
-            ],
-          ),
-        ),
-      ),
     );
   }
 
