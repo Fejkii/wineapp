@@ -10,6 +10,7 @@ import 'package:wine_app/ui/project/project_dashboard.dart';
 import 'package:wine_app/ui/project/user_project_list_view.dart';
 import 'package:wine_app/ui/settings/settings_view.dart';
 import 'package:wine_app/ui/splash_view.dart';
+import 'package:wine_app/ui/wine/wine_list_view.dart';
 import 'package:wine_app/ui/wine/wine_variety_list_view.dart';
 
 class RouteGenerator {
@@ -33,6 +34,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const UserProjectListView());
       case AppRoutes.settingsRoute:
         return MaterialPageRoute(builder: (_) => const SettingsView());
+      case AppRoutes.wineRoute:
+        return MaterialPageRoute(builder: (_) => const WineListView());
       case AppRoutes.wineVarietyListRoute:
         return MaterialPageRoute(builder: (_) => const WineVarietyListView());
       default:

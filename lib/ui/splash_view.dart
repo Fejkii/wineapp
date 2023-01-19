@@ -26,6 +26,7 @@ class _SplashViewState extends State<SplashView> {
       wineCubit.getWineVarietyList(appPreferences.getProject()!.id);
       wineCubit.getWineClassificationList();
       wineCubit.getWineRecordTypeList();
+      wineCubit.getWineList();
     }
     _startDelay();
   }

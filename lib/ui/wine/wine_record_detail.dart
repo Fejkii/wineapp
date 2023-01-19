@@ -8,36 +8,48 @@ import 'package:wine_app/const/app_strings.dart';
 import 'package:wine_app/const/app_values.dart';
 import 'package:wine_app/model/base/wine_model.dart';
 import 'package:wine_app/ui/widgets/app_buttons.dart';
+import 'package:wine_app/ui/widgets/app_date_picker.dart';
 import 'package:wine_app/ui/widgets/app_loading_indicator.dart';
 import 'package:wine_app/ui/widgets/app_text_form_field.dart';
 import 'package:wine_app/ui/widgets/app_toast_messages.dart';
 
-class WineView extends StatefulWidget {
-  final WineModel? wine;
-  const WineView({
+class WineRecordDetailView extends StatefulWidget {
+  final int wineEvidenceId;
+  final WineRecordModel? wineRecord;
+  const WineRecordDetailView({
     Key? key,
-    this.wine,
+    required this.wineEvidenceId,
+    this.wineRecord,
   }) : super(key: key);
 
   @override
-  State<WineView> createState() => _WineViewState();
+  State<WineRecordDetailView> createState() => _WineRecordDetailViewState();
 }
 
-class _WineViewState extends State<WineView> {
+class _WineRecordDetailViewState extends State<WineRecordDetailView> {
   final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
+  final TextEditingController _noteController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  WineCubit wineCubit = instance<WineCubit>();
   AppPreferences appPreferences = instance<AppPreferences>();
-  late List<WineVarietyModel> wineVarietyList;
-  late WineVarietyModel? selectedWineVariety;
+  WineCubit wineCubit = instance<WineCubit>();
+  late int wineEvidenceId;
+  late WineRecordModel? wineRecord;
+  late WineRecordTypeModel? selectedWineRecordType;
+  late List<WineRecordTypeModel> wineRecordTypeList;
 
   @override
   void initState() {
-    wineVarietyList = appPreferences.getWineVarietyList() ?? [];
-    selectedWineVariety = null;
-    if (widget.wine != null) {
-      _titleController.text = widget.wine!.title;
-      selectedWineVariety = widget.wine!.wineVariety;
+    wineRecordTypeList = appPreferences.getWineRecordTypeList() ?? [];
+    wineEvidenceId = widget.wineEvidenceId;
+    wineRecord = null;
+    selectedWineRecordType = null;
+    if (widget.wineRecord != null) {
+      wineRecord = widget.wineRecord;
+      selectedWineRecordType = wineRecord!.wineRecordType;
+      _titleController.text = wineRecord!.title;
+      _dateController.text = wineRecord!.date.toIso8601String();
+      _noteController.text = wineRecord!.note;
     }
     super.initState();
   }
@@ -45,6 +57,8 @@ class _WineViewState extends State<WineView> {
   @override
   void dispose() {
     _titleController.dispose();
+    _dateController.dispose();
+    _noteController.dispose();
     super.dispose();
   }
 
@@ -56,13 +70,13 @@ class _WineViewState extends State<WineView> {
           onTap: () => FocusScope.of(context).unfocus(),
           child: Scaffold(
             appBar: AppBar(
-              title: Text(widget.wine != null ? widget.wine!.title : AppStrings.createWine),
+              title: Text(wineRecord != null ? wineRecord!.title : AppStrings.addRecord),
               actions: [
                 BlocConsumer<WineCubit, WineState>(
                   listener: (context, state) {
-                    if (state is WineSuccessState) {
+                    if (state is WineRecordSuccessState) {
                       setState(() {
-                        widget.wine != null
+                        wineRecord != null
                             ? AppToastMessage().showToastMsg(AppStrings.updatedSuccessfully, ToastStates.success)
                             : AppToastMessage().showToastMsg(AppStrings.createdSuccessfully, ToastStates.success);
                       });
@@ -76,13 +90,25 @@ class _WineViewState extends State<WineView> {
                     } else {
                       return AppIconButton(
                         iconButtonType: IconButtonType.save,
-                        onPress: (() {
+                        onPress: () {
                           if (_formKey.currentState!.validate()) {
-                            widget.wine != null
-                                ? wineCubit.updateWine(widget.wine!.id, selectedWineVariety!.id, _titleController.text)
-                                : wineCubit.createWine(_titleController.text, selectedWineVariety!.id);
+                            wineRecord != null
+                                ? wineCubit.updateWineRecord(
+                                    wineRecord!.id,
+                                    selectedWineRecordType!.id,
+                                    _titleController.text,
+                                    DateTime.parse(_dateController.text),
+                                    _noteController.text,
+                                  )
+                                : wineCubit.createWineRecord(
+                                    wineEvidenceId,
+                                    selectedWineRecordType!.id,
+                                    _titleController.text,
+                                    DateTime.parse(_dateController.text),
+                                    _noteController.text,
+                                  );
                           }
-                        }),
+                        },
                       );
                     }
                   },
@@ -107,6 +133,7 @@ class _WineViewState extends State<WineView> {
             children: [
               const SizedBox(height: AppMargin.m10),
               _form(context),
+              const SizedBox(height: AppMargin.m10),
             ],
           ),
         ),
@@ -122,36 +149,41 @@ class _WineViewState extends State<WineView> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
+          DropdownSearch<WineRecordTypeModel>(
+            popupProps: const PopupProps.menu(showSelectedItems: false, showSearchBox: true),
+            items: wineRecordTypeList,
+            itemAsString: (WineRecordTypeModel wc) => wc.title,
+            dropdownDecoratorProps: const DropDownDecoratorProps(
+              dropdownSearchDecoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: AppStrings.wineRecordType,
+                hintText: AppStrings.selectInSelectBox,
+              ),
+            ),
+            onChanged: (WineRecordTypeModel? value) {
+              setState(() {
+                selectedWineRecordType = value!;
+              });
+            },
+            selectedItem: selectedWineRecordType,
+            clearButtonProps: const ClearButtonProps(isVisible: true),
+          ),
+          const SizedBox(height: AppMargin.m20),
           AppTextFormField(
             controller: _titleController,
             label: AppStrings.title,
-            inputType: InputType.title,
             isRequired: true,
-            icon: Icons.abc,
+            inputType: InputType.title,
           ),
           const SizedBox(height: AppMargin.m20),
-          DropdownSearch<WineVarietyModel>(
-            popupProps: const PopupProps.menu(showSelectedItems: false, showSearchBox: true),
-            items: wineVarietyList,
-            itemAsString: (WineVarietyModel wv) => wv.title,
-            dropdownDecoratorProps: const DropDownDecoratorProps(
-              dropdownSearchDecoration: InputDecoration(
-                labelText: AppStrings.wineVarieties,
-                hintText: AppStrings.wineVarietySelect,
-              ),
-            ),
-            onChanged: (WineVarietyModel? value) {
-              setState(() {
-                selectedWineVariety = value!;
-              });
-            },
-            selectedItem: selectedWineVariety,
-            validator: (WineVarietyModel? i) {
-              if (i == null) return 'required filed';
-              return null;
-            },
-            clearButtonProps: const ClearButtonProps(isVisible: true),
-            autoValidateMode: AutovalidateMode.onUserInteraction,
+          AppDatePicker(
+            controller: _dateController,
+          ),
+          const SizedBox(height: AppMargin.m20),
+          AppTextFormField(
+            controller: _noteController,
+            label: AppStrings.note,
+            inputType: InputType.note,
           ),
         ],
       ),

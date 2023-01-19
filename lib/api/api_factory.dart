@@ -52,13 +52,18 @@ class ApiFactory {
     return dio;
   }
 
-  Future<ApiResults> getData(
-    String endpoint, {
+  Future<ApiResults> getMethod({
+    required String endpoint,
+    int? identificator,
     Map<String, dynamic>? queryParameters,
   }) async {
     try {
+      String path = endpoint;
+      if (identificator != null) {
+        path = "$endpoint/$identificator";
+      }
       var response = await getDio().get(
-        endpoint,
+        path,
         queryParameters: queryParameters,
       );
 
@@ -78,14 +83,19 @@ class ApiFactory {
     }
   }
 
-  Future<ApiResults> postData(
-    String endpoint, {
+  Future<ApiResults> postMethod({
+    required String endpoint,
+    int? identificator,
     Map<String, dynamic>? data,
     Map<String, dynamic>? queryParameters,
   }) async {
     try {
+      String path = endpoint;
+      if (identificator != null) {
+        path = "$endpoint/$identificator";
+      }
       var response = await getDio().post(
-        endpoint,
+        path,
         data: data,
         queryParameters: queryParameters,
       );
@@ -102,14 +112,19 @@ class ApiFactory {
     }
   }
 
-  Future<ApiResults> putData(
-    String endpoint, {
+  Future<ApiResults> putMethod({
+    required String endpoint,
+    int? identificator,
     Map<String, dynamic>? data,
     Map<String, dynamic>? queryParameters,
   }) async {
     try {
+      String path = endpoint;
+      if (identificator != null) {
+        path = "$endpoint/$identificator";
+      }
       var response = await getDio().put(
-        endpoint,
+        path,
         data: data,
         queryParameters: queryParameters,
       );
@@ -127,14 +142,19 @@ class ApiFactory {
     }
   }
 
-  Future<ApiResults> deleteData(
-    String endpoint, {
+  Future<ApiResults> deleteMethod({
+    required String endpoint,
+    int? identificator,
     Map<String, dynamic>? data,
     Map<String, dynamic>? queryParameters,
   }) async {
     try {
+      String path = endpoint;
+      if (identificator != null) {
+        path = "$endpoint/$identificator";
+      }
       var response = await getDio().delete(
-        endpoint,
+        path,
         data: data,
         queryParameters: queryParameters,
       );

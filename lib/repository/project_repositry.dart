@@ -8,8 +8,8 @@ class ProjectRepository {
     String title,
     bool isDefault,
   ) async {
-    return instance<ApiFactory>().postData(
-      ApiEndpoints.projectUrl,
+    return instance<ApiFactory>().postMethod(
+      endpoint: ApiEndpoints.projectUrl,
       data: {
         "title": title,
         "is_default": isDefault,

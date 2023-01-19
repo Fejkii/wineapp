@@ -21,6 +21,11 @@ class WineListSuccessState extends WineState {
   const WineListSuccessState(this.wineList);
 }
 
+class WineBaseListSuccessState extends WineState {
+  final List<Map<String, dynamic>> wineBaseList;
+  const WineBaseListSuccessState(this.wineBaseList);
+}
+
 class WineSuccessState extends WineState {}
 
 class WineVarietySuccessState extends WineState {}
@@ -36,6 +41,13 @@ class WineEvidenceListSuccessState extends WineState {
   final List<WineEvidenceModel> wineEvidenceList;
   const WineEvidenceListSuccessState(this.wineEvidenceList);
 }
+
+class WineRecordListSuccessState extends WineState {
+  final List<WineRecordModel> wineRecordList;
+  const WineRecordListSuccessState(this.wineRecordList);
+}
+
+class WineRecordSuccessState extends WineState {}
 
 class WineClassificationListSuccessState extends WineState {
   final List<WineClassificationModel> wineClassificationList;

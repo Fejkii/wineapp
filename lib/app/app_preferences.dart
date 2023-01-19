@@ -12,6 +12,7 @@ enum AppPreferencesKeys {
   userToken,
   user,
   project,
+  wines,
   wineVarieties,
   wineClassifications,
   wineRecordTypes,
@@ -118,6 +119,19 @@ class AppPreferences {
       wineClassificationList.add(WineClassificationModel.fromMap(element));
     });
     return wineClassificationList;
+  }
+
+  Future<void> setWines(List wineList) async {
+    var wines = jsonEncode(wineList);
+    _sharedPreferences.setString(AppPreferencesKeys.wines.name, wines);
+  }
+
+  List<WineBaseModel>? getWineList() {
+    List<WineBaseModel> wineList = [];
+    (jsonDecode(_sharedPreferences.getString(AppPreferencesKeys.wines.name)!)).forEach((element) {
+      wineList.add(WineBaseModel.fromMap(element));
+    });
+    return wineList;
   }
 
   Future<void> setWineRecordTypes(List wineRecordTypeList) async {

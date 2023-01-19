@@ -90,7 +90,12 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
       decoration: InputDecoration(
         labelText: widget.label,
         border: const OutlineInputBorder(),
-        prefixIcon: iconData != null ? Icon(iconData) : null,
+        prefixIcon: iconData != null
+            ? Icon(
+                iconData,
+                size: 20,
+              )
+            : null,
         isDense: true,
         suffixIcon: showPasswordIcon(),
       ),

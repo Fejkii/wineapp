@@ -36,19 +36,22 @@ class _WineEvidenceViewState extends State<WineEvidenceView> {
   WineCubit wineCubit = instance<WineCubit>();
   AppPreferences appPreferences = instance<AppPreferences>();
   List<WineClassificationModel> wineClassificationList = [];
-  List<WineModel> wineList = [];
+  List<WineBaseModel> wineList = [];
   WineClassificationModel? selectedWineClassification;
-  WineModel? selectedWine;
+  WineBaseModel? selectedWine;
   WineEvidenceModel? wineEvidence;
 
   @override
   void initState() {
     wineClassificationList = appPreferences.getWineClassificationList() ?? [];
+    wineList = appPreferences.getWineList() ?? [];
+    selectedWine = null;
     selectedWineClassification = null;
     wineEvidence = null;
     if (widget.wineEvidence != null) {
       wineEvidence = widget.wineEvidence;
       _titleController.text = wineEvidence!.title;
+      selectedWine = wineEvidence!.wine;
       selectedWineClassification = wineEvidence!.wineClassification;
       _volumeController.text = wineEvidence!.volume.toString();
       _yearController.text = wineEvidence!.year.toString();
@@ -98,13 +101,14 @@ class _WineEvidenceViewState extends State<WineEvidenceView> {
                     if (state is WineLoadingState) {
                       return const AppLoadingIndicator();
                     } else {
-                      return AppSaveIconButton(
+                      return AppIconButton(
+                        iconButtonType: IconButtonType.save,
                         onPress: () {
                           if (_formKey.currentState!.validate()) {
                             wineEvidence != null
                                 ? wineCubit.updateWineEvidence(
                                     wineEvidence!.id,
-                                    wineEvidence!.wine.id,
+                                    selectedWine!.id,
                                     selectedWineClassification!.id,
                                     _titleController.text,
                                     double.parse(_volumeController.text),
@@ -115,7 +119,7 @@ class _WineEvidenceViewState extends State<WineEvidenceView> {
                                     _noteController.text,
                                   )
                                 : wineCubit.createWineEvidence(
-                                    1,
+                                    selectedWine!.id,
                                     selectedWineClassification!.id,
                                     _titleController.text,
                                     double.parse(_volumeController.text),
@@ -166,7 +170,7 @@ class _WineEvidenceViewState extends State<WineEvidenceView> {
       return Column(
         children: [
           Text("${AppStrings.created}: ${appFormatDate(wineEvidence!.createdAt)}"),
-          Text(wineEvidence!.updatedAt != null ? "${AppStrings.updated}: ${wineEvidence!.updatedAt.toString()}" : ""),
+          Text(wineEvidence!.updatedAt != null ? "${AppStrings.updated}: ${appFormatDate(wineEvidence!.updatedAt!)}" : ""),
         ],
       );
     } else {
@@ -188,6 +192,24 @@ class _WineEvidenceViewState extends State<WineEvidenceView> {
             isRequired: true,
           ),
           const SizedBox(height: AppMargin.m20),
+          DropdownSearch<WineBaseModel>(
+            popupProps: const PopupProps.menu(showSelectedItems: false, showSearchBox: true),
+            items: wineList,
+            itemAsString: (WineBaseModel wc) => wc.title,
+            dropdownDecoratorProps: const DropDownDecoratorProps(
+              dropdownSearchDecoration: InputDecoration(
+                labelText: AppStrings.wines,
+                hintText: AppStrings.selectInSelectBox,
+              ),
+            ),
+            onChanged: (WineBaseModel? value) {
+              setState(() {
+                selectedWine = value!;
+              });
+            },
+            selectedItem: selectedWine,
+            clearButtonProps: const ClearButtonProps(isVisible: true),
+          ),
           DropdownSearch<WineClassificationModel>(
             popupProps: const PopupProps.menu(showSelectedItems: false, showSearchBox: true),
             items: wineClassificationList,
@@ -195,7 +217,7 @@ class _WineEvidenceViewState extends State<WineEvidenceView> {
             dropdownDecoratorProps: const DropDownDecoratorProps(
               dropdownSearchDecoration: InputDecoration(
                 labelText: AppStrings.wineClassification,
-                hintText: AppStrings.wineClassificationSelect,
+                hintText: AppStrings.selectInSelectBox,
               ),
             ),
             onChanged: (WineClassificationModel? value) {
@@ -242,7 +264,6 @@ class _WineEvidenceViewState extends State<WineEvidenceView> {
           AppTextFormField(
             controller: _noteController,
             label: AppStrings.note,
-            keyboardType: TextInputType.number,
             inputType: InputType.note,
           ),
         ],

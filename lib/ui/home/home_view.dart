@@ -1,16 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wine_app/const/app_strings.dart';
 import 'package:wine_app/ui/vineyard/vineyard_view.dart';
 import 'package:wine_app/ui/wine/wine_evidence_list_view.dart';
-import 'package:wine_app/ui/wine/wine_list_view.dart';
-
-enum HomeViewIndexes {
-  wine,
-  vineyard,
-  project,
-  settings,
-}
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -23,7 +14,6 @@ class _HomeViewState extends State<HomeView> {
   int _currentPageIndex = 0;
 
   final List<Widget> _pages = [
-    const WineListView(),
     const WineEvidenceListView(),
     const VineyardView(),
   ];
@@ -46,10 +36,6 @@ class _HomeViewState extends State<HomeView> {
         currentIndex: _currentPageIndex,
         onTap: _onItemTap,
         items: const [
-          BottomNavigationBarItem(
-            label: AppStrings.wines,
-            icon: Icon(CupertinoIcons.wind),
-          ),
           BottomNavigationBarItem(
             label: AppStrings.wineEvidence,
             icon: Icon(Icons.format_list_bulleted_outlined),

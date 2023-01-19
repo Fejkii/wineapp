@@ -67,7 +67,7 @@ String appFormatDate(DateTime time, {bool dateOnly = false}) {
   String second = time.second.toString();
 
   if (dateOnly == false) {
-    return "$day.$month.$year $hour:$minute:$second";
+    return "$day. $month. $year $hour:$minute:$second";
   }
 
   return "$day. $month. $year";

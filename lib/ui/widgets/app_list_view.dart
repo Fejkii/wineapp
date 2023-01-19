@@ -27,11 +27,11 @@ class AppListView extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: const [
-                AppContentTitleText(text: AppStrings.emptyData, size: 20),
                 Padding(
                   padding: EdgeInsets.all(8.0),
-                  child: Icon(Icons.search_off, size: 20),
+                  child: Icon(Icons.search_off, size: 30),
                 ),
+                AppContentTitleText(text: AppStrings.emptyData),
               ],
             ),
           );

@@ -9,6 +9,7 @@ import 'package:wine_app/ui/widgets/app_list_view.dart';
 import 'package:wine_app/ui/widgets/app_loading_indicator.dart';
 import 'package:wine_app/ui/widgets/app_sidebar.dart';
 import 'package:wine_app/ui/widgets/app_toast_messages.dart';
+import 'package:wine_app/ui/wine/wine_evidence_detail_view.dart';
 import 'package:wine_app/ui/wine/wine_evidence_view.dart';
 
 class WineEvidenceListView extends StatefulWidget {
@@ -116,7 +117,7 @@ class _WineEvidenceListViewState extends State<WineEvidenceListView> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => WineEvidenceView(wineEvidence: wineEvidenceList[index]),
+            builder: (context) => WineEvidenceDetailView(wineEvidence: wineEvidenceList[index]),
           ),
         ).then((value) => _getData());
       },

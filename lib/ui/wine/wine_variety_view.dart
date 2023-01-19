@@ -69,13 +69,16 @@ class _WineVarietyViewState extends State<WineVarietyView> {
                     if (state is WineLoadingState) {
                       return const AppLoadingIndicator();
                     } else {
-                      return AppSaveIconButton(onPress: (() {
-                        if (_formKey.currentState!.validate()) {
-                          widget.wineVariety != null
-                              ? wineCubit.updateWineVariety(widget.wineVariety!.id, _titleController.text, _codeController.text)
-                              : wineCubit.createWineVariety(_titleController.text, _codeController.text);
-                        }
-                      }));
+                      return AppIconButton(
+                        iconButtonType: IconButtonType.save,
+                        onPress: (() {
+                          if (_formKey.currentState!.validate()) {
+                            widget.wineVariety != null
+                                ? wineCubit.updateWineVariety(widget.wineVariety!.id, _titleController.text, _codeController.text)
+                                : wineCubit.createWineVariety(_titleController.text, _codeController.text);
+                          }
+                        }),
+                      );
                     }
                   },
                 ),

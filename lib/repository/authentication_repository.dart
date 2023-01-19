@@ -9,8 +9,8 @@ class LoginRepository {
     String password,
     String deviceName,
   ) async {
-    return await instance<ApiFactory>().postData(
-      ApiEndpoints.loginUrl,
+    return await instance<ApiFactory>().postMethod(
+      endpoint: ApiEndpoints.loginUrl,
       data: {
         "email": email,
         "password": password,
@@ -20,7 +20,7 @@ class LoginRepository {
   }
 
   Future<ApiResults> logoutUser() async {
-    return await instance<ApiFactory>().getData(ApiEndpoints.logoutUrl);
+    return await instance<ApiFactory>().getMethod(endpoint: ApiEndpoints.logoutUrl);
   }
 
   Future<ApiResults> registerUser(
@@ -29,8 +29,8 @@ class LoginRepository {
     String password,
     String deviceName,
   ) async {
-    return await instance<ApiFactory>().postData(
-      ApiEndpoints.registerUrl,
+    return await instance<ApiFactory>().postMethod(
+      endpoint: ApiEndpoints.registerUrl,
       data: {
         "name": name,
         "email": email,

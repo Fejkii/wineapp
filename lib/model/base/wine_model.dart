@@ -67,6 +67,15 @@ class WineBaseModel {
     );
   }
 
+  factory WineBaseModel.fromWineData(Map<String, dynamic> map) {
+    return WineBaseModel(
+      id: map['id']?.toInt() ?? 0,
+      projectId: map['project']?['id'].toInt() ?? 0,
+      wineVarietyId: map['wine_variety']?['id'].toInt() ?? 0,
+      title: map['title'] ?? '',
+    );
+  }
+
   String toJson() => json.encode(toMap());
 
   factory WineBaseModel.fromJson(String source) => WineBaseModel.fromMap(json.decode(source));
@@ -211,7 +220,7 @@ class WineClassificationModel {
 
 class WineRecordModel {
   int id;
-  WineEvidenceModel wineEvidence;
+  int wineEvidenceId;
   WineRecordTypeModel wineRecordType;
   String title;
   DateTime date;
@@ -220,7 +229,7 @@ class WineRecordModel {
   DateTime? updatedAt;
   WineRecordModel({
     required this.id,
-    required this.wineEvidence,
+    required this.wineEvidenceId,
     required this.wineRecordType,
     required this.title,
     required this.date,
@@ -232,10 +241,10 @@ class WineRecordModel {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'wine_evidence': wineEvidence.toMap(),
+      'wine_evidence_id': wineEvidenceId,
       'wine_record_type': wineRecordType.toMap(),
       'title': title,
-      'date': date.millisecondsSinceEpoch,
+      'date': date,
       'note': note,
       'created_at': createdAt.millisecondsSinceEpoch,
       'updated_at': updatedAt?.millisecondsSinceEpoch,
@@ -245,10 +254,10 @@ class WineRecordModel {
   factory WineRecordModel.fromMap(Map<String, dynamic> map) {
     return WineRecordModel(
       id: map['id']?.toInt() ?? 0,
-      wineEvidence: WineEvidenceModel.fromMap(map['wine_evidence']),
+      wineEvidenceId: map['wine_evidence_id']?.toInt() ?? 0,
       wineRecordType: WineRecordTypeModel.fromMap(map['wine_record_type']),
       title: map['title'] ?? '',
-      date: DateTime.fromMillisecondsSinceEpoch(map['date']),
+      date: DateTime.parse(map['date']),
       note: map['note'] ?? '',
       createdAt: DateTime.parse(map['created_at']),
       updatedAt: map['updated_at'] != null ? DateTime.parse(map['updated_at']) : null,

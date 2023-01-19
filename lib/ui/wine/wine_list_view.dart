@@ -7,7 +7,6 @@ import 'package:wine_app/const/app_values.dart';
 import 'package:wine_app/model/base/wine_model.dart';
 import 'package:wine_app/ui/widgets/app_list_view.dart';
 import 'package:wine_app/ui/widgets/app_loading_indicator.dart';
-import 'package:wine_app/ui/widgets/app_sidebar.dart';
 import 'package:wine_app/ui/widgets/app_toast_messages.dart';
 import 'package:wine_app/ui/wine/wine_view.dart';
 
@@ -43,7 +42,6 @@ class _WineListViewState extends State<WineListView> {
     return BlocBuilder<WineCubit, WineState>(
       builder: (context, state) {
         return Scaffold(
-          drawer: AppSidebar(),
           appBar: AppBar(
             title: const Text(AppStrings.wines),
             actions: [
@@ -75,7 +73,7 @@ class _WineListViewState extends State<WineListView> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              _wineVarietyList(),
+              _wineList(),
             ],
           ),
         ),
@@ -83,7 +81,7 @@ class _WineListViewState extends State<WineListView> {
     );
   }
 
-  Widget _wineVarietyList() {
+  Widget _wineList() {
     return BlocConsumer<WineCubit, WineState>(
       listener: (context, state) {
         if (state is WineListSuccessState) {
@@ -96,7 +94,10 @@ class _WineListViewState extends State<WineListView> {
         if (state is WineLoadingState) {
           return const AppLoadingIndicator();
         } else {
-          return AppListView(listData: wineList, itemBuilder: _itemBuilder);
+          return AppListView(
+            listData: wineList,
+            itemBuilder: _itemBuilder,
+          );
         }
       },
     );

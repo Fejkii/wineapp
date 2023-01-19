@@ -26,4 +26,5 @@ class ApiEndpoints {
   static const String wineEvidenceListUrl = "wineEvidenceByProject";
   static const String wineRecordTypeUrl = "wineRecordType";
   static const String wineRecordUrl = "wineRecord";
+  static const String wineRecordListUrl = "wineRecordList";
 }

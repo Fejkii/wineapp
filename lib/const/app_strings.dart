@@ -6,6 +6,7 @@ class AppStrings {
   static const String loading = "Loading...";
   static const String retryAgain = "Retry again";
   static const String ok = "OK";
+  static const String cancel = "Cancel";
   static const String save = "Save";
   static const String create = "Create";
   static const String created = "Created";
@@ -20,6 +21,8 @@ class AppStrings {
   static const String selectInSelectBox = "Select some value";
   static const String selectBoxEmpty = "Please slect some value";
   static const String emptyData = "No Result Found";
+  static const String date = "Date";
+  static const String selectDate = "Select Date";
 
   // Authentication
   static const String name = "Name";
@@ -84,6 +87,8 @@ class AppStrings {
   static const String acid = "Acid in g for 1l";
   static const String sugar = "Residual sugar in g for 1l";
   static const String note = "Note";
+  static const String addRecord = "Add Record";
+  static const String wineRecordType = "Wine Record type";
 
   // Vineyards
   static const String vineyards = "Vineyards";
