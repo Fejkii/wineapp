@@ -57,13 +57,17 @@ class ApiFactory {
 
   Future<ApiResults> getMethod({
     required String endpoint,
+    String? endpointFilter,
     int? identificator,
     Map<String, dynamic>? queryParameters,
   }) async {
     try {
       String path = endpoint;
+      if (endpointFilter != null) {
+        path = "$path/$endpointFilter";
+      }
       if (identificator != null) {
-        path = "$endpoint/$identificator";
+        path = "$path/$identificator";
       }
       var response = await getDio().get(
         path,

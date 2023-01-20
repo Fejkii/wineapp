@@ -24,7 +24,8 @@ class WineRepository {
 
   Future<ApiResults> getWineList(int projectId) async {
     return instance<ApiFactory>().getMethod(
-      endpoint: ApiEndpoints.wineListUrl,
+      endpoint: ApiEndpoints.wineUrl,
+      endpointFilter: ApiEndpoints.projectUrl,
       identificator: projectId,
     );
   }
@@ -42,7 +43,8 @@ class WineRepository {
 
   Future<ApiResults> getWineVarietyList(int projectId) async {
     return instance<ApiFactory>().getMethod(
-      endpoint: ApiEndpoints.wineVarietyListUrl,
+      endpoint: ApiEndpoints.wineVarietyUrl,
+      endpointFilter: ApiEndpoints.projectUrl,
       identificator: projectId,
     );
   }
@@ -107,7 +109,8 @@ class WineRepository {
 
   Future<ApiResults> getWineEvidenceList(int projectId) async {
     return instance<ApiFactory>().getMethod(
-      endpoint: ApiEndpoints.wineEvidenceListUrl,
+      endpoint: ApiEndpoints.wineEvidenceUrl,
+      endpointFilter: ApiEndpoints.projectUrl,
       identificator: projectId,
     );
   }
@@ -144,7 +147,8 @@ class WineRepository {
 
   Future<ApiResults> getWineRecordList(int wineEvidenceId) async {
     return instance<ApiFactory>().getMethod(
-      endpoint: ApiEndpoints.wineRecordListUrl,
+      endpoint: ApiEndpoints.wineRecordUrl,
+      endpointFilter: ApiEndpoints.wineEvidenceUrl,
       identificator: wineEvidenceId,
     );
   }
