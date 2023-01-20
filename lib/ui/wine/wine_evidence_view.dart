@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wine_app/app/app_functions.dart';
-import 'package:wine_app/app/app_preferences.dart';
 import 'package:wine_app/app/dependency_injection.dart';
 import 'package:wine_app/bloc/wine/wine_cubit.dart';
 import 'package:wine_app/const/app_strings.dart';
@@ -10,7 +9,7 @@ import 'package:wine_app/model/base/wine_model.dart';
 import 'package:wine_app/ui/widgets/app_buttons.dart';
 import 'package:wine_app/ui/widgets/app_scaffold_layout.dart';
 import 'package:wine_app/ui/wine/wine_evidence_detail_view.dart';
-import 'package:wine_app/ui/wine/wine_record_detail.dart';
+import 'package:wine_app/ui/wine/wine_record_detail_view.dart';
 import 'package:wine_app/ui/wine/wine_record_list.dart';
 
 class WineEvidenceView extends StatefulWidget {
@@ -26,9 +25,6 @@ class WineEvidenceView extends StatefulWidget {
 
 class _WineEvidenceViewState extends State<WineEvidenceView> {
   WineCubit wineCubit = instance<WineCubit>();
-  AppPreferences appPreferences = instance<AppPreferences>();
-  List<WineModel> wineList = [];
-  WineModel? selectedWine;
   late WineEvidenceModel wineEvidence;
 
   @override

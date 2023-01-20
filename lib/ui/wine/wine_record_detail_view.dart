@@ -32,8 +32,9 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  AppPreferences appPreferences = instance<AppPreferences>();
-  WineCubit wineCubit = instance<WineCubit>();
+  final AppPreferences appPreferences = instance<AppPreferences>();
+  final WineCubit wineCubit = instance<WineCubit>();
+
   late int wineEvidenceId;
   late WineRecordModel? wineRecord;
   late WineRecordTypeModel? selectedWineRecordType;

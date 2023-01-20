@@ -54,7 +54,4 @@ class WineClassificationListSuccessState extends WineState {
   const WineClassificationListSuccessState(this.wineClassificationList);
 }
 
-class WineRecordTypeListSuccessState extends WineState {
-  final List<WineRecordTypeModel> wineRecordTypeList;
-  const WineRecordTypeListSuccessState(this.wineRecordTypeList);
-}
+class WineRecordTypeListSuccessState extends WineState {}

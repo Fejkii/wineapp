@@ -8,7 +8,7 @@ import 'package:wine_app/model/base/wine_model.dart';
 import 'package:wine_app/ui/widgets/app_list_view.dart';
 import 'package:wine_app/ui/widgets/app_loading_indicator.dart';
 import 'package:wine_app/ui/widgets/app_toast_messages.dart';
-import 'package:wine_app/ui/wine/wine_record_detail.dart';
+import 'package:wine_app/ui/wine/wine_record_detail_view.dart';
 
 class WineRecordList extends StatefulWidget {
   final int wineEvidenceId;
