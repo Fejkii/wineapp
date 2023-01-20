@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wine_app/const/app_strings.dart';
-import 'package:wine_app/ui/vineyard/vineyard_view.dart';
+import 'package:wine_app/ui/vineyard/vineyard_list_view.dart';
 import 'package:wine_app/ui/wine/wine_evidence_list_view.dart';
 
 class HomeView extends StatefulWidget {
@@ -15,7 +15,7 @@ class _HomeViewState extends State<HomeView> {
 
   final List<Widget> _pages = [
     const WineEvidenceListView(),
-    const VineyardView(),
+    const VineyardListView(),
   ];
 
   @override

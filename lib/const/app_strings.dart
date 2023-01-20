@@ -78,6 +78,7 @@ class AppStrings {
   // Wines
   static const String wines = "Wines";
   static const String createWine = "New Wine";
+  static const String createVineyard = "New Vineyard";
   static const String wineVariety = "Wine Variety";
   static const String wineVarietySelect = "Select Wine Variety";
   static const String wineVarieties = "Wine Varieties";
@@ -93,6 +94,7 @@ class AppStrings {
   static const String note = "Note";
   static const String addRecord = "Add Record";
   static const String wineRecordType = "Wine Record type";
+  static const String vineyardRecordType = "Vineyard Record type";
 
   // Vineyards
   static const String vineyards = "Vineyards";

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wine_app/model/base/project_model.dart';
 import 'package:wine_app/model/base/user_model.dart';
+import 'package:wine_app/model/base/vineyard_model.dart';
 import 'package:wine_app/model/base/wine_model.dart';
 import 'package:wine_app/services/language_service.dart';
 
@@ -16,6 +17,7 @@ enum AppPreferencesKeys {
   wineVarieties,
   wineClassifications,
   wineRecordTypes,
+  vineyardRecordTypes,
 }
 
 class AppPreferences {
@@ -145,5 +147,18 @@ class AppPreferences {
       wineRecordTypeList.add(WineRecordTypeModel.fromMap(element));
     });
     return wineRecordTypeList;
+  }
+
+  Future<void> setVineyardRecordTypes(List vineyardRecordTypeList) async {
+    var vineyardRecordTypes = jsonEncode(vineyardRecordTypeList);
+    _sharedPreferences.setString(AppPreferencesKeys.vineyardRecordTypes.name, vineyardRecordTypes);
+  }
+
+  List<VineyardRecordTypeModel>? getVineyardRecordTypeList() {
+    List<VineyardRecordTypeModel> vineyardRecordTypeList = [];
+    (jsonDecode(_sharedPreferences.getString(AppPreferencesKeys.vineyardRecordTypes.name)!)).forEach((element) {
+      vineyardRecordTypeList.add(VineyardRecordTypeModel.fromMap(element));
+    });
+    return vineyardRecordTypeList;
   }
 }

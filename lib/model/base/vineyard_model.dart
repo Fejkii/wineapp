@@ -35,20 +35,20 @@ class VineyardModel {
 
 class VineyardRecordModel {
   int id;
-  VineyardModel vineyard;
+  int vineyardId;
   String title;
   DateTime date;
-  VineyardWineModel vineyardWine;
+  int vineyardWineId;
   VineyardRecordTypeModel vineyardRecordType;
   String note;
   DateTime createdAt;
-  DateTime updatedAt;
+  DateTime? updatedAt;
   VineyardRecordModel({
     required this.id,
-    required this.vineyard,
+    required this.vineyardId,
     required this.title,
     required this.date,
-    required this.vineyardWine,
+    required this.vineyardWineId,
     required this.vineyardRecordType,
     required this.note,
     required this.createdAt,
@@ -58,28 +58,28 @@ class VineyardRecordModel {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'vineyard': vineyard.toMap(),
+      'vineyard_id': vineyardId,
       'title': title,
-      'date': date.millisecondsSinceEpoch,
-      'vineyardWine': vineyardWine.toMap(),
-      'vineyardRecordType': vineyardRecordType.toMap(),
+      'date': date,
+      'vineyard_wine_id': vineyardWineId,
+      'vineyard_record_type': vineyardRecordType.toMap(),
       'note': note,
-      'createdAt': createdAt.millisecondsSinceEpoch,
-      'updatedAt': updatedAt.millisecondsSinceEpoch,
+      'created_at': createdAt.millisecondsSinceEpoch,
+      'updated_at': updatedAt?.millisecondsSinceEpoch,
     };
   }
 
   factory VineyardRecordModel.fromMap(Map<String, dynamic> map) {
     return VineyardRecordModel(
       id: map['id']?.toInt() ?? 0,
-      vineyard: VineyardModel.fromMap(map['vineyard']),
+      vineyardId: map['vineyard_id']?.toInt() ?? 0,
       title: map['title'] ?? '',
-      date: DateTime.fromMillisecondsSinceEpoch(map['date']),
-      vineyardWine: VineyardWineModel.fromMap(map['vineyardWine']),
-      vineyardRecordType: VineyardRecordTypeModel.fromMap(map['vineyardRecordType']),
+      date: DateTime.parse(map['date']),
+      vineyardWineId: map['vineyard_wine_id']?.toInt() ?? 0,
+      vineyardRecordType: VineyardRecordTypeModel.fromMap(map['vineyard_record_type']),
       note: map['note'] ?? '',
-      createdAt: DateTime.fromMillisecondsSinceEpoch(map['createdAt']),
-      updatedAt: DateTime.fromMillisecondsSinceEpoch(map['updatedAt']),
+      createdAt: DateTime.parse(map['created_at']),
+      updatedAt: map['updated_at'] != null ? DateTime.parse(map['updated_at']) : null,
     );
   }
 
@@ -91,12 +91,12 @@ class VineyardRecordModel {
 class VineyardRecordTypeModel {
   int id;
   String title;
-  String code;
-  String color;
+  String? note;
+  String? color;
   VineyardRecordTypeModel({
     required this.id,
     required this.title,
-    required this.code,
+    this.note,
     required this.color,
   });
 
@@ -104,7 +104,7 @@ class VineyardRecordTypeModel {
     return {
       'id': id,
       'title': title,
-      'code': code,
+      'note': note,
       'color': color,
     };
   }
@@ -113,8 +113,8 @@ class VineyardRecordTypeModel {
     return VineyardRecordTypeModel(
       id: map['id']?.toInt() ?? 0,
       title: map['title'] ?? '',
-      code: map['code'] ?? '',
-      color: map['color'] ?? '',
+      note: map['note'],
+      color: map['color'],
     );
   }
 

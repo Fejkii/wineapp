@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:wine_app/app/app_preferences.dart';
 import 'package:wine_app/app/dependency_injection.dart';
+import 'package:wine_app/bloc/vineyard/vineyard_cubit.dart';
 import 'package:wine_app/bloc/wine/wine_cubit.dart';
 import 'package:wine_app/const/app_routes.dart';
 import 'package:wine_app/const/app_strings.dart';
@@ -19,6 +20,7 @@ class _SplashViewState extends State<SplashView> {
   Timer? _timer;
   late AppPreferences appPreferences = instance<AppPreferences>();
   late WineCubit wineCubit = instance<WineCubit>();
+  late VineyardCubit vineyardCubit = instance<VineyardCubit>();
 
   @override
   void initState() {
@@ -28,6 +30,7 @@ class _SplashViewState extends State<SplashView> {
       wineCubit.getWineClassificationList();
       wineCubit.getWineRecordTypeList();
       wineCubit.getWineList();
+      vineyardCubit.getVineyardRecordTypeList();
     }
     _startDelay();
   }

@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wine_app/api/api_factory.dart';
@@ -18,7 +17,7 @@ Future<void> initAppDependences() async {
   final sharedPreferences = await SharedPreferences.getInstance();
   instance.registerLazySingleton<SharedPreferences>(() => sharedPreferences);
   instance.registerLazySingleton<AppPreferences>(() => AppPreferences(instance<SharedPreferences>()));
-  
+
   instance.registerLazySingleton(() => NavigationService());
 
   instance.registerLazySingleton<ApiFactory>(() => ApiFactory(instance<AppPreferences>()));
