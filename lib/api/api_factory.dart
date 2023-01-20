@@ -5,7 +5,10 @@ import 'package:wine_app/api/api_error_handler.dart';
 import 'package:wine_app/api/api_result_handler.dart';
 import 'package:wine_app/app/app_functions.dart';
 import 'package:wine_app/app/app_preferences.dart';
+import 'package:wine_app/app/dependency_injection.dart';
+import 'package:wine_app/const/app_routes.dart';
 import 'package:wine_app/model/reponse/base_response.dart';
+import 'package:wine_app/services/navigator_service.dart';
 
 const String APPLICATION_JSON = "application/json";
 const String CONTENT_TYPE = "contet-type";
@@ -73,6 +76,12 @@ class ApiFactory {
     } on DioError catch (e) {
       if (e.response != null) {
         BaseErrorResponse baseErrorResponse = BaseErrorResponse.fromMap(e.response!.data);
+
+        if (e.response!.statusCode == ResponseCode.UNATUHORIZED) {
+          instance<NavigationService>().navigateTo(AppRoutes.loginRoute);
+          // TODO lock dio for no more reqeusts.
+        }
+
         return ApiFailure(baseErrorResponse.code, baseErrorResponse.message);
       } else {
         // Something happened in setting up or sending the request that triggered an Error
@@ -105,6 +114,9 @@ class ApiFactory {
     } on DioError catch (e) {
       if (e.response != null) {
         BaseErrorResponse baseErrorResponse = BaseErrorResponse.fromMap(e.response!.data);
+        if (e.response!.statusCode == ResponseCode.UNATUHORIZED) {
+          instance<NavigationService>().navigateTo(AppRoutes.loginRoute);
+        }
         return ApiFailure(baseErrorResponse.code, baseErrorResponse.message);
       } else {
         return ApiErrorHandler.handle(e).failure;
@@ -134,6 +146,9 @@ class ApiFactory {
       return ApiSuccess(baseResponse.data, response.statusCode);
     } on DioError catch (e) {
       if (e.response != null) {
+        if (e.response!.statusCode == ResponseCode.UNATUHORIZED) {
+          instance<NavigationService>().navigateTo(AppRoutes.loginRoute);
+        }
         BaseErrorResponse baseErrorResponse = BaseErrorResponse.fromMap(e.response!.data);
         return ApiFailure(baseErrorResponse.code, baseErrorResponse.message);
       } else {
@@ -164,6 +179,9 @@ class ApiFactory {
       return ApiSuccess(baseResponse.data, response.statusCode);
     } on DioError catch (e) {
       if (e.response != null) {
+        if (e.response!.statusCode == ResponseCode.UNATUHORIZED) {
+          instance<NavigationService>().navigateTo(AppRoutes.loginRoute);
+        }
         BaseErrorResponse baseErrorResponse = BaseErrorResponse.fromMap(e.response!.data);
         return ApiFailure(baseErrorResponse.code, baseErrorResponse.message);
       } else {

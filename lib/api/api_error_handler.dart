@@ -7,7 +7,7 @@ enum DataSource {
   NO_CONTENT,
   BAD_REQUEST,
   FORBIDDEN,
-  UNATUHORISED,
+  UNATUHORIZED,
   CONFLICT,
   NOT_FOUND,
   INTERNAL_SERVER_ERROR,
@@ -51,8 +51,8 @@ ApiFailure _handleError(DioError error) {
           return DataSource.BAD_REQUEST.getFailure();
         case ResponseCode.FORBIDDEN:
           return DataSource.FORBIDDEN.getFailure();
-        case ResponseCode.UNATUHORISED:
-          return DataSource.UNATUHORISED.getFailure();
+        case ResponseCode.UNATUHORIZED:
+          return DataSource.UNATUHORIZED.getFailure();
         case ResponseCode.CONFLICT:
           return DataSource.CONFLICT.getFailure();
         case ResponseCode.NOT_FOUND:
@@ -76,8 +76,8 @@ extension DataSourceExtension on DataSource {
         return ApiFailure(ResponseCode.BAD_REQUEST, ResponseMessage.BAD_REQUEST);
       case DataSource.FORBIDDEN:
         return ApiFailure(ResponseCode.FORBIDDEN, ResponseMessage.FORBIDDEN);
-      case DataSource.UNATUHORISED:
-        return ApiFailure(ResponseCode.UNATUHORISED, ResponseMessage.UNATUHORISED);
+      case DataSource.UNATUHORIZED:
+        return ApiFailure(ResponseCode.UNATUHORIZED, ResponseMessage.UNATUHORIZED);
       case DataSource.CONFLICT:
         return ApiFailure(ResponseCode.CONFLICT, ResponseMessage.CONFLICT);
       case DataSource.NOT_FOUND:
@@ -110,7 +110,7 @@ class ResponseCode {
   static const int NO_CONTENT = 201; // succes with no content
   static const int BAD_REQUEST = 400; // API rejected the request
   static const int FORBIDDEN = 403; // API rejected the request
-  static const int UNATUHORISED = 401; // failures user is not authorised
+  static const int UNATUHORIZED = 401; // failures user is not authorised
   static const int NOT_FOUND = 404; // API URL is not correct. not found
   static const int CONFLICT = 409; // This response is sent when a request conflicts with the current state of the server.
   static const int INTERNAL_SERVER_ERROR = 500; // crash happend in server side
@@ -131,7 +131,7 @@ class ResponseMessage {
   static const String NO_CONTENT = "Succes with no content"; // succes with no content
   static const String BAD_REQUEST = "Bad request, try again later"; // API rejected the request
   static const String FORBIDDEN = "Forbidden request, try again later"; // API rejected the request
-  static const String UNATUHORISED = "User is not authorised"; // failures user is not authorised
+  static const String UNATUHORIZED = "User is not authorised"; // failures user is not authorised
   static const String NOT_FOUND = "URL is not correct, try again later"; // API URL is not correct, not found
   static const String CONFLICT = "Some conflict with data on server"; // Probably iteam is already exist
   static const String INTERNAL_SERVER_ERROR = "Internal server error, try again later"; // crash happend in server side

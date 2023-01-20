@@ -11,6 +11,7 @@ import 'package:wine_app/bloc/user_project/user_project_cubit.dart';
 import 'package:wine_app/bloc/vineyard/vineyard_cubit.dart';
 import 'package:wine_app/bloc/wine/wine_cubit.dart';
 import 'package:wine_app/const/app_routes.dart';
+import 'package:wine_app/services/navigator_service.dart';
 import 'package:wine_app/services/route_service.dart';
 import 'package:wine_app/ui/theme/app_theme.dart';
 
@@ -31,13 +32,13 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  late ThemeCubit themeCubit;
+
   @override
   void initState() {
     super.initState();
     setState(() {});
   }
-
-  late ThemeCubit themeCubit;
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +61,7 @@ class _MyAppState extends State<MyApp> {
               onGenerateRoute: RouteGenerator.onGenerateRoute,
               initialRoute: AppRoutes.splashRoute,
               debugShowCheckedModeBanner: false,
+              navigatorKey: instance<NavigationService>().navigatorKey,
             );
           });
         },
