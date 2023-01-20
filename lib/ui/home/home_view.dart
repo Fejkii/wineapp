@@ -38,7 +38,7 @@ class _HomeViewState extends State<HomeView> {
         items: const [
           BottomNavigationBarItem(
             label: AppStrings.wineEvidence,
-            icon: Icon(Icons.format_list_bulleted_outlined),
+            icon: Icon(Icons.wine_bar),
           ),
           BottomNavigationBarItem(
             label: AppStrings.vineyards,

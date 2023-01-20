@@ -45,6 +45,7 @@ class AppThemes {
       selectedItemColor: AppColors.darkPrimary,
       unselectedItemColor: AppColors.lightGrey,
       elevation: 0,
+      selectedIconTheme: const IconThemeData(size: 30),
     ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(backgroundColor: AppColors.darkPrimary),
     checkboxTheme: CheckboxThemeData(
@@ -108,6 +109,7 @@ class AppThemes {
       selectedItemColor: AppColors.white,
       unselectedItemColor: AppColors.grey,
       elevation: 0,
+      selectedIconTheme: const IconThemeData(size: 30),
     ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(backgroundColor: AppColors.darkPrimary),
     checkboxTheme: CheckboxThemeData(

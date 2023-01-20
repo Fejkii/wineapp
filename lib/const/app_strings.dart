@@ -3,6 +3,8 @@ class AppStrings {
   static const String appName = "Wine App";
 
   // Basic texts
+  static const String appVersion = "Aplication Version";
+  static const String apiVersion = "API Version";
   static const String loading = "Loading...";
   static const String retryAgain = "Retry again";
   static const String ok = "OK";
@@ -34,6 +36,7 @@ class AppStrings {
   static const String passwordError = "Invalid Password";
   static const String login = "Login";
   static const String logout = "Logout";
+  static const String youHaveBeenLoggedOut = "You have been logged out.\nYou must log in again to continue in the application.";
 
   static const String registration = "Registration";
   static const String register = "Register";

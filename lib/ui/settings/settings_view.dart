@@ -65,9 +65,14 @@ class _SettingsViewState extends State<SettingsView> {
                 onPressed: () {
                   authCubit.logout();
                 },
-                child: Text(
-                  AppStrings.logout,
-                  style: Theme.of(context).textTheme.button,
+                child: Row(
+                  children: [
+                    const Icon(Icons.logout),
+                    Text(
+                      AppStrings.logout,
+                      style: Theme.of(context).textTheme.button,
+                    ),
+                  ],
                 ),
               );
             }

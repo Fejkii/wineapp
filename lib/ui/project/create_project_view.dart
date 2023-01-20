@@ -53,7 +53,7 @@ class _CreateProjectViewState extends State<CreateProjectView> {
                   authCubit.logout();
                   Navigator.pushNamedAndRemoveUntil(context, AppRoutes.loginRoute, (route) => false);
                 }),
-                icon: const Icon(Icons.exit_to_app),
+                icon: const Icon(Icons.logout),
               ),
             ],
           ),

@@ -1,7 +1,8 @@
 class ApiEndpoints {
-  static const String TEST_BASE_URL = "http://127.0.0.1:8000/api/v1/";
-  static const String TEST_ANDROID_BASE_URL = "http://10.0.2.2:8000/api/v1/";
-  static const String BASE_URL = "https://wineapp.mrhappy.cz/api/v1/";
+  static const String API_VERSION = "v1";
+  static const String TEST_BASE_URL = "http://127.0.0.1:8000/api/$API_VERSION/";
+  static const String TEST_ANDROID_BASE_URL = "http://10.0.2.2:8000/api/$API_VERSION/";
+  static const String BASE_URL = "https://wineapp.mrhappy.cz/api/$API_VERSION/";
 
   static const String loginUrl = "login";
   static const String registerUrl = "register";
