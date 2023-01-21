@@ -10,6 +10,7 @@ TextStyle _getTextStyle(double fontSize, String fontFamily, FontWeight fontWeigh
   );
 }
 
+// TODO Not used!
 // regular text style
 TextStyle getRegularStyle({double fontSize = AppFontSize.s12, required Color color}) {
   return _getTextStyle(fontSize, AppFonts.fontFamily, AppFontWeight.regular, color);

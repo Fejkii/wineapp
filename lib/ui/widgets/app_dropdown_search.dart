@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:wine_app/const/app_strings.dart';
 
-// TODO
+// TODO Not used, not work yet!
 class AppSelectBox extends StatefulWidget {
   final List<Object> list;
   final String Function(dynamic) item;

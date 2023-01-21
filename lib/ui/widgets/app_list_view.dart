@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wine_app/const/app_strings.dart';
 import 'package:wine_app/const/app_values.dart';
-import 'package:wine_app/ui/theme/app_colors.dart';
 import 'package:wine_app/ui/widgets/app_texts.dart';
 
 class AppListView extends StatelessWidget {

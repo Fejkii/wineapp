@@ -5,6 +5,7 @@ import 'package:wine_app/bloc/login/auth_cubit.dart';
 import 'package:wine_app/const/app_routes.dart';
 import 'package:wine_app/const/app_strings.dart';
 import 'package:wine_app/const/app_values.dart';
+import 'package:wine_app/ui/widgets/app_buttons.dart';
 import 'package:wine_app/ui/widgets/app_loading_indicator.dart';
 import 'package:wine_app/ui/widgets/app_scaffold_layout.dart';
 import 'package:wine_app/ui/widgets/app_text_form_field.dart';
@@ -99,8 +100,9 @@ class _RegisterViewState extends State<RegisterView> {
               if (state is AuthLoadingState) {
                 return const AppLoadingIndicator();
               } else {
-                return ElevatedButton(
-                  onPressed: () {
+                return AppButton(
+                  title: AppStrings.register,
+                  onTap: () {
                     if (_formKey.currentState!.validate()) {
                       authCubit.register(
                         _nameController.text,
@@ -109,10 +111,6 @@ class _RegisterViewState extends State<RegisterView> {
                       );
                     }
                   },
-                  child: Text(
-                    AppStrings.register,
-                    style: Theme.of(context).textTheme.button,
-                  ),
                 );
               }
             },

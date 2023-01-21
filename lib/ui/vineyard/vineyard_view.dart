@@ -35,6 +35,7 @@ class _VineyardViewState extends State<VineyardView> {
 
   void _getData() {
     vineyardCubit.getVineyard(vineyard.id);
+    vineyardCubit.getVineyardRecordList(vineyard.id);
   }
 
   @override
@@ -69,8 +70,9 @@ class _VineyardViewState extends State<VineyardView> {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        AppLoginButton(
+        AppButton(
           title: AppStrings.addRecord,
+          buttonType: ButtonType.add,
           onTap: () {
             Navigator.push(
               context,

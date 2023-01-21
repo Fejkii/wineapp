@@ -66,9 +66,6 @@ class AppStrings {
   static const String userAddedToProject = "User added to this project";
   static const String userAddedToProjectError = "User doesn't exist, or is already in this project";
 
-  //Profile
-  static const String profile = "Profile";
-
   // Settings
   static const String settings = "Settings";
 

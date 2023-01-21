@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wine_app/const/app_strings.dart';
 import 'package:wine_app/const/app_values.dart';
+import 'package:wine_app/ui/widgets/app_buttons.dart';
 import 'package:wine_app/ui/widgets/app_scaffold_layout.dart';
 import 'package:wine_app/ui/widgets/app_text_form_field.dart';
 import 'package:wine_app/ui/widgets/app_texts.dart';
@@ -68,15 +69,12 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
           const SizedBox(height: AppMargin.m20),
           StreamBuilder<bool>(
             builder: (context, snapshot) {
-              return ElevatedButton(
-                  child: Text(
-                    AppStrings.resetPasswordButton,
-                    style: Theme.of(context).textTheme.button,
-                  ),
-                  onPressed: () {
-                    // TODO: reset password email
-                    print("Reset password pressed");
-                  });
+              return AppButton(
+                title: AppStrings.resetPasswordButton,
+                onTap: () {
+                  // TODO: reset password adn send email
+                },
+              );
             },
           ),
         ],

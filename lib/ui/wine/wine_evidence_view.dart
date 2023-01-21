@@ -35,6 +35,7 @@ class _WineEvidenceViewState extends State<WineEvidenceView> {
 
   void _getData() {
     wineCubit.getWineEvidence(wineEvidence.id);
+    wineCubit.getWineRecordList(wineEvidence.id);
   }
 
   @override
@@ -72,8 +73,9 @@ class _WineEvidenceViewState extends State<WineEvidenceView> {
         const SizedBox(height: AppMargin.m10),
         _otherInfo(),
         const SizedBox(height: AppMargin.m20),
-        AppLoginButton(
+        AppButton(
           title: AppStrings.addRecord,
+          buttonType: ButtonType.add,
           onTap: () {
             Navigator.push(
               context,

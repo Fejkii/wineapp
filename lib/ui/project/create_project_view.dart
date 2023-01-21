@@ -7,6 +7,7 @@ import 'package:wine_app/bloc/project/project_cubit.dart';
 import 'package:wine_app/const/app_routes.dart';
 import 'package:wine_app/const/app_strings.dart';
 import 'package:wine_app/const/app_values.dart';
+import 'package:wine_app/ui/widgets/app_buttons.dart';
 import 'package:wine_app/ui/widgets/app_loading_indicator.dart';
 import 'package:wine_app/ui/widgets/app_scaffold_layout.dart';
 import 'package:wine_app/ui/widgets/app_text_form_field.dart';
@@ -120,16 +121,13 @@ class _CreateProjectViewState extends State<CreateProjectView> {
               if (state is CreateProjectLoadingState) {
                 return const AppLoadingIndicator();
               } else {
-                return ElevatedButton(
-                  onPressed: () {
+                return AppButton(
+                  title: AppStrings.createProject,
+                  onTap: () {
                     if (_formKey.currentState!.validate()) {
                       projectCubit.createProject(_titleController.text, _isDefaultValue);
                     }
                   },
-                  child: Text(
-                    AppStrings.createProject,
-                    style: Theme.of(context).textTheme.button,
-                  ),
                 );
               }
             },

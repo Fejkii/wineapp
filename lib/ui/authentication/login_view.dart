@@ -5,7 +5,6 @@ import 'package:wine_app/bloc/login/auth_cubit.dart';
 import 'package:wine_app/const/app_routes.dart';
 import 'package:wine_app/const/app_strings.dart';
 import 'package:wine_app/const/app_values.dart';
-import 'package:wine_app/ui/theme/app_colors.dart';
 import 'package:wine_app/ui/widgets/app_buttons.dart';
 import 'package:wine_app/ui/widgets/app_loading_indicator.dart';
 import 'package:wine_app/ui/widgets/app_scaffold_layout.dart';
@@ -111,8 +110,9 @@ class _LoginViewState extends State<LoginView> {
               if (state is AuthLoadingState) {
                 return const AppLoadingIndicator();
               } else {
-                return ElevatedButton(
-                  onPressed: () {
+                return AppButton(
+                  title: AppStrings.login,
+                  onTap: () {
                     if (_formKey.currentState!.validate()) {
                       authCubit.login(
                         _emailController.text,
@@ -120,10 +120,6 @@ class _LoginViewState extends State<LoginView> {
                       );
                     }
                   },
-                  child: Text(
-                    AppStrings.login,
-                    style: Theme.of(context).textTheme.button,
-                  ),
                 );
               }
             },

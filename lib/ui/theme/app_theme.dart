@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wine_app/const/app_values.dart';
 import 'package:wine_app/ui/theme/app_colors.dart';
-import 'package:wine_app/ui/theme/app_text_styles.dart';
 
 class AppThemes {
   //..............light Theme
@@ -20,11 +19,15 @@ class AppThemes {
       buttonColor: AppColors.primary,
     ),
     textButtonTheme: TextButtonThemeData(
-      style: TextButton.styleFrom(foregroundColor: AppColors.primary),
+      style: TextButton.styleFrom(
+        foregroundColor: AppColors.primary,
+        textStyle: const TextStyle(fontSize: AppSize.s15),
+      ),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        textStyle: getRegularStyle(color: AppColors.white),
+        textStyle: const TextStyle(fontSize: AppSize.s15),
+        foregroundColor: AppColors.white,
         backgroundColor: AppColors.primary,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppSize.s15),
@@ -70,11 +73,15 @@ class AppThemes {
       buttonColor: AppColors.primary,
     ),
     textButtonTheme: TextButtonThemeData(
-      style: TextButton.styleFrom(foregroundColor: AppColors.darkPrimary),
+      style: TextButton.styleFrom(
+        foregroundColor: AppColors.white,
+        textStyle: const TextStyle(fontSize: AppSize.s15),
+      ),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        textStyle: getRegularStyle(color: AppColors.white),
+        textStyle: const TextStyle(fontSize: AppSize.s15),
+        foregroundColor: AppColors.white,
         backgroundColor: AppColors.darkPrimary,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppSize.s15),

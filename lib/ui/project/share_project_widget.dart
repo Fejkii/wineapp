@@ -7,6 +7,7 @@ import 'package:wine_app/bloc/user_project/user_project_cubit.dart';
 import 'package:wine_app/const/app_strings.dart';
 import 'package:wine_app/const/app_values.dart';
 import 'package:wine_app/model/base/project_model.dart';
+import 'package:wine_app/ui/widgets/app_buttons.dart';
 import 'package:wine_app/ui/widgets/app_list_view.dart';
 import 'package:wine_app/ui/widgets/app_loading_indicator.dart';
 import 'package:wine_app/ui/widgets/app_text_form_field.dart';
@@ -99,16 +100,13 @@ class _ShareProjectWidgetState extends State<ShareProjectWidget> {
               if (state is CreateProjectLoadingState) {
                 return const AppLoadingIndicator();
               } else {
-                return ElevatedButton(
-                  onPressed: () {
+                return AppButton(
+                  title: AppStrings.shareProjectButton,
+                  onTap: () {
                     if (_formKey.currentState!.validate()) {
                       userProjectCubit.shareProjectToUser(_emailController.text, project.id);
                     }
                   },
-                  child: Text(
-                    AppStrings.shareProjectButton,
-                    style: Theme.of(context).textTheme.button,
-                  ),
                 );
               }
             },
