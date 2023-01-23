@@ -115,14 +115,16 @@ class _WineEvidenceViewState extends State<WineEvidenceView> {
           const TableCell(child: Text(AppStrings.created)),
           TableCell(child: Text(appFormatDate(wineEvidence.createdAt))),
         ]),
-        TableRow(children: [
-          const TableCell(child: Text(AppStrings.updated)),
-          TableCell(child: Text(appFormatDate(wineEvidence.updatedAt!))),
-        ]),
-        TableRow(children: [
-          const TableCell(child: Text(AppStrings.note)),
-          TableCell(child: Text(wineEvidence.note)),
-        ]),
+        if (wineEvidence.updatedAt != null)
+          TableRow(children: [
+            const TableCell(child: Text(AppStrings.updated)),
+            TableCell(child: Text(appFormatDate(wineEvidence.updatedAt!))),
+          ]),
+        if (wineEvidence.note != AppConstant.EMPTY)
+          TableRow(children: [
+            const TableCell(child: Text(AppStrings.note)),
+            TableCell(child: Text(wineEvidence.note)),
+          ]),
       ],
     );
   }

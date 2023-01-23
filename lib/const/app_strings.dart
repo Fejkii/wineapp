@@ -9,6 +9,9 @@ class AppStrings {
   static const String retryAgain = "Retry again";
   static const String ok = "OK";
   static const String cancel = "Cancel";
+  static const String delete = "Delete";
+  static const String deleteUserProject = "Delete user from project";
+  static const String deleteUserProjectContent = "are you sure you want to remove the user from this project?";
   static const String save = "Save";
   static const String create = "Create";
   static const String created = "Created";
@@ -48,21 +51,28 @@ class AppStrings {
   static const String resetPasswordButton = "Reset password";
 
   // Project
-  static const String noProject = "You don't have any projects created yet.\nCreate your own project or ask a friend to share.";
+  static const String noProject =
+      "You don't have any default project created yet.\nCreate your own project, select shared project or ask a friend to share.";
   static const String nextProject = "You can create another project.";
   static const String project = "Project";
   static const String yourProjects = "Your Projects";
+  static const String selectProject = "Select default project";
   static const String createProject = "Create project";
   static const String updateProject = "Update project";
   static const String projectName = "Project name";
   static const String nameError = "Invalid name";
-  static const String isProjectDefault = "Set project as default";
+  static const String setProjectDefault = "Set project as default";
+  static const String setProjectDefaultContent = "This action restarts the application and sets this project as the default";
+  static const String projectIsDefault = "This project is already set as default";
   static const String isProjectDefaultSubtitle = "This project will be automatically open after login";
   static const String showUserProject = "Show user project";
+  static const String usersInProject = "Users in this project";
   static const String showUserProjectList = "Show all my projects";
   static const String shareProject = "You can share project to other users";
+  static const String sharedProject = "Shared project";
   static const String shareProjectButton = "Share project";
   static const String userProjectSharedList = "This project is shared with users";
+  static const String userProjectDeleted = "User deleted from project";
   static const String userAddedToProject = "User added to this project";
   static const String userAddedToProjectError = "User doesn't exist, or is already in this project";
 

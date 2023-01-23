@@ -26,4 +26,8 @@ class UsersForProjectListSuccessState extends UserProjectState {
   const UsersForProjectListSuccessState(this.userList);
 }
 
+class UpdateUserProjectSuccessState extends UserProjectState {}
+
 class ShareProjectSuccessState extends UserProjectState {}
+
+class DeleteUserProjectSuccessState extends UserProjectState {}

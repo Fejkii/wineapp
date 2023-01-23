@@ -11,6 +11,7 @@ class ApiEndpoints {
   static const String userUrl = "user";
   static const String projectUrl = "project";
   static const String userProjectUrl = "userProject";
+  static const String listUrl = "list";
 
   static const String vineyardUrl = "vineyard";
   static const String vineyardWineUrl = "vineyardWine";

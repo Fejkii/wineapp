@@ -4,10 +4,13 @@ import 'package:wine_app/app/dependency_injection.dart';
 import 'package:wine_app/const/api_endpoints.dart';
 
 class UserProjectRepository {
-  Future<ApiResults> getProjectList() async {
-    return instance<ApiFactory>().getMethod(
+  Future<ApiResults> getUserProjectList(int userId) async {
+    return instance<ApiFactory>().postMethod(
       endpoint: ApiEndpoints.userProjectUrl,
-      endpointFilter: ApiEndpoints.userUrl
+      endpointFilter: ApiEndpoints.listUrl,
+      data: {
+        "user_id": userId,
+      },
     );
   }
 
@@ -25,6 +28,23 @@ class UserProjectRepository {
       data: {
         "email": email,
         "project_id": projectId,
+      },
+    );
+  }
+
+  Future<ApiResults> deleteUserFromProject(int userProjectId) async {
+    return instance<ApiFactory>().deleteMethod(
+      endpoint: ApiEndpoints.userProjectUrl,
+      identificator: userProjectId,
+    );
+  }
+
+  Future<ApiResults> setDefaultUserProject(int userProjectId) async {
+    return instance<ApiFactory>().putMethod(
+      endpoint: ApiEndpoints.userProjectUrl,
+      identificator: userProjectId,
+      data: {
+        "is_default": true,
       },
     );
   }

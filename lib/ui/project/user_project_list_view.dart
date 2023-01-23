@@ -26,13 +26,17 @@ class _UserProjectListViewState extends State<UserProjectListView> {
   @override
   void initState() {
     userProjectList = [];
-    userProjectCubit.getUserProjectList();
+    _getData();
     super.initState();
   }
 
   @override
   void dispose() {
     super.dispose();
+  }
+
+  void _getData() {
+    userProjectCubit.getUserProjectList();
   }
 
   @override
@@ -83,14 +87,21 @@ class _UserProjectListViewState extends State<UserProjectListView> {
 
   Widget _itemBuilder(BuildContext context, int index) {
     return AppListViewItem(
-      itemBody: Text(userProjectList[index].project.title),
+      itemBody: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          if (userProjectList[index].isDefault) const Icon(Icons.star, size: AppSize.s20),
+          if (userProjectList[index].isDefault) const SizedBox(width: AppPadding.p10),
+          Text(userProjectList[index].project.title),
+        ],
+      ),
       onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => UserProjectDetailView(userProject: userProjectList[index]),
           ),
-        );
+        ).then((value) => _getData());
       },
     );
   }

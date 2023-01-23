@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 import 'package:wine_app/model/base/user_model.dart';
@@ -33,7 +34,8 @@ class UserProjectModel {
   int id;
   UserModel user;
   ProjectModel project;
-  int isDefault;
+  bool isDefault;
+  bool isOwner;
   String createdAt;
   String updatedAt;
 
@@ -42,6 +44,7 @@ class UserProjectModel {
     this.user,
     this.project,
     this.isDefault,
+    this.isOwner,
     this.createdAt,
     this.updatedAt,
   );
@@ -52,6 +55,7 @@ class UserProjectModel {
       'user': user.toMap(),
       'project': project.toMap(),
       'is_default': isDefault,
+      'is_owner': isOwner,
       'created_at': createdAt,
       'updated_at': updatedAt,
     };
@@ -62,7 +66,8 @@ class UserProjectModel {
       map['id']?.toInt() ?? 0,
       UserModel.fromMap(map['user']),
       ProjectModel.fromMap(map['project']),
-      map['is_default'] ?? int,
+      map['is_default'] == 1 ? true : false,
+      map['is_owner']  == 1 ? true : false,
       map['created_at'] ?? '',
       map['updated_at'] ?? '',
     );

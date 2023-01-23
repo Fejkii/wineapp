@@ -10,6 +10,7 @@ import 'package:wine_app/model/base/project_model.dart';
 import 'package:wine_app/ui/widgets/app_buttons.dart';
 import 'package:wine_app/ui/widgets/app_list_view.dart';
 import 'package:wine_app/ui/widgets/app_loading_indicator.dart';
+import 'package:wine_app/ui/widgets/app_modal_dialog.dart';
 import 'package:wine_app/ui/widgets/app_text_form_field.dart';
 import 'package:wine_app/ui/widgets/app_texts.dart';
 import 'package:wine_app/ui/widgets/app_toast_messages.dart';
@@ -86,9 +87,13 @@ class _ShareProjectWidgetState extends State<ShareProjectWidget> {
             listener: (context, state) {
               if (state is ShareProjectSuccessState) {
                 setState(() {
-                  _emailController.text = "";
+                  AppToastMessage().showToastMsg(AppStrings.createdSuccessfully, ToastStates.success);
+                  _emailController.text = AppConstant.EMPTY;
                   userProjectCubit.getUsersForProjectList(project.id);
                 });
+              } else if (state is DeleteUserProjectSuccessState) {
+                AppToastMessage().showToastMsg(AppStrings.userProjectDeleted, ToastStates.success);
+                userProjectCubit.getUsersForProjectList(project.id);
               } else if (state is UserProjectFailureState) {
                 AppToastMessage().showToastMsg(
                   state.errorMessage,
@@ -117,21 +122,26 @@ class _ShareProjectWidgetState extends State<ShareProjectWidget> {
   }
 
   Widget _usersInProject() {
-    return BlocConsumer<UserProjectCubit, UserProjectState>(
-      listener: (context, state) {
-        if (state is UsersForProjectListSuccessState) {
-          userList = state.userList;
-        } else if (state is UserProjectFailureState) {
-          AppToastMessage().showToastMsg(state.errorMessage, ToastStates.error);
-        }
-      },
-      builder: (context, state) {
-        if (state is UserProjectLoadingState) {
-          return const AppLoadingIndicator();
-        } else {
-          return AppListView(listData: userList, itemBuilder: _itemBuilder);
-        }
-      },
+    return Column(
+      children: [
+        const AppTitleText(text: AppStrings.usersInProject),
+        BlocConsumer<UserProjectCubit, UserProjectState>(
+          listener: (context, state) {
+            if (state is UsersForProjectListSuccessState) {
+              userList = state.userList;
+            } else if (state is UserProjectFailureState) {
+              AppToastMessage().showToastMsg(state.errorMessage, ToastStates.error);
+            }
+          },
+          builder: (context, state) {
+            if (state is UserProjectLoadingState) {
+              return const AppLoadingIndicator();
+            } else {
+              return AppListView(listData: userList, itemBuilder: _itemBuilder);
+            }
+          },
+        ),
+      ],
     );
   }
 
@@ -140,12 +150,31 @@ class _ShareProjectWidgetState extends State<ShareProjectWidget> {
       itemBody: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(userList[index].user.name),
+          Row(
+            children: [
+              if (userList[index].isOwner) const Icon(Icons.key, size: AppSize.s20),
+              if (userList[index].isOwner) const SizedBox(width: AppPadding.p10),
+              Text(userList[index].user.name),
+            ],
+          ),
           Text(
             userList[index].user.email,
           ),
         ],
       ),
+      onDelete: (value) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) => AppModalDialog(
+            title: AppStrings.deleteUserProject,
+            content: AppStrings.deleteUserProjectContent,
+            onTap: () {
+              userProjectCubit.deleteUserFromProject(userList[index].id);
+              Navigator.pop(context);
+            },
+          ),
+        );
+      },
     );
   }
 }

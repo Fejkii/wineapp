@@ -20,8 +20,9 @@ class ProjectCubit extends Cubit<ProjectState> {
     ApiResults apiResults = await ProjectRepository().createProject(title, isDefault);
 
     if (apiResults is ApiSuccess) {
-      if (isDefault) {
-        UserProjectResponse userProject = UserProjectResponse.fromMap(apiResults.data);
+      UserProjectResponse userProject = UserProjectResponse.fromMap(apiResults.data);
+
+      if (userProject.isDefault) {
         appPreferences.setProject(userProject.project);
       }
       emit(CreateProjectSuccessState());

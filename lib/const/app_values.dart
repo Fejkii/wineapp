@@ -29,6 +29,11 @@ class AppSize {
   static const double s180 = 180.0;
 }
 
+class AppRadius {
+  static const double r5 = 5.0;
+  static const double r15 = 15.0;
+}
+
 class AppDuration {
   static const int d300 = 300;
 }
@@ -37,8 +42,6 @@ class AppConstant {
   static const String EMPTY = "";
   static const int ZERO = 0;
   static const DateTime? NULL_DATE = null;
-
-  static const int RECENTLY_ACTIVE = 2;
 }
 
 enum ToastStates { success, error, warning }
