@@ -120,7 +120,7 @@ class VineyardCubit extends Cubit<VineyardState> {
     emit(VineyardLoadingState());
     ApiResults apiResults = await VineyardRepository().getVineyardRecordTypeList();
     if (apiResults is ApiSuccess) {
-      appPreferences.setVineyardRecordTypes(apiResults.data);
+      await appPreferences.setVineyardRecordTypes(apiResults.data);
       emit(VineyardRecordTypeListSuccessState());
     } else if (apiResults is ApiFailure) {
       emit(VineyardFailureState(apiResults.message));

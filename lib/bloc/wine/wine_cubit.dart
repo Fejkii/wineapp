@@ -27,7 +27,7 @@ class WineCubit extends Cubit<WineState> {
       (jsonDecode(json.encode(apiResults.data))).forEach((element) {
         wineBaseList.add(WineBaseModel.fromWineData(element).toMap());
       });
-      appPreferences.setWines(wineBaseList);
+      await appPreferences.setWines(wineBaseList);
       emit(WineListSuccessState(wineList));
     } else if (apiResults is ApiFailure) {
       emit(WineFailureState(apiResults.message));
@@ -42,7 +42,7 @@ class WineCubit extends Cubit<WineState> {
       (jsonDecode(json.encode(apiResults.data))).forEach((element) {
         wineBaseList.add(WineBaseModel.fromWineData(element).toMap());
       });
-      appPreferences.setWines(wineBaseList);
+      await appPreferences.setWines(wineBaseList);
       emit(WineBaseListSuccessState(wineBaseList));
     } else if (apiResults is ApiFailure) {
       emit(WineFailureState(apiResults.message));
@@ -77,7 +77,7 @@ class WineCubit extends Cubit<WineState> {
       (jsonDecode(json.encode(apiResults.data))).forEach((element) {
         wineVarietyList.add(WineVarietyModel.fromMap(element));
       });
-      appPreferences.setWineVarieties(apiResults.data);
+      await appPreferences.setWineVarieties(apiResults.data);
       emit(WineVarietyListSuccessState(wineVarietyList));
     } else if (apiResults is ApiFailure) {
       emit(WineFailureState(apiResults.message));
@@ -123,7 +123,7 @@ class WineCubit extends Cubit<WineState> {
     emit(WineLoadingState());
     ApiResults apiResults = await WineRepository().getWineRecordTypeList();
     if (apiResults is ApiSuccess) {
-      appPreferences.setWineRecordTypes(apiResults.data);
+      await appPreferences.setWineRecordTypes(apiResults.data);
       emit(WineRecordTypeListSuccessState());
     } else if (apiResults is ApiFailure) {
       emit(WineFailureState(apiResults.message));

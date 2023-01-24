@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wine_app/api/api_result_handler.dart';
 import 'package:wine_app/app/app_preferences.dart';
@@ -70,7 +69,7 @@ class UserProjectCubit extends Cubit<UserProjectState> {
     emit(UserProjectLoadingState());
     ApiResults apiResults = await UserProjectRepository().setDefaultUserProject(userProject.id);
     if (apiResults is ApiSuccess) {
-      appPreferences.setProject(userProject.project);
+      appPreferences.setProject(userProject.project!);
       instance<NavigationService>().navigateTo(AppRoutes.splashRoute);
       emit(UpdateUserProjectSuccessState());
     } else if (apiResults is ApiFailure) {

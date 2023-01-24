@@ -42,7 +42,7 @@ class _UserProjectDetailViewState extends State<UserProjectDetailView> {
         return AppScaffoldLayout(
           body: _body(),
           appBar: AppBar(
-            title: Text(userProject.project.title),
+            title: Text(userProject.project!.title),
           ),
         );
       },
@@ -52,7 +52,7 @@ class _UserProjectDetailViewState extends State<UserProjectDetailView> {
   Widget _body() {
     return Column(
       children: [
-        const ShareProjectWidget(),
+        if (userProject.isOwner) const ShareProjectWidget(),
         const SizedBox(height: AppPadding.p20),
         _setDefaultProject(),
       ],

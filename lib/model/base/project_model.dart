@@ -33,11 +33,11 @@ class ProjectModel {
 class UserProjectModel {
   int id;
   UserModel user;
-  ProjectModel project;
+  ProjectModel? project;
   bool isDefault;
   bool isOwner;
-  String createdAt;
-  String updatedAt;
+  DateTime createdAt;
+  DateTime updatedAt;
 
   UserProjectModel(
     this.id,
@@ -53,7 +53,7 @@ class UserProjectModel {
     return {
       'id': id,
       'user': user.toMap(),
-      'project': project.toMap(),
+      'project': project != null ? project!.toMap() : null,
       'is_default': isDefault,
       'is_owner': isOwner,
       'created_at': createdAt,
@@ -65,11 +65,11 @@ class UserProjectModel {
     return UserProjectModel(
       map['id']?.toInt() ?? 0,
       UserModel.fromMap(map['user']),
-      ProjectModel.fromMap(map['project']),
-      map['is_default'] == 1 ? true : false,
-      map['is_owner']  == 1 ? true : false,
-      map['created_at'] ?? '',
-      map['updated_at'] ?? '',
+      map['project'] != null ? ProjectModel.fromMap(map['project']) : null,
+      map['is_default'],
+      map['is_owner'],
+      DateTime.parse(map['created_at']),
+      DateTime.parse(map['updated_at']),
     );
   }
 

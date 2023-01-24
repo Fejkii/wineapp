@@ -4,17 +4,17 @@ class UserModel {
   int id;
   String name;
   String email;
-  String? emailVarificationAt;
-  String createdAt;
-  String updatedAt;
+  DateTime? emailVarificationAt;
+  DateTime createdAt;
+  DateTime? updatedAt;
 
   UserModel({
     required this.id,
     required this.name,
     required this.email,
-    required this.emailVarificationAt,
     required this.createdAt,
-    required this.updatedAt,
+    this.emailVarificationAt,
+    this.updatedAt,
   });
 
   Map<String, dynamic> toMap() {
@@ -22,9 +22,9 @@ class UserModel {
       'id': id,
       'name': name,
       'email': email,
-      'emailVarificationAt': emailVarificationAt,
-      'createdAt': createdAt,
-      'updatedAt': updatedAt,
+      'email_verified_at': emailVarificationAt != null ? emailVarificationAt!.toIso8601String() : null,
+      'created_at': createdAt.toIso8601String(),
+      'updated_at': updatedAt != null ? updatedAt!.toIso8601String() : null,
     };
   }
 
@@ -33,9 +33,9 @@ class UserModel {
       id: map['id']?.toInt() ?? 0,
       name: map['name'] ?? '',
       email: map['email'] ?? '',
-      emailVarificationAt: map['emailVarificationAt'] ?? '',
-      createdAt: map['createdAt'] ?? '',
-      updatedAt: map['updatedAt'] ?? '',
+      emailVarificationAt: map['email_verified_at'] != null ? DateTime.parse(map['email_verified_at']) : null,
+      createdAt: DateTime.parse(map['created_at']),
+      updatedAt: map['updated_at'] != null ? DateTime.parse(map['updated_at']) : null,
     );
   }
 

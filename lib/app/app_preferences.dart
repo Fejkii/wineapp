@@ -13,6 +13,7 @@ enum AppPreferencesKeys {
   userToken,
   user,
   project,
+  isUserOwnerOfProject,
   wines,
   wineVarieties,
   wineClassifications,
@@ -39,7 +40,7 @@ class AppPreferences {
   }
 
   Future<void> setAppTheme(bool isLightTheme) async {
-    _sharedPreferences.setBool(AppPreferencesKeys.theme.name, isLightTheme);
+    await _sharedPreferences.setBool(AppPreferencesKeys.theme.name, isLightTheme);
   }
 
   bool getAppTheme() {
@@ -50,11 +51,15 @@ class AppPreferences {
     return true;
   }
 
-  Future<void> setIsUserLoggedIn(String userToken, UserModel user, ProjectModel? project) async {
-    _sharedPreferences.setString(AppPreferencesKeys.userToken.name, userToken);
-    _sharedPreferences.setString(AppPreferencesKeys.user.name, user.toJson());
-    if (project != null) {
-      setProject(project);
+  Future<void> setIsUserLoggedIn(String userToken, UserModel user, UserProjectModel? userProject) async {
+    await _sharedPreferences.setString(AppPreferencesKeys.userToken.name, userToken);
+    await _sharedPreferences.setString(AppPreferencesKeys.user.name, user.toJson());
+    if (userProject != null) {
+      await setIsOwner(userProject.isOwner);
+
+      if (userProject.project != null) {
+        setProject(userProject.project!);
+      }
     }
   }
 
@@ -83,7 +88,11 @@ class AppPreferences {
   }
 
   Future<void> setProject(ProjectModel project) async {
-    _sharedPreferences.setString(AppPreferencesKeys.project.name, project.toJson());
+    await _sharedPreferences.setString(AppPreferencesKeys.project.name, project.toJson());
+  }
+
+  Future<void> setIsOwner(bool isOwner) async {
+    await _sharedPreferences.setBool(AppPreferencesKeys.isUserOwnerOfProject.name, isOwner);
   }
 
   bool hasUserProject() {
@@ -97,9 +106,13 @@ class AppPreferences {
     return null;
   }
 
+  bool isUserOwnerOfProject() {
+    return _sharedPreferences.getBool(AppPreferencesKeys.isUserOwnerOfProject.name) != null ? _sharedPreferences.getBool(AppPreferencesKeys.isUserOwnerOfProject.name)! : false;
+  }
+
   Future<void> setWineVarieties(List wineVarietyList) async {
     var wineVarieties = jsonEncode(wineVarietyList);
-    _sharedPreferences.setString(AppPreferencesKeys.wineVarieties.name, wineVarieties);
+    await _sharedPreferences.setString(AppPreferencesKeys.wineVarieties.name, wineVarieties);
   }
 
   List<WineVarietyModel>? getWineVarietyList() {
@@ -112,7 +125,7 @@ class AppPreferences {
 
   Future<void> setWineClassifications(List wineClassificationList) async {
     var wineClassifications = jsonEncode(wineClassificationList);
-    _sharedPreferences.setString(AppPreferencesKeys.wineClassifications.name, wineClassifications);
+    await _sharedPreferences.setString(AppPreferencesKeys.wineClassifications.name, wineClassifications);
   }
 
   List<WineClassificationModel>? getWineClassificationList() {
@@ -125,7 +138,7 @@ class AppPreferences {
 
   Future<void> setWines(List wineList) async {
     var wines = jsonEncode(wineList);
-    _sharedPreferences.setString(AppPreferencesKeys.wines.name, wines);
+    await _sharedPreferences.setString(AppPreferencesKeys.wines.name, wines);
   }
 
   List<WineBaseModel>? getWineList() {
@@ -138,7 +151,7 @@ class AppPreferences {
 
   Future<void> setWineRecordTypes(List wineRecordTypeList) async {
     var wineRecordTypes = jsonEncode(wineRecordTypeList);
-    _sharedPreferences.setString(AppPreferencesKeys.wineRecordTypes.name, wineRecordTypes);
+    await _sharedPreferences.setString(AppPreferencesKeys.wineRecordTypes.name, wineRecordTypes);
   }
 
   List<WineRecordTypeModel>? getWineRecordTypeList() {
@@ -151,7 +164,7 @@ class AppPreferences {
 
   Future<void> setVineyardRecordTypes(List vineyardRecordTypeList) async {
     var vineyardRecordTypes = jsonEncode(vineyardRecordTypeList);
-    _sharedPreferences.setString(AppPreferencesKeys.vineyardRecordTypes.name, vineyardRecordTypes);
+    await _sharedPreferences.setString(AppPreferencesKeys.vineyardRecordTypes.name, vineyardRecordTypes);
   }
 
   List<VineyardRecordTypeModel>? getVineyardRecordTypeList() {

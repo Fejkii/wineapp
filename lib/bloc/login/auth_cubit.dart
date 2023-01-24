@@ -23,8 +23,8 @@ class AuthCubit extends Cubit<AuthState> {
     ApiResults apiResults = await LoginRepository().loginUser(email, password, deviceInfoModel.name);
     if (apiResults is ApiSuccess) {
       LoginResponse auth = LoginResponse.fromMap(apiResults.data);
-      appPreferences.setIsUserLoggedIn(auth.rememberToken, auth.user, auth.project);
-      emit(LoginSuccessState(true, auth.project != null ? true : false));
+      await appPreferences.setIsUserLoggedIn(auth.rememberToken, auth.user, auth.userProject);
+      emit(LoginSuccessState(true, auth.userProject != null && auth.userProject!.project != null ? true : false));
     } else if (apiResults is ApiFailure) {
       emit(LoginFailureState(apiResults.message));
     }
@@ -48,15 +48,12 @@ class AuthCubit extends Cubit<AuthState> {
     String password,
   ) async {
     emit(AuthLoadingState());
-
     DeviceInfoModel deviceInfoModel = await getDeviceDetails();
     ApiResults apiResults = await LoginRepository().registerUser(name, email, password, deviceInfoModel.name);
-
     if (apiResults is ApiSuccess) {
       LoginResponse auth = LoginResponse.fromMap(apiResults.data);
-
-      appPreferences.setIsUserLoggedIn(auth.rememberToken, auth.user, null);
-      emit(LoginSuccessState(true, auth.project != null ? true : false));
+      await appPreferences.setIsUserLoggedIn(auth.rememberToken, auth.user, auth.userProject);
+      emit(LoginSuccessState(true, auth.userProject != null && auth.userProject!.project != null ? true : false));
     } else if (apiResults is ApiFailure) {
       emit(LoginFailureState(apiResults.message));
     }

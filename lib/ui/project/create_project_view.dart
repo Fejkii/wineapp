@@ -185,7 +185,7 @@ class _CreateProjectViewState extends State<CreateProjectView> {
         children: [
           if (userProjectList[index].isDefault) const Icon(Icons.star, size: AppSize.s20),
           if (userProjectList[index].isDefault) const SizedBox(width: AppPadding.p10),
-          Text(userProjectList[index].project.title),
+          Text(userProjectList[index].project!.title),
         ],
       ),
       onTap: () {
