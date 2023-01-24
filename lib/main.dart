@@ -7,6 +7,7 @@ import 'package:wine_app/bloc/app_bloc_observer.dart';
 import 'package:wine_app/bloc/login/auth_cubit.dart';
 import 'package:wine_app/bloc/project/project_cubit.dart';
 import 'package:wine_app/bloc/theme/theme_cubit.dart';
+import 'package:wine_app/bloc/user/user_cubit.dart';
 import 'package:wine_app/bloc/user_project/user_project_cubit.dart';
 import 'package:wine_app/bloc/vineyard/vineyard_cubit.dart';
 import 'package:wine_app/bloc/wine/wine_cubit.dart';
@@ -46,6 +47,7 @@ class _MyAppState extends State<MyApp> {
       providers: [
         BlocProvider<ThemeCubit>(create: (context) => instance<ThemeCubit>()),
         BlocProvider<AuthCubit>(create: (context) => instance<AuthCubit>()),
+        BlocProvider<UserCubit>(create: (context) => instance<UserCubit>()),
         BlocProvider<ProjectCubit>(create: (context) => instance<ProjectCubit>()),
         BlocProvider<UserProjectCubit>(create: (context) => instance<UserProjectCubit>()),
         BlocProvider<WineCubit>(create: (context) => instance<WineCubit>()),

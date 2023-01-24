@@ -10,6 +10,7 @@ import 'package:wine_app/ui/project/project_dashboard.dart';
 import 'package:wine_app/ui/project/user_project_list_view.dart';
 import 'package:wine_app/ui/settings/settings_view.dart';
 import 'package:wine_app/ui/splash_view.dart';
+import 'package:wine_app/ui/user/user_detail_view.dart';
 import 'package:wine_app/ui/wine/wine_list_view.dart';
 import 'package:wine_app/ui/wine/wine_variety_list_view.dart';
 
@@ -26,6 +27,8 @@ class RouteGenerator {
         return CustomViewRoute(direction: AxisDirection.left, child: const ForgetPasswordView());
       case AppRoutes.homeRoute:
         return MaterialPageRoute(builder: (_) => const HomeView());
+      case AppRoutes.userRoute:
+        return MaterialPageRoute(builder: (_) => const UserDetailView());
       case AppRoutes.projectRoute:
         return MaterialPageRoute(builder: (_) => const ProjectDashboardView());
       case AppRoutes.createProjectRoute:

@@ -45,6 +45,13 @@ class AppSidebar extends StatelessWidget {
                 ),
               ),
               ListTile(
+                leading: const Icon(Icons.person),
+                title: const Text(AppStrings.user),
+                onTap: () {
+                  Navigator.popAndPushNamed(context, AppRoutes.userRoute);
+                },
+              ),
+              ListTile(
                 leading: const Icon(Icons.supervised_user_circle),
                 title: const Text(AppStrings.project),
                 onTap: () {

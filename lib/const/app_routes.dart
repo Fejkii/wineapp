@@ -4,6 +4,7 @@ class AppRoutes {
   static const String forgetPasswordRoute = "/forgetPassword";
   static const String registerRoute = "/register";
   static const String homeRoute = "/home";
+  static const String userRoute = "/user";
   static const String settingsRoute = "/settings";
   static const String projectRoute = "/project";
   static const String createProjectRoute = "/createProject";

@@ -32,6 +32,8 @@ class AppStrings {
   // Authentication
   static const String name = "Name";
   static const String email = "Email";
+  static const String emailVerification = "Email verification";
+  static const String emailNotVerification = "Email is not verified";
   static const String emailEmpty = "Email must not be empty";
   static const String emailError = "Invalid Email";
   static const String password = "Password";
@@ -81,6 +83,7 @@ class AppStrings {
 
   // Users
   static const String users = "Users";
+  static const String user = "User";
 
   // Wines
   static const String wines = "Wines";

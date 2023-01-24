@@ -53,7 +53,7 @@ class AppPreferences {
 
   Future<void> setIsUserLoggedIn(String userToken, UserModel user, UserProjectModel? userProject) async {
     await _sharedPreferences.setString(AppPreferencesKeys.userToken.name, userToken);
-    await _sharedPreferences.setString(AppPreferencesKeys.user.name, user.toJson());
+    await setUser(user);
     if (userProject != null) {
       await setIsOwner(userProject.isOwner);
 
@@ -78,6 +78,10 @@ class AppPreferences {
 
   String? getUserToken() {
     return _sharedPreferences.getString(AppPreferencesKeys.userToken.name);
+  }
+
+  Future<void> setUser(UserModel user) async {
+    await _sharedPreferences.setString(AppPreferencesKeys.user.name, user.toJson());
   }
 
   UserModel? getUser() {
@@ -107,7 +111,9 @@ class AppPreferences {
   }
 
   bool isUserOwnerOfProject() {
-    return _sharedPreferences.getBool(AppPreferencesKeys.isUserOwnerOfProject.name) != null ? _sharedPreferences.getBool(AppPreferencesKeys.isUserOwnerOfProject.name)! : false;
+    return _sharedPreferences.getBool(AppPreferencesKeys.isUserOwnerOfProject.name) != null
+        ? _sharedPreferences.getBool(AppPreferencesKeys.isUserOwnerOfProject.name)!
+        : false;
   }
 
   Future<void> setWineVarieties(List wineVarietyList) async {
