@@ -22,7 +22,7 @@ class VineyardListView extends StatefulWidget {
 
 class _VineyardListViewState extends State<VineyardListView> {
   final VineyardCubit vineyardCubit = instance<VineyardCubit>();
-  late List<VineyardModel> vineyardList;
+  late List<VineyardModel> vineyardList = [];
 
   @override
   void initState() {

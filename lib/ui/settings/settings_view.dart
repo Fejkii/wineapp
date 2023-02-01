@@ -7,6 +7,7 @@ import 'package:wine_app/const/app_routes.dart';
 import 'package:wine_app/const/app_strings.dart';
 import 'package:wine_app/ui/widgets/app_buttons.dart';
 import 'package:wine_app/ui/widgets/app_loading_indicator.dart';
+import 'package:wine_app/ui/widgets/app_my_bar.dart';
 import 'package:wine_app/ui/widgets/app_scaffold_layout.dart';
 
 class SettingsView extends StatefulWidget {
@@ -26,8 +27,8 @@ class _SettingsViewState extends State<SettingsView> {
       builder: (context, state) {
         return AppScaffoldLayout(
           body: _getContentWidget(),
-          appBar: AppBar(
-            title: const Text(AppStrings.settings),
+          appBar: myAppBar(
+            title: AppStrings.settings,
           ),
         );
       },

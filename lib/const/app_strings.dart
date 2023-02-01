@@ -28,6 +28,8 @@ class AppStrings {
   static const String emptyData = "No Result Found";
   static const String date = "Date";
   static const String selectDate = "Select Date";
+  static const String noInternetConnection = "No internet connection";
+  static const String internetConnection = "Internet connection restored";
 
   // Authentication
   static const String name = "Name";

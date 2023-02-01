@@ -41,6 +41,7 @@ dependencies:
   # API plugins
   dio: ^4.0.6
   pretty_dio_logger: ^1.1.1
+  connectivity_plus: ^3.0.2 # Check internet connection
 
   # Statemant manager
   equatable: ^2.0.5
