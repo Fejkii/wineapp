@@ -16,9 +16,13 @@ import 'package:wine_app/services/navigator_service.dart';
 import 'package:wine_app/services/route_service.dart';
 import 'package:wine_app/ui/theme/app_theme.dart';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
 void main() async {
   Bloc.observer = AppBlocObserver();
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await initAppDependences();
   await instance<AppPreferences>().initSP();
 
