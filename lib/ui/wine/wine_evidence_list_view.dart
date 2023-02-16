@@ -92,7 +92,7 @@ class _WineEvidenceListViewState extends State<WineEvidenceListView> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(wineEvidenceList[index].title),
-          Text(wineEvidenceList[index].volume.toString()),
+          Text("${wineEvidenceList[index].volume.toString()} l"),
           Text(wineEvidenceList[index].year.toString()),
         ],
       ),

@@ -81,7 +81,10 @@ class _AppScaffoldLayoutState extends State<AppScaffoldLayout> {
         color: _connectionStatus == ConnectivityResult.none ? Colors.red : Colors.green,
         height: 25,
         child: Center(
-          child: Text(_connectionStatus == ConnectivityResult.none ? AppStrings.noInternetConnection : AppStrings.internetConnection, style: getBoldStyle(),),
+          child: Text(
+            _connectionStatus == ConnectivityResult.none ? AppStrings.noInternetConnection : AppStrings.internetConnection,
+            style: getBoldStyle(),
+          ),
         ),
       ),
     );
