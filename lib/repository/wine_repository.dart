@@ -153,14 +153,14 @@ class WineRepository {
     );
   }
 
-  Future<ApiResults> updateWineRecord(int wineRecordId, int wineRecordTypeId, String title, String date, String? note) async {
+  Future<ApiResults> updateWineRecord(int wineRecordId, int wineRecordTypeId, String date, double? freeSulfure, String? note) async {
     return instance<ApiFactory>().putMethod(
       endpoint: ApiEndpoints.wineRecordUrl,
       identificator: wineRecordId,
       data: {
         "wine_record_type_id": wineRecordTypeId,
-        "title": title,
         "date": date,
+        "free_sulfure": freeSulfure,
         "note": note,
       },
     );
@@ -173,14 +173,14 @@ class WineRepository {
     );
   }
 
-  Future<ApiResults> createWineRecord(int wineEvidenceId, int wineRecordTypeId, String title, String date, String? note) async {
+  Future<ApiResults> createWineRecord(int wineEvidenceId, int wineRecordTypeId, String date, double? freeSulfure, String? note) async {
     return instance<ApiFactory>().postMethod(
       endpoint: ApiEndpoints.wineRecordUrl,
       data: {
         "wine_evidence_id": wineEvidenceId,
         "wine_record_type_id": wineRecordTypeId,
-        "title": title,
         "date": date,
+        "free_sulfure": freeSulfure,
         "note": note,
       },
     );

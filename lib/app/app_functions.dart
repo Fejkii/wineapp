@@ -48,6 +48,10 @@ bool isTitleValid(String title) {
   return RegExp(r"^.{2,}$").hasMatch(title);
 }
 
+bool isDoubleValid(String value) {
+  return RegExp(r"^(-?)(0|([1-9][0-9]*))(\\.[0-9]+)?$").hasMatch(value);
+}
+
 String appFormatDate(DateTime time, {bool dateOnly = false}) {
   String year = time.year.toString();
   String month = time.month.toString();

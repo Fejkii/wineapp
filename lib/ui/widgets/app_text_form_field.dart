@@ -8,6 +8,7 @@ enum InputType {
   password,
   title,
   note,
+  number,
 }
 
 class AppTextFormField extends StatefulWidget {
@@ -21,6 +22,7 @@ class AppTextFormField extends StatefulWidget {
   final bool? isRequired;
   final String? errorMessage;
   final IconData? icon;
+  final Function(String)? onChange;
 
   const AppTextFormField({
     Key? key,
@@ -31,6 +33,7 @@ class AppTextFormField extends StatefulWidget {
     this.isRequired = false,
     this.errorMessage,
     this.icon,
+    this.onChange,
   }) : super(key: key);
 
   @override
@@ -78,6 +81,9 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
         case InputType.title:
           iconData = Icons.title;
           break;
+        case InputType.number:
+          iconData = Icons.numbers;
+          break;
         default:
           break;
       }
@@ -122,12 +128,18 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
               return AppStrings.titleError;
             }
             break;
+          case InputType.number:
+            if (value != null && value.isNotEmpty && !isDoubleValid(value)) {
+              return AppStrings.valueError;
+            }
+            break;
           default:
             return null;
         }
         return null;
       },
       autovalidateMode: AutovalidateMode.onUserInteraction,
+      onChanged: widget.onChange,
     );
   }
 }

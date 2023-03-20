@@ -222,7 +222,7 @@ class _WineEvidenceDetailViewState extends State<WineEvidenceDetailView> {
           const SizedBox(height: AppMargin.m20),
           AppTextFormField(
             controller: _volumeController,
-            label: AppStrings.volume,
+            label: AppStrings.wineQuantity,
             isRequired: true,
             keyboardType: TextInputType.number,
           ),

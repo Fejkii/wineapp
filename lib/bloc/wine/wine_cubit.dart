@@ -192,13 +192,13 @@ class WineCubit extends Cubit<WineState> {
     }
   }
 
-  void updateWineRecord(int wineRecordId, int wineRecordTypeId, String title, DateTime date, String? note) async {
+  void updateWineRecord(int wineRecordId, int wineRecordTypeId, DateTime date, double? freeSulfure, String? note) async {
     emit(WineLoadingState());
     ApiResults apiResults = await WineRepository().updateWineRecord(
       wineRecordId,
       wineRecordTypeId,
-      title,
       date.toIso8601String(),
+      freeSulfure,
       note,
     );
     if (apiResults is ApiSuccess) {
@@ -208,13 +208,13 @@ class WineCubit extends Cubit<WineState> {
     }
   }
 
-  void createWineRecord(int wineEvidenceId, int wineRecordTypeId, String title, DateTime date, String? note) async {
+  void createWineRecord(int wineEvidenceId, int wineRecordTypeId, DateTime date, double? freeSulfure, String? note) async {
     emit(WineLoadingState());
     ApiResults apiResults = await WineRepository().createWineRecord(
       wineEvidenceId,
       wineRecordTypeId,
-      title,
       date.toIso8601String(),
+      freeSulfure,
       note,
     );
     if (apiResults is ApiSuccess) {

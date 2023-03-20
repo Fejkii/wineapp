@@ -45,3 +45,9 @@ class AppConstant {
 }
 
 enum ToastStates { success, error, warning }
+
+class AppUnits {
+  static const String liter = "l";
+  static const String mililiter = "ml";
+  static const String percent = "%";
+}

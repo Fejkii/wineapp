@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:wine_app/const/app_strings.dart';
-import 'package:wine_app/const/app_values.dart';
 
 class AppDatePicker extends StatefulWidget {
   final TextEditingController controller;
@@ -23,12 +22,17 @@ class AppDatePicker extends StatefulWidget {
 
 class _AppDatePickerState extends State<AppDatePicker> {
   late DateTime selectedDate;
-  DateTime firstDate = DateTime(1900);
+  DateTime firstDate = DateTime(2000);
   DateTime lastDate = DateTime(2100);
 
   @override
   void initState() {
     super.initState();
+    selectedDate = DateTime.now();
+    if (widget.initDate != null) {
+      selectedDate = widget.initDate!;
+    }
+    widget.controller.text = selectedDate.toString();
   }
 
   @override
@@ -42,14 +46,6 @@ class _AppDatePickerState extends State<AppDatePicker> {
       ),
       readOnly: true,
       onTap: () async {
-        setState(() {
-          if (widget.controller.text != AppConstant.EMPTY && widget.controller.text.isNotEmpty) {
-            selectedDate = DateTime.parse(widget.controller.text);
-          } else {
-            selectedDate = DateTime.now();
-          }
-        });
-
         DateTime? pickedDate = await showDatePicker(
           context: context,
           initialDate: selectedDate,

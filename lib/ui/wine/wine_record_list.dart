@@ -11,10 +11,10 @@ import 'package:wine_app/ui/widgets/app_toast_messages.dart';
 import 'package:wine_app/ui/wine/wine_record_detail_view.dart';
 
 class WineRecordList extends StatefulWidget {
-  final int wineEvidenceId;
+  final WineEvidenceModel wineEvidence;
   const WineRecordList({
     Key? key,
-    required this.wineEvidenceId,
+    required this.wineEvidence,
   }) : super(key: key);
 
   @override
@@ -38,7 +38,7 @@ class _WineRecordListState extends State<WineRecordList> {
   }
 
   void _getData() {
-    wineCubit.getWineRecordList(widget.wineEvidenceId);
+    wineCubit.getWineRecordList(widget.wineEvidence.id);
   }
 
   @override
@@ -74,9 +74,9 @@ class _WineRecordListState extends State<WineRecordList> {
       itemBody: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(wineRecordList[index].title),
-          Text(wineRecordList[index].wineRecordType.title),
           Text(appFormatDate(wineRecordList[index].date, dateOnly: true)),
+          Text(wineRecordList[index].wineRecordType.title),
+          Text(wineRecordList[index].freeSulfure != null ? wineRecordList[index].freeSulfure!.toStringAsFixed(0) : ""),
         ],
       ),
       onTap: () {
@@ -84,7 +84,7 @@ class _WineRecordListState extends State<WineRecordList> {
           context,
           MaterialPageRoute(
             builder: (context) => WineRecordDetailView(
-              wineEvidenceId: widget.wineEvidenceId,
+              wineEvidence: widget.wineEvidence,
               wineRecord: wineRecordList[index],
             ),
           ),

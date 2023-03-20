@@ -80,13 +80,13 @@ class _WineEvidenceViewState extends State<WineEvidenceView> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => WineRecordDetailView(wineEvidenceId: wineEvidence.id),
+                builder: (context) => WineRecordDetailView(wineEvidence: wineEvidence),
               ),
             ).then((value) => _getData());
           },
         ),
         const SizedBox(height: AppMargin.m10),
-        WineRecordList(wineEvidenceId: wineEvidence.id),
+        WineRecordList(wineEvidence: wineEvidence),
         const SizedBox(height: AppMargin.m20),
       ],
     );
@@ -96,7 +96,7 @@ class _WineEvidenceViewState extends State<WineEvidenceView> {
     return Table(
       children: [
         TableRow(children: [
-          const TableCell(child: Text(AppStrings.volume)),
+          const TableCell(child: Text(AppStrings.wineQuantity)),
           TableCell(child: Text(wineEvidence.volume.toString())),
         ]),
         TableRow(children: [

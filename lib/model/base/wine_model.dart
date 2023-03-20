@@ -222,17 +222,17 @@ class WineRecordModel {
   int id;
   int wineEvidenceId;
   WineRecordTypeModel wineRecordType;
-  String title;
   DateTime date;
-  String note;
+  double? freeSulfure;
+  String? note;
   DateTime createdAt;
   DateTime? updatedAt;
   WineRecordModel({
     required this.id,
     required this.wineEvidenceId,
     required this.wineRecordType,
-    required this.title,
     required this.date,
+    this.freeSulfure,
     required this.note,
     required this.createdAt,
     this.updatedAt,
@@ -243,8 +243,8 @@ class WineRecordModel {
       'id': id,
       'wine_evidence_id': wineEvidenceId,
       'wine_record_type': wineRecordType.toMap(),
-      'title': title,
-      'date': date,
+      'date': date.millisecondsSinceEpoch,
+      'free_sulfure': freeSulfure,
       'note': note,
       'created_at': createdAt.millisecondsSinceEpoch,
       'updated_at': updatedAt?.millisecondsSinceEpoch,
@@ -256,9 +256,9 @@ class WineRecordModel {
       id: map['id']?.toInt() ?? 0,
       wineEvidenceId: map['wine_evidence_id']?.toInt() ?? 0,
       wineRecordType: WineRecordTypeModel.fromMap(map['wine_record_type']),
-      title: map['title'] ?? '',
       date: DateTime.parse(map['date']),
-      note: map['note'] ?? '',
+      freeSulfure: map['free_sulfure']?.toDouble(),
+      note: map['note'],
       createdAt: DateTime.parse(map['created_at']),
       updatedAt: map['updated_at'] != null ? DateTime.parse(map['updated_at']) : null,
     );

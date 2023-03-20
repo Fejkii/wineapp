@@ -22,6 +22,7 @@ class AppStrings {
   static const String title = "Title";
   static const String code = "Code";
   static const String titleError = "Invalid title";
+  static const String valueError = "Invalid value";
   static const String inputEmpty = "Please enter some value";
   static const String selectInSelectBox = "Select some value";
   static const String selectBoxEmpty = "Please slect some value";
@@ -82,6 +83,9 @@ class AppStrings {
 
   // Settings
   static const String settings = "Settings";
+  static const String projectSettings = "Project Settings";
+  static const String defaultFreeSulfur = "Default Free Sulfure";
+  static const String defaultLiquidSulfur = "Default Liquid Sulfure";
 
   // Users
   static const String users = "Users";
@@ -98,7 +102,7 @@ class AppStrings {
   static const String wineClassification = "Wine Classification";
   static const String createWineVariety = "New Wine Varietiy";
   static const String wineEvidence = "Wine Evidence";
-  static const String volume = "Amount of wine in l";
+  static const String wineQuantity = "Amount of wine in l";
   static const String year = "Year of manufacture";
   static const String alcohol = "Alcohol in %";
   static const String acid = "Acid in g for 1l";
@@ -107,6 +111,11 @@ class AppStrings {
   static const String addRecord = "Add Record";
   static const String wineRecordType = "Wine Record type";
   static const String vineyardRecordType = "Vineyard Record type";
+  static const String measuredFreeSulfur = "Measured Free Sulfure";
+  static const String liquidSulfur = "Liquid Sulfure";
+  static const String requiredSulphurisation = "Required sulphurisation";
+  static const String sulfurizationBy = "Sulfurization by";
+  static const String liquidSulfurDosage = "Liquid sulfur dosage";
 
   // Vineyards
   static const String vineyards = "Vineyards";
