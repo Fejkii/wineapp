@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wine_app/model/base/project_model.dart';
+import 'package:wine_app/model/base/project_settings_model.dart';
 import 'package:wine_app/model/base/user_model.dart';
 import 'package:wine_app/model/base/vineyard_model.dart';
 import 'package:wine_app/model/base/wine_model.dart';
@@ -13,6 +14,7 @@ enum AppPreferencesKeys {
   userToken,
   user,
   project,
+  projectSettings,
   isUserOwnerOfProject,
   wines,
   wineVarieties,
@@ -93,6 +95,17 @@ class AppPreferences {
 
   Future<void> setProject(ProjectModel project) async {
     await _sharedPreferences.setString(AppPreferencesKeys.project.name, project.toJson());
+  }
+
+  Future<void> setProjectSettings(ProjectSettingsModel projectSettings) async {
+    await _sharedPreferences.setString(AppPreferencesKeys.projectSettings.name, projectSettings.toJson());
+  }
+
+  ProjectSettingsModel? getProjectSettings() {
+    if (_sharedPreferences.getString(AppPreferencesKeys.projectSettings.name) != null) {
+      return ProjectSettingsModel.fromJson(_sharedPreferences.getString(AppPreferencesKeys.projectSettings.name)!);
+    }
+    return null;
   }
 
   Future<void> setIsOwner(bool isOwner) async {

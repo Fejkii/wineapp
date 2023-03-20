@@ -62,9 +62,11 @@ class _AppScaffoldLayoutState extends State<AppScaffoldLayout> {
     });
     if (result == ConnectivityResult.mobile || result == ConnectivityResult.wifi) {
       Future.delayed(const Duration(seconds: 3), () {
-        setState(() {
-          _visible = false;
-        });
+        if (mounted) {
+          setState(() {
+            _visible = false;
+          });
+        }
       });
     } else {
       setState(() {
@@ -97,23 +99,25 @@ class _AppScaffoldLayoutState extends State<AppScaffoldLayout> {
       child: Scaffold(
         drawer: widget.hasSidebar != null && widget.hasSidebar == true ? AppSidebar() : null,
         appBar: widget.appBar,
-        body: Column(
-          children: [
-            networkStatusBar(),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20),
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const SizedBox(height: 10),
-                    widget.body,
-                  ],
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              // networkStatusBar(),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const SizedBox(height: 10),
+                      widget.body,
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
