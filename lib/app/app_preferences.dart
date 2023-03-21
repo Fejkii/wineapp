@@ -32,12 +32,16 @@ class AppPreferences {
     return _sharedPreferences = await SharedPreferences.getInstance();
   }
 
+  Future<void> setAppLanguage(String language) async {
+    await _sharedPreferences.setString(AppPreferencesKeys.language.name, language);
+  }
+
   String getAppLanguage() {
     String? language = _sharedPreferences.getString(AppPreferencesKeys.language.name);
     if (language != null && language.isNotEmpty) {
       return language;
     } else {
-      return LanguageTypeEnum.english.getValue();
+      return LanguageCodeEnum.english.getValue();
     }
   }
 

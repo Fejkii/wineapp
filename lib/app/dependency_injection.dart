@@ -5,7 +5,7 @@ import 'package:wine_app/app/app_preferences.dart';
 import 'package:wine_app/bloc/login/auth_cubit.dart';
 import 'package:wine_app/bloc/project/project_cubit.dart';
 import 'package:wine_app/bloc/project_settings/project_settings_cubit.dart';
-import 'package:wine_app/bloc/theme/theme_cubit.dart';
+import 'package:wine_app/bloc/theme/settings_cubit.dart';
 import 'package:wine_app/bloc/user/user_cubit.dart';
 import 'package:wine_app/bloc/user_project/user_project_cubit.dart';
 import 'package:wine_app/bloc/vineyard/vineyard_cubit.dart';
@@ -24,7 +24,7 @@ Future<void> initAppDependences() async {
 
   instance.registerLazySingleton<ApiFactory>(() => ApiFactory(instance<AppPreferences>()));
 
-  instance.registerLazySingleton<ThemeCubit>(() => ThemeCubit(instance<AppPreferences>()));
+  instance.registerLazySingleton<SettingsCubit>(() => SettingsCubit(instance<AppPreferences>()));
   instance.registerLazySingleton<AuthCubit>(() => AuthCubit(instance<AppPreferences>()));
   instance.registerLazySingleton<UserCubit>(() => UserCubit(instance<AppPreferences>()));
   instance.registerLazySingleton<ProjectCubit>(() => ProjectCubit(instance<AppPreferences>()));

@@ -37,7 +37,8 @@ dependencies:
   shared_preferences: ^2.0.15 # for save local variables
   get_it: ^7.2.0 # for Dependency injection
   device_info: ^2.0.3
-  intl: ^0.18.0 # Format date and numbers
+  intl: ^0.17.0 # Format date and numbers
+  flutter_localization: ^0.1.10 # Translations
 
   # API plugins
   dio: ^4.0.6
@@ -73,7 +74,7 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
+  generate: true
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

@@ -124,4 +124,5 @@ class AppStrings {
 
   // Settings
   static const String changeTheme = "Change dark or light theme";
+  static const String changeLanguage = "Select language";
 }
