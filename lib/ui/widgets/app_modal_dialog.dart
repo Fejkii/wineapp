@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wine_app/const/app_strings.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:wine_app/ui/widgets/app_buttons.dart';
 import 'package:wine_app/ui/widgets/app_texts.dart';
 
@@ -27,12 +26,12 @@ class _AppModalDialogState extends State<AppModalDialog> {
       content: AppContentText(text: widget.content),
       actions: [
         AppTextButton(
-          title: AppStrings.cancel,
+          title: AppLocalizations.of(context)!.cancel,
           onTap: () {
             Navigator.pop(context);
           },
         ),
-        AppTextButton(title: AppStrings.ok, onTap: widget.onTap),
+        AppTextButton(title: AppLocalizations.of(context)!.ok, onTap: widget.onTap),
       ],
     );
   }

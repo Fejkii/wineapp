@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-
-import 'package:wine_app/const/app_strings.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:wine_app/const/app_values.dart';
 import 'package:wine_app/ui/theme/app_colors.dart';
 import 'package:wine_app/ui/widgets/app_texts.dart';
@@ -28,12 +27,12 @@ class AppListView extends StatelessWidget {
         : Center(
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              children: const [
-                Padding(
+              children: [
+                const Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Icon(Icons.search_off, size: 30),
                 ),
-                AppContentTitleText(text: AppStrings.emptyData),
+                AppContentTitleText(text: AppLocalizations.of(context)!.emptyData),
               ],
             ),
           );
@@ -63,7 +62,7 @@ class AppListViewItem extends StatelessWidget {
             backgroundColor: AppColors.red,
             foregroundColor: AppColors.white,
             icon: Icons.delete,
-            label: AppStrings.delete,
+            label: AppLocalizations.of(context)!.delete,
             borderRadius: const BorderRadius.all(Radius.circular(AppRadius.r5)),
           ),
         ],

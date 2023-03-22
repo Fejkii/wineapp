@@ -60,7 +60,6 @@
     "setProjectDefaultContent": "This action restarts the application and sets this project as the default",
     "projectIsDefault": "This project is already set as default",
     "isProjectDefaultSubtitle": "This project will be automatically open after login",
-    "showUserProject": "Show user project",
     "usersInProject": "Users in this project",
     "showUserProjectList": "Show all my projects",
     "shareProject": "You can share project to other users",
@@ -74,7 +73,6 @@
     "projectSettings": "Project Settings",
     "defaultFreeSulfur": "Default Free Sulfure",
     "defaultLiquidSulfur": "Default Liquid Sulfure",
-    "users": "Users",
     "user": "User",
     "wines": "Wines",
     "createWine": "New Wine",
@@ -82,7 +80,6 @@
     "wineVariety": "Wine Variety",
     "wineVarietySelect": "Select Wine Variety",
     "wineVarieties": "Wine Varieties",
-    "wineClassificationSelect": "Select Classification Variety",
     "wineClassification": "Wine Classification",
     "createWineVariety": "New Wine Varietiy",
     "wineEvidence": "Wine Evidence",
@@ -101,8 +98,6 @@
     "sulfurizationBy": "Sulfurization by",
     "liquidSulfurDosage": "Liquid sulfur dosage",
     "vineyards": "Vineyards",
-    "vineyardCreate": "Create vineyard",
-    "vineyardUpdate": "Update vineyard",
     "changeTheme": "Change dark or light theme",
     "changeLanguage": "Select language"
 }

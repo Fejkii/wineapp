@@ -7,7 +7,7 @@ import 'package:wine_app/bloc/project_settings/project_settings_cubit.dart';
 import 'package:wine_app/bloc/vineyard/vineyard_cubit.dart';
 import 'package:wine_app/bloc/wine/wine_cubit.dart';
 import 'package:wine_app/const/app_routes.dart';
-import 'package:wine_app/const/app_strings.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:wine_app/ui/theme/app_colors.dart';
 
 class SplashView extends StatefulWidget {
@@ -29,7 +29,7 @@ class _SplashViewState extends State<SplashView> {
     super.initState();
     if (appPreferences.hasUserProject()) {
       int projectId = appPreferences.getProject()!.id;
-      
+
       projectSettingsCubit.getProjectSettings(projectId);
       wineCubit.getWineVarietyList(projectId);
       wineCubit.getWineClassificationList();
@@ -65,7 +65,7 @@ class _SplashViewState extends State<SplashView> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: AppStrings.appName,
+      title: AppLocalizations.of(context)!.appName,
       home: Scaffold(
         body: Center(
           child: SizedBox(

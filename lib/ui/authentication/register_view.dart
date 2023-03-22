@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wine_app/app/dependency_injection.dart';
 import 'package:wine_app/bloc/login/auth_cubit.dart';
 import 'package:wine_app/const/app_routes.dart';
-import 'package:wine_app/const/app_strings.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:wine_app/const/app_values.dart';
 import 'package:wine_app/ui/widgets/app_buttons.dart';
 import 'package:wine_app/ui/widgets/app_loading_indicator.dart';
@@ -45,7 +45,7 @@ class _RegisterViewState extends State<RegisterView> {
     return AppScaffoldLayout(
       body: _registerForm(context),
       appBar: AppBar(
-        title: const Text(AppStrings.registration),
+        title: Text(AppLocalizations.of(context)!.registration),
       ),
     );
   }
@@ -61,14 +61,14 @@ class _RegisterViewState extends State<RegisterView> {
           const SizedBox(height: AppMargin.m10),
           AppTextFormField(
             controller: _nameController,
-            label: AppStrings.name,
+            label: AppLocalizations.of(context)!.name,
             isRequired: true,
             icon: Icons.text_fields_outlined,
           ),
           const SizedBox(height: AppMargin.m20),
           AppTextFormField(
             controller: _emailController,
-            label: AppStrings.email,
+            label: AppLocalizations.of(context)!.email,
             keyboardType: TextInputType.emailAddress,
             isRequired: true,
             inputType: InputType.email,
@@ -76,14 +76,14 @@ class _RegisterViewState extends State<RegisterView> {
           const SizedBox(height: AppMargin.m20),
           AppTextFormField(
             controller: _passwordController,
-            label: AppStrings.password,
+            label: AppLocalizations.of(context)!.password,
             isRequired: true,
             inputType: InputType.password,
           ),
           const SizedBox(height: AppMargin.m20),
           AppTextFormField(
             controller: _passwordConfirmController,
-            label: AppStrings.passwordConfirmation,
+            label: AppLocalizations.of(context)!.passwordConfirmation,
             isRequired: true,
             inputType: InputType.password,
           ),
@@ -101,7 +101,7 @@ class _RegisterViewState extends State<RegisterView> {
                 return const AppLoadingIndicator();
               } else {
                 return AppButton(
-                  title: AppStrings.register,
+                  title: AppLocalizations.of(context)!.register,
                   onTap: () {
                     if (_formKey.currentState!.validate()) {
                       authCubit.register(

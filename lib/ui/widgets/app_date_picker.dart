@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wine_app/const/app_strings.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AppDatePicker extends StatefulWidget {
   final TextEditingController controller;
@@ -41,7 +41,7 @@ class _AppDatePickerState extends State<AppDatePicker> {
       controller: widget.controller,
       decoration: InputDecoration(
         prefixIcon: widget.setIcon != null ? const Icon(Icons.calendar_today, size: 20) : null,
-        labelText: widget.label != null ? widget.label! : AppStrings.date,
+        labelText: widget.label != null ? widget.label! : AppLocalizations.of(context)!.date,
         border: const OutlineInputBorder(),
       ),
       readOnly: true,
@@ -51,9 +51,9 @@ class _AppDatePickerState extends State<AppDatePicker> {
           initialDate: selectedDate,
           firstDate: firstDate,
           lastDate: lastDate,
-          confirmText: AppStrings.ok,
-          cancelText: AppStrings.cancel,
-          helpText: AppStrings.selectDate,
+          confirmText: AppLocalizations.of(context)!.ok,
+          cancelText: AppLocalizations.of(context)!.cancel,
+          helpText: AppLocalizations.of(context)!.selectDate,
         );
 
         if (pickedDate != null) {

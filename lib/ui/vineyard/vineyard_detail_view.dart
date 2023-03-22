@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wine_app/app/app_preferences.dart';
 import 'package:wine_app/app/dependency_injection.dart';
 import 'package:wine_app/bloc/vineyard/vineyard_cubit.dart';
-import 'package:wine_app/const/app_strings.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:wine_app/const/app_values.dart';
-
 import 'package:wine_app/model/base/vineyard_model.dart';
 import 'package:wine_app/ui/widgets/app_buttons.dart';
 import 'package:wine_app/ui/widgets/app_loading_indicator.dart';
 import 'package:wine_app/ui/widgets/app_scaffold_layout.dart';
 import 'package:wine_app/ui/widgets/app_text_form_field.dart';
 import 'package:wine_app/ui/widgets/app_toast_messages.dart';
-
-import '../../app/app_preferences.dart';
 
 class VineyardDetailView extends StatefulWidget {
   final VineyardModel? vineyard;
@@ -54,15 +52,15 @@ class _VineyardDetailViewState extends State<VineyardDetailView> {
         return AppScaffoldLayout(
           body: _bodyWidget(),
           appBar: AppBar(
-            title: Text(vineyard != null ? vineyard!.title : AppStrings.createVineyard),
+            title: Text(vineyard != null ? vineyard!.title : AppLocalizations.of(context)!.createVineyard),
             actions: [
               BlocConsumer<VineyardCubit, VineyardState>(
                 listener: (context, state) {
                   if (state is VineyardSuccessState) {
                     setState(() {
                       vineyard != null
-                          ? AppToastMessage().showToastMsg(AppStrings.updatedSuccessfully, ToastStates.success)
-                          : AppToastMessage().showToastMsg(AppStrings.createdSuccessfully, ToastStates.success);
+                          ? AppToastMessage().showToastMsg(AppLocalizations.of(context)!.updatedSuccessfully, ToastStates.success)
+                          : AppToastMessage().showToastMsg(AppLocalizations.of(context)!.createdSuccessfully, ToastStates.success);
                     });
                   } else if (state is VineyardFailureState) {
                     AppToastMessage().showToastMsg(state.errorMessage, ToastStates.error);
@@ -118,7 +116,7 @@ class _VineyardDetailViewState extends State<VineyardDetailView> {
         children: <Widget>[
           AppTextFormField(
             controller: _titleController,
-            label: AppStrings.title,
+            label: AppLocalizations.of(context)!.title,
             isRequired: true,
           ),
         ],

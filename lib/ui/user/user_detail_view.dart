@@ -4,7 +4,7 @@ import 'package:wine_app/app/app_functions.dart';
 import 'package:wine_app/app/app_preferences.dart';
 import 'package:wine_app/app/dependency_injection.dart';
 import 'package:wine_app/bloc/user/user_cubit.dart';
-import 'package:wine_app/const/app_strings.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:wine_app/const/app_values.dart';
 import 'package:wine_app/model/base/user_model.dart';
 import 'package:wine_app/ui/widgets/app_buttons.dart';
@@ -56,7 +56,7 @@ class _UserDetailViewState extends State<UserDetailView> {
                 listener: (context, state) {
                   if (state is UpdateUserSuccessState) {
                     appPreferences.setUser(state.user);
-                    AppToastMessage().showToastMsg(AppStrings.updatedSuccessfully, ToastStates.success);
+                    AppToastMessage().showToastMsg(AppLocalizations.of(context)!.updatedSuccessfully, ToastStates.success);
                   } else if (state is UserFailureState) {
                     AppToastMessage().showToastMsg(state.errorMessage, ToastStates.error);
                   }
@@ -103,14 +103,14 @@ class _UserDetailViewState extends State<UserDetailView> {
         children: <Widget>[
           AppTextFormField(
             controller: _nameController,
-            label: AppStrings.name,
+            label: AppLocalizations.of(context)!.name,
             isRequired: true,
             inputType: InputType.title,
           ),
           const SizedBox(height: AppMargin.m20),
           AppTextFormField(
             controller: _emailController,
-            label: AppStrings.email,
+            label: AppLocalizations.of(context)!.email,
             inputType: InputType.email,
           ),
         ],
@@ -122,18 +122,19 @@ class _UserDetailViewState extends State<UserDetailView> {
     return Table(
       children: [
         TableRow(children: [
-          const TableCell(child: Text(AppStrings.created)),
+          TableCell(child: Text(AppLocalizations.of(context)!.created)),
           TableCell(child: Text(appFormatDate(user.createdAt, dateOnly: true))),
         ]),
         TableRow(children: [
-          const TableCell(child: Text(AppStrings.updated)),
+          TableCell(child: Text(AppLocalizations.of(context)!.updated)),
           TableCell(child: Text(user.updatedAt != null ? appFormatDate(user.updatedAt!, dateOnly: true) : AppConstant.EMPTY)),
         ]),
         TableRow(children: [
-          const TableCell(child: Text(AppStrings.emailVerification)),
+          TableCell(child: Text(AppLocalizations.of(context)!.emailVerification)),
           TableCell(
-              child: Text(
-                  user.emailVarificationAt != null ? appFormatDate(user.emailVarificationAt!, dateOnly: true) : AppStrings.emailNotVerification)),
+              child: Text(user.emailVarificationAt != null
+                  ? appFormatDate(user.emailVarificationAt!, dateOnly: true)
+                  : AppLocalizations.of(context)!.emailNotVerification)),
         ]),
       ],
     );

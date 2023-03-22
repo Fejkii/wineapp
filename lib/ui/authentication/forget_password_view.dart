@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wine_app/const/app_strings.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:wine_app/const/app_values.dart';
 import 'package:wine_app/ui/widgets/app_buttons.dart';
 import 'package:wine_app/ui/widgets/app_scaffold_layout.dart';
@@ -33,7 +33,7 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
     return AppScaffoldLayout(
       body: _bodyWidget(),
       appBar: AppBar(
-        title: const Text(AppStrings.forgetPassword),
+        title: Text(AppLocalizations.of(context)!.forgetPassword),
       ),
     );
   }
@@ -55,13 +55,13 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          const AppTitleText(text: AppStrings.resetPasswordTitle),
+          AppTitleText(text: AppLocalizations.of(context)!.resetPasswordTitle),
           const SizedBox(height: AppMargin.m20),
-          const AppContentText(text: AppStrings.resetPasswordText),
+          AppContentText(text: AppLocalizations.of(context)!.resetPasswordText),
           const SizedBox(height: AppMargin.m20),
           AppTextFormField(
             controller: _emailController,
-            label: AppStrings.email,
+            label: AppLocalizations.of(context)!.email,
             keyboardType: TextInputType.emailAddress,
             isRequired: true,
             inputType: InputType.email,
@@ -70,7 +70,7 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
           StreamBuilder<bool>(
             builder: (context, snapshot) {
               return AppButton(
-                title: AppStrings.resetPasswordButton,
+                title: AppLocalizations.of(context)!.resetPasswordButton,
                 onTap: () {
                   // TODO: reset password adn send email
                 },

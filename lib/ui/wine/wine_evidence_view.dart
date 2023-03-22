@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wine_app/app/app_functions.dart';
 import 'package:wine_app/app/dependency_injection.dart';
 import 'package:wine_app/bloc/wine/wine_cubit.dart';
-import 'package:wine_app/const/app_strings.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:wine_app/const/app_values.dart';
 import 'package:wine_app/model/base/wine_model.dart';
 import 'package:wine_app/ui/widgets/app_buttons.dart';
@@ -74,7 +74,7 @@ class _WineEvidenceViewState extends State<WineEvidenceView> {
         _otherInfo(),
         const SizedBox(height: AppMargin.m20),
         AppButton(
-          title: AppStrings.addRecord,
+          title: AppLocalizations.of(context)!.addRecord,
           buttonType: ButtonType.add,
           onTap: () {
             Navigator.push(
@@ -96,33 +96,33 @@ class _WineEvidenceViewState extends State<WineEvidenceView> {
     return Table(
       children: [
         TableRow(children: [
-          const TableCell(child: Text(AppStrings.wineQuantity)),
+          TableCell(child: Text(AppLocalizations.of(context)!.wineQuantity)),
           TableCell(child: Text(wineEvidence.volume.toString())),
         ]),
         TableRow(children: [
-          const TableCell(child: Text(AppStrings.acid)),
+          TableCell(child: Text(AppLocalizations.of(context)!.acid)),
           TableCell(child: Text(wineEvidence.acid.toString())),
         ]),
         TableRow(children: [
-          const TableCell(child: Text(AppStrings.sugar)),
+          TableCell(child: Text(AppLocalizations.of(context)!.sugar)),
           TableCell(child: Text(wineEvidence.sugar.toString())),
         ]),
         TableRow(children: [
-          const TableCell(child: Text(AppStrings.alcohol)),
+          TableCell(child: Text(AppLocalizations.of(context)!.alcohol)),
           TableCell(child: Text(wineEvidence.alcohol.toString())),
         ]),
         TableRow(children: [
-          const TableCell(child: Text(AppStrings.created)),
+          TableCell(child: Text(AppLocalizations.of(context)!.created)),
           TableCell(child: Text(appFormatDate(wineEvidence.createdAt))),
         ]),
         if (wineEvidence.updatedAt != null)
           TableRow(children: [
-            const TableCell(child: Text(AppStrings.updated)),
+            TableCell(child: Text(AppLocalizations.of(context)!.updated)),
             TableCell(child: Text(appFormatDate(wineEvidence.updatedAt!))),
           ]),
         if (wineEvidence.note != AppConstant.EMPTY)
           TableRow(children: [
-            const TableCell(child: Text(AppStrings.note)),
+            TableCell(child: Text(AppLocalizations.of(context)!.note)),
             TableCell(child: Text(wineEvidence.note)),
           ]),
       ],

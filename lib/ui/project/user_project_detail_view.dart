@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wine_app/app/app_preferences.dart';
 import 'package:wine_app/app/dependency_injection.dart';
 import 'package:wine_app/bloc/user_project/user_project_cubit.dart';
-import 'package:wine_app/const/app_strings.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:wine_app/const/app_values.dart';
 import 'package:wine_app/model/base/project_model.dart';
 import 'package:wine_app/ui/project/share_project_widget.dart';
@@ -71,19 +71,19 @@ class _UserProjectDetailViewState extends State<UserProjectDetailView> {
           );
         } else if (state is UpdateUserProjectSuccessState) {
           AppToastMessage().showToastMsg(
-            AppStrings.updated,
+            AppLocalizations.of(context)!.updated,
             ToastStates.success,
           );
         }
       },
       child: userProject.isDefault
-          ? const AppTitleText(text: AppStrings.projectIsDefault)
+          ? AppTitleText(text: AppLocalizations.of(context)!.projectIsDefault)
           : Column(
               children: [
                 const SizedBox(height: AppPadding.p20),
-                const AppContentTitleText(text: AppStrings.setProjectDefaultContent),
+                AppContentTitleText(text: AppLocalizations.of(context)!.setProjectDefaultContent),
                 AppButton(
-                  title: AppStrings.setProjectDefault,
+                  title: AppLocalizations.of(context)!.setProjectDefault,
                   onTap: () {
                     userProjectCubit.setDefaultUserProject(userProject);
                   },

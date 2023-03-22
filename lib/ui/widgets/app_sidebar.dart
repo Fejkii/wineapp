@@ -5,7 +5,7 @@ import 'package:wine_app/app/dependency_injection.dart';
 import 'package:wine_app/bloc/login/auth_cubit.dart';
 import 'package:wine_app/const/api_endpoints.dart';
 import 'package:wine_app/const/app_routes.dart';
-import 'package:wine_app/const/app_strings.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:wine_app/const/app_values.dart';
 import 'package:wine_app/ui/widgets/app_loading_indicator.dart';
 import 'package:wine_app/ui/widgets/app_texts.dart';
@@ -31,7 +31,7 @@ class AppSidebar extends StatelessWidget {
                         Icon(Icons.wine_bar, color: Theme.of(context).primaryIconTheme.color),
                         const SizedBox(width: 10),
                         AppTitleText(
-                          text: AppStrings.appName,
+                          text: AppLocalizations.of(context)!.appName,
                           color: Theme.of(context).primaryIconTheme.color,
                         ),
                       ],
@@ -46,28 +46,28 @@ class AppSidebar extends StatelessWidget {
               ),
               ListTile(
                 leading: const Icon(Icons.person),
-                title: const Text(AppStrings.user),
+                title: Text(AppLocalizations.of(context)!.user),
                 onTap: () {
                   Navigator.popAndPushNamed(context, AppRoutes.userRoute);
                 },
               ),
               ListTile(
                 leading: const Icon(Icons.supervised_user_circle),
-                title: const Text(AppStrings.project),
+                title: Text(AppLocalizations.of(context)!.project),
                 onTap: () {
                   Navigator.popAndPushNamed(context, AppRoutes.projectRoute);
                 },
               ),
               ListTile(
                 leading: const Icon(Icons.nature),
-                title: const Text(AppStrings.wines),
+                title: Text(AppLocalizations.of(context)!.wines),
                 onTap: () {
                   Navigator.popAndPushNamed(context, AppRoutes.wineRoute);
                 },
               ),
               ListTile(
                 leading: const Icon(Icons.dataset_outlined),
-                title: const Text(AppStrings.wineVarieties),
+                title: Text(AppLocalizations.of(context)!.wineVarieties),
                 onTap: () {
                   Navigator.popAndPushNamed(context, AppRoutes.wineVarietyListRoute);
                 },
@@ -75,7 +75,7 @@ class AppSidebar extends StatelessWidget {
               const Divider(),
               ListTile(
                 leading: const Icon(Icons.settings),
-                title: const Text(AppStrings.settings),
+                title: Text(AppLocalizations.of(context)!.settings),
                 onTap: () {
                   Navigator.popAndPushNamed(context, AppRoutes.settingsRoute);
                 },
@@ -95,7 +95,7 @@ class AppSidebar extends StatelessWidget {
                   } else {
                     return ListTile(
                       leading: const Icon(Icons.logout),
-                      title: const Text(AppStrings.logout),
+                      title: Text(AppLocalizations.of(context)!.logout),
                       onTap: () {
                         authCubit.logout();
                       },
@@ -104,7 +104,7 @@ class AppSidebar extends StatelessWidget {
                 },
               ),
               const Divider(),
-              _appVersionInfo(),
+              _appVersionInfo(context),
             ],
           ),
         );
@@ -112,19 +112,19 @@ class AppSidebar extends StatelessWidget {
     );
   }
 
-  Widget _appVersionInfo() {
+  Widget _appVersionInfo(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(left: AppPadding.p20, top: AppPadding.p20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
+        children: [
           Text(
-            '${AppStrings.appVersion}: 0.0.1',
-            style: TextStyle(fontSize: 12),
+            '${AppLocalizations.of(context)!.appVersion}: 0.0.1',
+            style: const TextStyle(fontSize: 12),
           ),
           Text(
-            '${AppStrings.apiVersion}: ${ApiEndpoints.API_VERSION}',
-            style: TextStyle(fontSize: 12),
+            '${AppLocalizations.of(context)!.apiVersion}: ${ApiEndpoints.API_VERSION}',
+            style: const TextStyle(fontSize: 12),
           ),
         ],
       ),

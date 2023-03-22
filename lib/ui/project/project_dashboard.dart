@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wine_app/app/app_preferences.dart';
 import 'package:wine_app/app/dependency_injection.dart';
 import 'package:wine_app/const/app_routes.dart';
-import 'package:wine_app/const/app_strings.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:wine_app/ui/project/share_project_widget.dart';
 import 'package:wine_app/ui/widgets/app_buttons.dart';
 import 'package:wine_app/ui/widgets/app_scaffold_layout.dart';
@@ -35,10 +35,10 @@ class _ProjectDashboardViewState extends State<ProjectDashboardView> {
   Widget _bodyWidget() {
     return Column(
       children: [
-        Text("${AppStrings.projectName}: ${instance<AppPreferences>().getProject()!.title}"),
+        Text("${AppLocalizations.of(context)!.projectName}: ${instance<AppPreferences>().getProject()!.title}"),
         const SizedBox(height: 20),
         AppButton(
-          title: AppStrings.showUserProjectList,
+          title: AppLocalizations.of(context)!.showUserProjectList,
           onTap: () {
             Navigator.pushNamed(context, AppRoutes.userProjectListRoute);
           },

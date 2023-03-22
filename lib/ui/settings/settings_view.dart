@@ -7,7 +7,6 @@ import 'package:wine_app/bloc/login/auth_cubit.dart';
 import 'package:wine_app/bloc/project_settings/project_settings_cubit.dart';
 import 'package:wine_app/bloc/theme/settings_cubit.dart';
 import 'package:wine_app/const/app_routes.dart';
-import 'package:wine_app/const/app_strings.dart';
 import 'package:wine_app/const/app_values.dart';
 import 'package:wine_app/model/base/project_settings_model.dart';
 import 'package:wine_app/services/language_service.dart';

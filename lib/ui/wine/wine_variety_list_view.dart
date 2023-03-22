@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wine_app/app/app_preferences.dart';
 import 'package:wine_app/app/dependency_injection.dart';
 import 'package:wine_app/bloc/wine/wine_cubit.dart';
-import 'package:wine_app/const/app_strings.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:wine_app/const/app_values.dart';
 import 'package:wine_app/model/base/wine_model.dart';
 import 'package:wine_app/ui/widgets/app_list_view.dart';
@@ -42,7 +42,7 @@ class _WineVarietyListViewState extends State<WineVarietyListView> {
         return AppScaffoldLayout(
           body: _wineVarietyList(),
           appBar: AppBar(
-            title: const Text(AppStrings.wineVarieties),
+            title: Text(AppLocalizations.of(context)!.wineVarieties),
             actions: [
               IconButton(
                 onPressed: () {

@@ -6,7 +6,7 @@ import 'package:wine_app/bloc/login/auth_cubit.dart';
 import 'package:wine_app/bloc/project/project_cubit.dart';
 import 'package:wine_app/bloc/user_project/user_project_cubit.dart';
 import 'package:wine_app/const/app_routes.dart';
-import 'package:wine_app/const/app_strings.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:wine_app/const/app_values.dart';
 import 'package:wine_app/model/base/project_model.dart';
 import 'package:wine_app/ui/project/user_project_detail_view.dart';
@@ -76,7 +76,7 @@ class _CreateProjectViewState extends State<CreateProjectView> {
   Widget _bodyWidget() {
     return Column(
       children: [
-        AppTitleText(text: hasUserProject ? AppStrings.nextProject : AppStrings.noProject),
+        AppTitleText(text: hasUserProject ? AppLocalizations.of(context)!.nextProject : AppLocalizations.of(context)!.noProject),
         const SizedBox(height: 20),
         _form(context),
         _getSharedProjects()
@@ -94,15 +94,15 @@ class _CreateProjectViewState extends State<CreateProjectView> {
         children: <Widget>[
           AppTextFormField(
             controller: _titleController,
-            label: AppStrings.projectName,
+            label: AppLocalizations.of(context)!.projectName,
             isRequired: true,
             inputType: InputType.title,
             icon: Icons.tag,
           ),
           const SizedBox(height: AppMargin.m20),
           CheckboxListTile(
-            title: const Text(AppStrings.setProjectDefault),
-            subtitle: const Text(AppStrings.isProjectDefaultSubtitle),
+            title: Text(AppLocalizations.of(context)!.setProjectDefault),
+            subtitle: Text(AppLocalizations.of(context)!.isProjectDefaultSubtitle),
             value: _isDefaultValue,
             onChanged: (newValue) {
               setState(() {
@@ -133,7 +133,7 @@ class _CreateProjectViewState extends State<CreateProjectView> {
                 return const AppLoadingIndicator();
               } else {
                 return AppButton(
-                  title: AppStrings.createProject,
+                  title: AppLocalizations.of(context)!.createProject,
                   onTap: () {
                     if (_formKey.currentState!.validate()) {
                       projectCubit.createProject(_titleController.text, _isDefaultValue);
@@ -153,8 +153,8 @@ class _CreateProjectViewState extends State<CreateProjectView> {
         ? Column(
             children: [
               const SizedBox(height: AppPadding.p20),
-              const AppTitleText(text: AppStrings.sharedProject),
-              const AppContentText(text: AppStrings.selectProject),
+             AppTitleText(text: AppLocalizations.of(context)!.sharedProject),
+               AppContentText(text: AppLocalizations.of(context)!.selectProject),
               SafeArea(
                 child: BlocConsumer<UserProjectCubit, UserProjectState>(
                   listener: (context, state) {

@@ -5,7 +5,7 @@ import 'package:wine_app/app/app_functions.dart';
 import 'package:wine_app/app/app_preferences.dart';
 import 'package:wine_app/app/dependency_injection.dart';
 import 'package:wine_app/bloc/wine/wine_cubit.dart';
-import 'package:wine_app/const/app_strings.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:wine_app/const/app_values.dart';
 import 'package:wine_app/model/base/wine_model.dart';
 import 'package:wine_app/ui/widgets/app_buttons.dart';
@@ -83,15 +83,15 @@ class _WineEvidenceDetailViewState extends State<WineEvidenceDetailView> {
         return AppScaffoldLayout(
           body: _bodyWidget(),
           appBar: AppBar(
-            title: Text(wineEvidence != null ? wineEvidence!.title : AppStrings.createWine),
+            title: Text(wineEvidence != null ? wineEvidence!.title : AppLocalizations.of(context)!.createWine),
             actions: [
               BlocConsumer<WineCubit, WineState>(
                 listener: (context, state) {
                   if (state is WineEvidenceSuccessState) {
                     setState(() {
                       wineEvidence != null
-                          ? AppToastMessage().showToastMsg(AppStrings.updatedSuccessfully, ToastStates.success)
-                          : AppToastMessage().showToastMsg(AppStrings.createdSuccessfully, ToastStates.success);
+                          ? AppToastMessage().showToastMsg(AppLocalizations.of(context)!.updatedSuccessfully, ToastStates.success)
+                          : AppToastMessage().showToastMsg(AppLocalizations.of(context)!.createdSuccessfully, ToastStates.success);
                     });
                   } else if (state is WineFailureState) {
                     AppToastMessage().showToastMsg(state.errorMessage, ToastStates.error);
@@ -160,8 +160,10 @@ class _WineEvidenceDetailViewState extends State<WineEvidenceDetailView> {
     if (wineEvidence != null) {
       return Column(
         children: [
-          Text("${AppStrings.created}: ${appFormatDate(wineEvidence!.createdAt)}"),
-          Text(wineEvidence!.updatedAt != null ? "${AppStrings.updated}: ${appFormatDate(wineEvidence!.updatedAt!)}" : AppConstant.EMPTY),
+          Text("${AppLocalizations.of(context)!.created}: ${appFormatDate(wineEvidence!.createdAt)}"),
+          Text(wineEvidence!.updatedAt != null
+              ? "${AppLocalizations.of(context)!.updated}: ${appFormatDate(wineEvidence!.updatedAt!)}"
+              : AppConstant.EMPTY),
         ],
       );
     } else {
@@ -179,7 +181,7 @@ class _WineEvidenceDetailViewState extends State<WineEvidenceDetailView> {
         children: <Widget>[
           AppTextFormField(
             controller: _titleController,
-            label: AppStrings.title,
+            label: AppLocalizations.of(context)!.title,
             isRequired: true,
           ),
           const SizedBox(height: AppMargin.m20),
@@ -187,10 +189,10 @@ class _WineEvidenceDetailViewState extends State<WineEvidenceDetailView> {
             popupProps: const PopupProps.menu(showSelectedItems: false, showSearchBox: true),
             items: wineList,
             itemAsString: (WineBaseModel wc) => wc.title,
-            dropdownDecoratorProps: const DropDownDecoratorProps(
+            dropdownDecoratorProps: DropDownDecoratorProps(
               dropdownSearchDecoration: InputDecoration(
-                labelText: AppStrings.wines,
-                hintText: AppStrings.selectInSelectBox,
+                labelText: AppLocalizations.of(context)!.wines,
+                hintText: AppLocalizations.of(context)!.selectInSelectBox,
               ),
             ),
             onChanged: (WineBaseModel? value) {
@@ -205,10 +207,10 @@ class _WineEvidenceDetailViewState extends State<WineEvidenceDetailView> {
             popupProps: const PopupProps.menu(showSelectedItems: false, showSearchBox: true),
             items: wineClassificationList,
             itemAsString: (WineClassificationModel wc) => wc.title,
-            dropdownDecoratorProps: const DropDownDecoratorProps(
+            dropdownDecoratorProps: DropDownDecoratorProps(
               dropdownSearchDecoration: InputDecoration(
-                labelText: AppStrings.wineClassification,
-                hintText: AppStrings.selectInSelectBox,
+                labelText: AppLocalizations.of(context)!.wineClassification,
+                hintText: AppLocalizations.of(context)!.selectInSelectBox,
               ),
             ),
             onChanged: (WineClassificationModel? value) {
@@ -222,39 +224,39 @@ class _WineEvidenceDetailViewState extends State<WineEvidenceDetailView> {
           const SizedBox(height: AppMargin.m20),
           AppTextFormField(
             controller: _volumeController,
-            label: AppStrings.wineQuantity,
+            label: AppLocalizations.of(context)!.wineQuantity,
             isRequired: true,
             keyboardType: TextInputType.number,
           ),
           const SizedBox(height: AppMargin.m20),
           AppTextFormField(
             controller: _yearController,
-            label: AppStrings.year,
+            label: AppLocalizations.of(context)!.year,
             isRequired: true,
             keyboardType: TextInputType.number,
           ),
           const SizedBox(height: AppMargin.m20),
           AppTextFormField(
             controller: _alcoholController,
-            label: AppStrings.alcohol,
+            label: AppLocalizations.of(context)!.alcohol,
             keyboardType: TextInputType.number,
           ),
           const SizedBox(height: AppMargin.m20),
           AppTextFormField(
             controller: _acidController,
-            label: AppStrings.acid,
+            label: AppLocalizations.of(context)!.acid,
             keyboardType: TextInputType.number,
           ),
           const SizedBox(height: AppMargin.m20),
           AppTextFormField(
             controller: _sugarController,
-            label: AppStrings.sugar,
+            label: AppLocalizations.of(context)!.sugar,
             keyboardType: TextInputType.number,
           ),
           const SizedBox(height: AppMargin.m20),
           AppTextFormField(
             controller: _noteController,
-            label: AppStrings.note,
+            label: AppLocalizations.of(context)!.note,
             inputType: InputType.note,
           ),
         ],

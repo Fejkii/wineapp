@@ -3,7 +3,7 @@ import 'dart:developer' as developer;
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:wine_app/const/app_strings.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:wine_app/const/app_values.dart';
 import 'package:wine_app/ui/theme/app_text_styles.dart';
 import 'package:wine_app/ui/widgets/app_sidebar.dart';
@@ -84,7 +84,9 @@ class _AppScaffoldLayoutState extends State<AppScaffoldLayout> {
         height: 25,
         child: Center(
           child: Text(
-            _connectionStatus == ConnectivityResult.none ? AppStrings.noInternetConnection : AppStrings.internetConnection,
+            _connectionStatus == ConnectivityResult.none
+                ? AppLocalizations.of(context)!.noInternetConnection
+                : AppLocalizations.of(context)!.internetConnection,
             style: getBoldStyle(),
           ),
         ),

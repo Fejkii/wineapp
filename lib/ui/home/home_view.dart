@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wine_app/const/app_strings.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:wine_app/ui/vineyard/vineyard_list_view.dart';
 import 'package:wine_app/ui/wine/wine_evidence_list_view.dart';
 
@@ -35,14 +35,14 @@ class _HomeViewState extends State<HomeView> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentPageIndex,
         onTap: _onItemTap,
-        items: const [
+        items: [
           BottomNavigationBarItem(
-            label: AppStrings.wineEvidence,
-            icon: Icon(Icons.wine_bar),
+            label: AppLocalizations.of(context)!.wineEvidence,
+            icon: const Icon(Icons.wine_bar),
           ),
           BottomNavigationBarItem(
-            label: AppStrings.vineyards,
-            icon: Icon(Icons.local_florist),
+            label: AppLocalizations.of(context)!.vineyards,
+            icon: const Icon(Icons.local_florist),
           ),
         ],
       ),

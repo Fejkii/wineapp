@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wine_app/app/dependency_injection.dart';
 import 'package:wine_app/bloc/vineyard/vineyard_cubit.dart';
-import 'package:wine_app/const/app_strings.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:wine_app/const/app_values.dart';
-
 import 'package:wine_app/model/base/vineyard_model.dart';
 import 'package:wine_app/ui/vineyard/vineyard_detail_view.dart';
 import 'package:wine_app/ui/vineyard/vineyard_record_detail_view.dart';
@@ -71,7 +70,7 @@ class _VineyardViewState extends State<VineyardView> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         AppButton(
-          title: AppStrings.addRecord,
+          title: AppLocalizations.of(context)!.addRecord,
           buttonType: ButtonType.add,
           onTap: () {
             Navigator.push(

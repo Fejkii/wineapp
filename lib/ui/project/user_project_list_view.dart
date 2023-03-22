@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wine_app/app/dependency_injection.dart';
 import 'package:wine_app/bloc/user_project/user_project_cubit.dart';
 import 'package:wine_app/const/app_routes.dart';
-import 'package:wine_app/const/app_strings.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:wine_app/const/app_values.dart';
 import 'package:wine_app/model/base/project_model.dart';
 import 'package:wine_app/ui/project/user_project_detail_view.dart';
@@ -46,7 +46,7 @@ class _UserProjectListViewState extends State<UserProjectListView> {
         return AppScaffoldLayout(
           body: _getContentWidget(),
           appBar: AppBar(
-            title: const Text(AppStrings.yourProjects),
+            title: Text(AppLocalizations.of(context)!.yourProjects),
             actions: [
               IconButton(
                 onPressed: () {

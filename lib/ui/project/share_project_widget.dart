@@ -4,7 +4,7 @@ import 'package:wine_app/app/app_preferences.dart';
 import 'package:wine_app/app/dependency_injection.dart';
 import 'package:wine_app/bloc/project/project_cubit.dart';
 import 'package:wine_app/bloc/user_project/user_project_cubit.dart';
-import 'package:wine_app/const/app_strings.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:wine_app/const/app_values.dart';
 import 'package:wine_app/model/base/project_model.dart';
 import 'package:wine_app/ui/widgets/app_buttons.dart';
@@ -73,11 +73,11 @@ class _ShareProjectWidgetState extends State<ShareProjectWidget> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          const AppContentTitleText(text: AppStrings.shareProject),
+          AppContentTitleText(text: AppLocalizations.of(context)!.shareProject),
           const SizedBox(height: 20),
           AppTextFormField(
             controller: _emailController,
-            label: AppStrings.email,
+            label: AppLocalizations.of(context)!.email,
             keyboardType: TextInputType.emailAddress,
             isRequired: true,
             inputType: InputType.email,
@@ -87,12 +87,12 @@ class _ShareProjectWidgetState extends State<ShareProjectWidget> {
             listener: (context, state) {
               if (state is ShareProjectSuccessState) {
                 setState(() {
-                  AppToastMessage().showToastMsg(AppStrings.createdSuccessfully, ToastStates.success);
+                  AppToastMessage().showToastMsg(AppLocalizations.of(context)!.createdSuccessfully, ToastStates.success);
                   _emailController.text = AppConstant.EMPTY;
                   userProjectCubit.getUsersForProjectList(project.id);
                 });
               } else if (state is DeleteUserProjectSuccessState) {
-                AppToastMessage().showToastMsg(AppStrings.userProjectDeleted, ToastStates.success);
+                AppToastMessage().showToastMsg(AppLocalizations.of(context)!.userProjectDeleted, ToastStates.success);
                 userProjectCubit.getUsersForProjectList(project.id);
               } else if (state is UserProjectFailureState) {
                 AppToastMessage().showToastMsg(
@@ -106,7 +106,7 @@ class _ShareProjectWidgetState extends State<ShareProjectWidget> {
                 return const AppLoadingIndicator();
               } else {
                 return AppButton(
-                  title: AppStrings.shareProjectButton,
+                  title: AppLocalizations.of(context)!.shareProjectButton,
                   onTap: () {
                     if (_formKey.currentState!.validate()) {
                       userProjectCubit.shareProjectToUser(_emailController.text, project.id);
@@ -124,7 +124,7 @@ class _ShareProjectWidgetState extends State<ShareProjectWidget> {
   Widget _usersInProject() {
     return Column(
       children: [
-        const AppTitleText(text: AppStrings.usersInProject),
+        AppTitleText(text: AppLocalizations.of(context)!.usersInProject),
         BlocConsumer<UserProjectCubit, UserProjectState>(
           listener: (context, state) {
             if (state is UsersForProjectListSuccessState) {
@@ -166,8 +166,8 @@ class _ShareProjectWidgetState extends State<ShareProjectWidget> {
         showDialog(
           context: context,
           builder: (BuildContext context) => AppModalDialog(
-            title: AppStrings.deleteUserProject,
-            content: AppStrings.deleteUserProjectContent,
+            title: AppLocalizations.of(context)!.deleteUserProject,
+            content: AppLocalizations.of(context)!.deleteUserProjectContent,
             onTap: () {
               userProjectCubit.deleteUserFromProject(userList[index].id);
               Navigator.pop(context);

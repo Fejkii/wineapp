@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wine_app/app/dependency_injection.dart';
 import 'package:wine_app/bloc/wine/wine_cubit.dart';
-import 'package:wine_app/const/app_strings.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:wine_app/const/app_values.dart';
 import 'package:wine_app/model/base/wine_model.dart';
 import 'package:wine_app/ui/widgets/app_list_view.dart';
@@ -47,7 +47,7 @@ class _WineEvidenceListViewState extends State<WineEvidenceListView> {
           body: _list(),
           hasSidebar: true,
           appBar: AppBar(
-            title: const Text(AppStrings.wineEvidence),
+            title:  Text(AppLocalizations.of(context)!.wineEvidence),
             actions: [
               IconButton(
                 onPressed: () {

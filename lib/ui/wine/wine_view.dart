@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wine_app/app/app_preferences.dart';
 import 'package:wine_app/app/dependency_injection.dart';
 import 'package:wine_app/bloc/wine/wine_cubit.dart';
-import 'package:wine_app/const/app_strings.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:wine_app/const/app_values.dart';
 import 'package:wine_app/model/base/wine_model.dart';
 import 'package:wine_app/ui/widgets/app_buttons.dart';
@@ -56,15 +56,15 @@ class _WineViewState extends State<WineView> {
         return AppScaffoldLayout(
           body: _form(context),
           appBar: AppBar(
-            title: Text(widget.wine != null ? widget.wine!.title : AppStrings.createWine),
+            title: Text(widget.wine != null ? widget.wine!.title : AppLocalizations.of(context)!.createWine),
             actions: [
               BlocConsumer<WineCubit, WineState>(
                 listener: (context, state) {
                   if (state is WineSuccessState) {
                     setState(() {
                       widget.wine != null
-                          ? AppToastMessage().showToastMsg(AppStrings.updatedSuccessfully, ToastStates.success)
-                          : AppToastMessage().showToastMsg(AppStrings.createdSuccessfully, ToastStates.success);
+                          ? AppToastMessage().showToastMsg(AppLocalizations.of(context)!.updatedSuccessfully, ToastStates.success)
+                          : AppToastMessage().showToastMsg(AppLocalizations.of(context)!.createdSuccessfully, ToastStates.success);
                     });
                   } else if (state is WineFailureState) {
                     AppToastMessage().showToastMsg(state.errorMessage, ToastStates.error);
@@ -104,7 +104,7 @@ class _WineViewState extends State<WineView> {
         children: <Widget>[
           AppTextFormField(
             controller: _titleController,
-            label: AppStrings.title,
+            label: AppLocalizations.of(context)!.title,
             inputType: InputType.title,
             isRequired: true,
             icon: Icons.abc,
@@ -114,10 +114,10 @@ class _WineViewState extends State<WineView> {
             popupProps: const PopupProps.menu(showSelectedItems: false, showSearchBox: true),
             items: wineVarietyList,
             itemAsString: (WineVarietyModel wv) => wv.title,
-            dropdownDecoratorProps: const DropDownDecoratorProps(
+            dropdownDecoratorProps: DropDownDecoratorProps(
               dropdownSearchDecoration: InputDecoration(
-                labelText: AppStrings.wineVarieties,
-                hintText: AppStrings.wineVarietySelect,
+                labelText: AppLocalizations.of(context)!.wineVarieties,
+                hintText: AppLocalizations.of(context)!.wineVarietySelect,
               ),
             ),
             onChanged: (WineVarietyModel? value) {

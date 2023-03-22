@@ -4,9 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wine_app/app/app_preferences.dart';
 import 'package:wine_app/app/dependency_injection.dart';
 import 'package:wine_app/bloc/vineyard/vineyard_cubit.dart';
-import 'package:wine_app/const/app_strings.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:wine_app/const/app_values.dart';
-
 import 'package:wine_app/model/base/vineyard_model.dart';
 import 'package:wine_app/ui/widgets/app_buttons.dart';
 import 'package:wine_app/ui/widgets/app_date_picker.dart';
@@ -72,15 +71,15 @@ class _VineyardRecordDetailViewState extends State<VineyardRecordDetailView> {
         return AppScaffoldLayout(
           body: _form(context),
           appBar: AppBar(
-            title: Text(vineyardRecord != null ? vineyardRecord!.title : AppStrings.addRecord),
+            title: Text(vineyardRecord != null ? vineyardRecord!.title : AppLocalizations.of(context)!.addRecord),
             actions: [
               BlocConsumer<VineyardCubit, VineyardState>(
                 listener: (context, state) {
                   if (state is VineyardRecordSuccessState) {
                     setState(() {
                       vineyardRecord != null
-                          ? AppToastMessage().showToastMsg(AppStrings.updatedSuccessfully, ToastStates.success)
-                          : AppToastMessage().showToastMsg(AppStrings.createdSuccessfully, ToastStates.success);
+                          ? AppToastMessage().showToastMsg(AppLocalizations.of(context)!.updatedSuccessfully, ToastStates.success)
+                          : AppToastMessage().showToastMsg(AppLocalizations.of(context)!.createdSuccessfully, ToastStates.success);
                     });
                   } else if (state is VineyardFailureState) {
                     AppToastMessage().showToastMsg(state.errorMessage, ToastStates.error);
@@ -134,11 +133,11 @@ class _VineyardRecordDetailViewState extends State<VineyardRecordDetailView> {
             popupProps: const PopupProps.menu(showSelectedItems: false, showSearchBox: true),
             items: vineyardRecordTypeList,
             itemAsString: (VineyardRecordTypeModel wc) => wc.title,
-            dropdownDecoratorProps: const DropDownDecoratorProps(
+            dropdownDecoratorProps: DropDownDecoratorProps(
               dropdownSearchDecoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: AppStrings.vineyardRecordType,
-                hintText: AppStrings.selectInSelectBox,
+                border: const OutlineInputBorder(),
+                labelText: AppLocalizations.of(context)!.vineyardRecordType,
+                hintText: AppLocalizations.of(context)!.selectInSelectBox,
               ),
             ),
             onChanged: (VineyardRecordTypeModel? value) {
@@ -152,7 +151,7 @@ class _VineyardRecordDetailViewState extends State<VineyardRecordDetailView> {
           const SizedBox(height: AppMargin.m20),
           AppTextFormField(
             controller: _titleController,
-            label: AppStrings.title,
+            label: AppLocalizations.of(context)!.title,
             isRequired: true,
             inputType: InputType.title,
           ),
@@ -163,7 +162,7 @@ class _VineyardRecordDetailViewState extends State<VineyardRecordDetailView> {
           const SizedBox(height: AppMargin.m20),
           AppTextFormField(
             controller: _noteController,
-            label: AppStrings.note,
+            label: AppLocalizations.of(context)!.note,
             inputType: InputType.note,
           ),
         ],

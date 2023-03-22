@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
 import 'package:wine_app/app/app_functions.dart';
-import 'package:wine_app/const/app_strings.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 enum InputType {
   email,
@@ -109,28 +108,28 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
       validator: (value) {
         if (widget.isRequired == true) {
           if (value == null || value.isEmpty) {
-            return widget.errorMessage ?? AppStrings.inputEmpty;
+            return widget.errorMessage ?? AppLocalizations.of(context)!.inputEmpty;
           }
         }
         switch (widget.inputType) {
           case InputType.email:
             if (value != null && value.isNotEmpty && !isEmailValid(value)) {
-              return AppStrings.emailError;
+              return AppLocalizations.of(context)!.emailError;
             }
             break;
           case InputType.password:
             if (value != null && value.isNotEmpty && !isPasswordValid(value)) {
-              return AppStrings.passwordError;
+              return AppLocalizations.of(context)!.passwordError;
             }
             break;
           case InputType.title:
             if (value != null && value.isNotEmpty && !isTitleValid(value)) {
-              return AppStrings.titleError;
+              return AppLocalizations.of(context)!.titleError;
             }
             break;
           case InputType.number:
             if (value != null && value.isNotEmpty && !isDoubleValid(value)) {
-              return AppStrings.valueError;
+              return AppLocalizations.of(context)!.valueError;
             }
             break;
           default:

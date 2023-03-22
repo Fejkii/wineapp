@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wine_app/app/dependency_injection.dart';
 import 'package:wine_app/bloc/vineyard/vineyard_cubit.dart';
-import 'package:wine_app/const/app_strings.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:wine_app/const/app_values.dart';
 import 'package:wine_app/model/base/vineyard_model.dart';
 import 'package:wine_app/ui/vineyard/vineyard_detail_view.dart';
@@ -42,7 +42,7 @@ class _VineyardListViewState extends State<VineyardListView> {
           body: _list(),
           hasSidebar: true,
           appBar: AppBar(
-            title: const Text(AppStrings.vineyards),
+            title: Text(AppLocalizations.of(context)!.vineyards),
             actions: [
               IconButton(
                 onPressed: () {

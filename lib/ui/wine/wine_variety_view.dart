@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wine_app/app/dependency_injection.dart';
 import 'package:wine_app/bloc/wine/wine_cubit.dart';
-import 'package:wine_app/const/app_strings.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:wine_app/const/app_values.dart';
 import 'package:wine_app/model/base/wine_model.dart';
 import 'package:wine_app/ui/widgets/app_buttons.dart';
@@ -51,15 +51,15 @@ class _WineVarietyViewState extends State<WineVarietyView> {
         return AppScaffoldLayout(
           body: _form(context),
           appBar: AppBar(
-            title: Text(widget.wineVariety != null ? widget.wineVariety!.title : AppStrings.createWineVariety),
+            title: Text(widget.wineVariety != null ? widget.wineVariety!.title : AppLocalizations.of(context)!.createWineVariety),
             actions: [
               BlocConsumer<WineCubit, WineState>(
                 listener: (context, state) {
                   if (state is WineSuccessState) {
                     setState(() {
                       widget.wineVariety != null
-                          ? AppToastMessage().showToastMsg(AppStrings.updatedSuccessfully, ToastStates.success)
-                          : AppToastMessage().showToastMsg(AppStrings.createdSuccessfully, ToastStates.success);
+                          ? AppToastMessage().showToastMsg(AppLocalizations.of(context)!.updatedSuccessfully, ToastStates.success)
+                          : AppToastMessage().showToastMsg(AppLocalizations.of(context)!.createdSuccessfully, ToastStates.success);
                     });
                   } else if (state is WineFailureState) {
                     AppToastMessage().showToastMsg(state.errorMessage, ToastStates.error);
@@ -101,13 +101,13 @@ class _WineVarietyViewState extends State<WineVarietyView> {
           AppTextFormField(
             controller: _titleController,
             isRequired: true,
-            label: AppStrings.title,
+            label: AppLocalizations.of(context)!.title,
           ),
           const SizedBox(height: 20),
           AppTextFormField(
             controller: _codeController,
             isRequired: true,
-            label: AppStrings.code,
+            label: AppLocalizations.of(context)!.code,
           ),
           const SizedBox(height: AppMargin.m20),
         ],

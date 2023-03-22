@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wine_app/app/app_preferences.dart';
 import 'package:wine_app/app/dependency_injection.dart';
 import 'package:wine_app/bloc/wine/wine_cubit.dart';
-import 'package:wine_app/const/app_strings.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:wine_app/const/app_values.dart';
 import 'package:wine_app/model/base/wine_model.dart';
 import 'package:wine_app/ui/widgets/app_buttons.dart';
@@ -99,15 +99,15 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
         return AppScaffoldLayout(
           body: _form(context),
           appBar: AppBar(
-            title: Text(wineRecord != null ? wineRecord!.wineRecordType.title : AppStrings.addRecord),
+            title: Text(wineRecord != null ? wineRecord!.wineRecordType.title : AppLocalizations.of(context)!.addRecord),
             actions: [
               BlocConsumer<WineCubit, WineState>(
                 listener: (context, state) {
                   if (state is WineRecordSuccessState) {
                     setState(() {
                       wineRecord != null
-                          ? AppToastMessage().showToastMsg(AppStrings.updatedSuccessfully, ToastStates.success)
-                          : AppToastMessage().showToastMsg(AppStrings.createdSuccessfully, ToastStates.success);
+                          ? AppToastMessage().showToastMsg(AppLocalizations.of(context)!.updatedSuccessfully, ToastStates.success)
+                          : AppToastMessage().showToastMsg(AppLocalizations.of(context)!.createdSuccessfully, ToastStates.success);
                     });
                   } else if (state is WineFailureState) {
                     AppToastMessage().showToastMsg(state.errorMessage, ToastStates.error);
@@ -165,11 +165,11 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
             popupProps: const PopupProps.menu(showSelectedItems: false, showSearchBox: true),
             items: wineRecordTypeList,
             itemAsString: (WineRecordTypeModel wc) => wc.title,
-            dropdownDecoratorProps: const DropDownDecoratorProps(
+            dropdownDecoratorProps: DropDownDecoratorProps(
               dropdownSearchDecoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: AppStrings.wineRecordType,
-                hintText: AppStrings.selectInSelectBox,
+                border: const OutlineInputBorder(),
+                labelText: AppLocalizations.of(context)!.wineRecordType,
+                hintText: AppLocalizations.of(context)!.selectInSelectBox,
               ),
             ),
             onChanged: (WineRecordTypeModel? value) {
@@ -185,7 +185,7 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
           const SizedBox(height: AppMargin.m20),
           AppTextFormField(
             controller: _noteController,
-            label: AppStrings.note,
+            label: AppLocalizations.of(context)!.note,
             inputType: InputType.note,
           ),
         ],
@@ -200,19 +200,20 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
               children: [
                 AppTextFormField(
                   controller: _freeSulfureController,
-                  label: AppStrings.measuredFreeSulfur,
+                  label: AppLocalizations.of(context)!.measuredFreeSulfur,
                   isRequired: true,
                   inputType: InputType.number,
                   keyboardType: TextInputType.number,
                 ),
                 const SizedBox(height: AppMargin.m10),
-                AppTextWithValue(text: AppStrings.wineQuantity, value: widget.wineEvidence.volume, unit: AppUnits.liter),
-                AppTextWithValue(text: AppStrings.requiredSulphurisation, value: defaultFreeSulfure.toStringAsFixed(0)),
-                AppTextWithValue(text: AppStrings.liquidSulfur, value: defaultLiquidSulfur.toStringAsFixed(0), unit: AppUnits.percent),
+                AppTextWithValue(text: AppLocalizations.of(context)!.wineQuantity, value: widget.wineEvidence.volume, unit: AppUnits.liter),
+                AppTextWithValue(text: AppLocalizations.of(context)!.requiredSulphurisation, value: defaultFreeSulfure.toStringAsFixed(0)),
+                AppTextWithValue(
+                    text: AppLocalizations.of(context)!.liquidSulfur, value: defaultLiquidSulfur.toStringAsFixed(0), unit: AppUnits.percent),
                 Column(
                   children: [
-                    AppTextWithValue(text: AppStrings.sulfurizationBy, value: sulfirizationBy.toStringAsFixed(0)),
-                    AppTextWithValue(text: AppStrings.liquidSulfurDosage, value: dosage.toStringAsFixed(2), unit: AppUnits.mililiter),
+                    AppTextWithValue(text: AppLocalizations.of(context)!.sulfurizationBy, value: sulfirizationBy.toStringAsFixed(0)),
+                    AppTextWithValue(text: AppLocalizations.of(context)!.liquidSulfurDosage, value: dosage.toStringAsFixed(2), unit: AppUnits.mililiter),
                   ],
                 )
               ],

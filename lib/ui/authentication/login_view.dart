@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wine_app/app/dependency_injection.dart';
 import 'package:wine_app/bloc/login/auth_cubit.dart';
 import 'package:wine_app/const/app_routes.dart';
-import 'package:wine_app/const/app_strings.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:wine_app/const/app_values.dart';
 import 'package:wine_app/ui/widgets/app_buttons.dart';
 import 'package:wine_app/ui/widgets/app_loading_indicator.dart';
@@ -63,10 +63,10 @@ class _LoginViewState extends State<LoginView> {
 
   Widget _logo() {
     return Column(
-      children: const [
-        Icon(Icons.wine_bar, size: 80),
-        SizedBox(height: 10),
-        AppTitleText(text: AppStrings.appName),
+      children: [
+        const Icon(Icons.wine_bar, size: 80),
+        const SizedBox(height: 10),
+        AppTitleText(text: AppLocalizations.of(context)!.appName),
       ],
     );
   }
@@ -81,7 +81,7 @@ class _LoginViewState extends State<LoginView> {
         children: [
           AppTextFormField(
             controller: _emailController,
-            label: AppStrings.email,
+            label: AppLocalizations.of(context)!.email,
             keyboardType: TextInputType.emailAddress,
             isRequired: true,
             inputType: InputType.email,
@@ -89,7 +89,7 @@ class _LoginViewState extends State<LoginView> {
           const SizedBox(height: AppMargin.m20),
           AppTextFormField(
             controller: _passwordController,
-            label: AppStrings.password,
+            label: AppLocalizations.of(context)!.password,
             isRequired: true,
             inputType: InputType.password,
           ),
@@ -111,7 +111,7 @@ class _LoginViewState extends State<LoginView> {
                 return const AppLoadingIndicator();
               } else {
                 return AppButton(
-                  title: AppStrings.login,
+                  title: AppLocalizations.of(context)!.login,
                   onTap: () {
                     if (_formKey.currentState!.validate()) {
                       authCubit.login(
@@ -129,13 +129,13 @@ class _LoginViewState extends State<LoginView> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               AppTextButton(
-                title: AppStrings.forgetPassword,
+                title: AppLocalizations.of(context)!.forgetPassword,
                 onTap: () {
                   Navigator.pushNamed(context, AppRoutes.forgetPasswordRoute);
                 },
               ),
               AppTextButton(
-                title: AppStrings.register,
+                title: AppLocalizations.of(context)!.register,
                 onTap: () {
                   Navigator.pushNamed(context, AppRoutes.registerRoute);
                 },

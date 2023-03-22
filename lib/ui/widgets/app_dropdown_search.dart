@@ -1,7 +1,6 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
-
-import 'package:wine_app/const/app_strings.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // TODO Not used, not work yet!
 class AppSelectBox extends StatefulWidget {
@@ -47,7 +46,7 @@ class _AppSelectBoxState extends State<AppSelectBox> {
       validator: (value) {
         if (widget.isRequired == true) {
           if (value == null) {
-            return widget.errorMessage ?? AppStrings.selectBoxEmpty;
+            return widget.errorMessage ?? AppLocalizations.of(context)!.selectBoxEmpty;
           }
         }
         return null;
@@ -61,7 +60,7 @@ class _AppSelectBoxState extends State<AppSelectBox> {
       dropdownDecoratorProps: DropDownDecoratorProps(
         dropdownSearchDecoration: InputDecoration(
           labelText: widget.label,
-          hintText: widget.labelInBox ?? AppStrings.selectInSelectBox,
+          hintText: widget.labelInBox ?? AppLocalizations.of(context)!.selectInSelectBox,
         ),
       ),
       clearButtonProps: const ClearButtonProps(isVisible: true),
@@ -101,7 +100,7 @@ class _AppSelectBoxState extends State<AppSelectBox> {
 //       validator: (value) {
 //         if (isRequired == true) {
 //           if (value == null) {
-//             return errorMessage ?? AppStrings.selectBoxEmpty;
+//             return errorMessage ?? AppLocalizations.of(context)!.selectBoxEmpty;
 //           }
 //         }
 //         return null;
@@ -115,7 +114,7 @@ class _AppSelectBoxState extends State<AppSelectBox> {
 //       dropdownDecoratorProps: DropDownDecoratorProps(
 //         dropdownSearchDecoration: InputDecoration(
 //           labelText: label,
-//           hintText: labelInBox ?? AppStrings.selectInSelectBox,
+//           hintText: labelInBox ?? AppLocalizations.of(context)!.selectInSelectBox,
 //         ),
 //       ),
 //       clearButtonProps: const ClearButtonProps(isVisible: true),
