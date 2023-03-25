@@ -6,6 +6,7 @@ import 'package:wine_app/model/base/project_settings_model.dart';
 import 'package:wine_app/model/base/user_model.dart';
 import 'package:wine_app/model/base/vineyard_model.dart';
 import 'package:wine_app/model/base/wine_model.dart';
+import 'package:wine_app/model/base/wine_record_model.dart';
 import 'package:wine_app/services/language_service.dart';
 
 enum AppPreferencesKeys {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quantity_input/quantity_input.dart';
 import 'package:wine_app/app/app_functions.dart';
 import 'package:wine_app/app/dependency_injection.dart';
 import 'package:wine_app/bloc/wine/wine_cubit.dart';
@@ -26,10 +27,12 @@ class WineEvidenceView extends StatefulWidget {
 class _WineEvidenceViewState extends State<WineEvidenceView> {
   WineCubit wineCubit = instance<WineCubit>();
   late WineEvidenceModel wineEvidence;
+  late int wineVolume;
 
   @override
   void initState() {
     wineEvidence = widget.wineEvidence;
+    wineVolume = wineEvidence.volume.toInt();
     super.initState();
   }
 
@@ -71,6 +74,31 @@ class _WineEvidenceViewState extends State<WineEvidenceView> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         const SizedBox(height: AppMargin.m10),
+        const SizedBox(height: AppMargin.m20),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(AppLocalizations.of(context)!.wineQuantity),
+            QuantityInput(
+              value: wineVolume,
+              acceptsZero: true,
+              step: 10,
+              onChanged: (value) => setState(() => wineVolume = int.parse(value.replaceAll(',', ''))),
+              inputWidth: 100,
+              buttonColor: Colors.green,
+            ),
+            AppIconButton(
+              iconButtonType: IconButtonType.save,
+              onPress: () {
+                wineCubit.updateWineEvidenceVolume(
+                  wineEvidence.id,
+                  wineVolume.toDouble()
+                );
+              },
+            ),
+          ],
+        ),
+        const SizedBox(height: AppMargin.m20),
         _otherInfo(),
         const SizedBox(height: AppMargin.m20),
         AppButton(
@@ -95,10 +123,6 @@ class _WineEvidenceViewState extends State<WineEvidenceView> {
   Widget _otherInfo() {
     return Table(
       children: [
-        TableRow(children: [
-          TableCell(child: Text(AppLocalizations.of(context)!.wineQuantity)),
-          TableCell(child: Text(wineEvidence.volume.toString())),
-        ]),
         TableRow(children: [
           TableCell(child: Text(AppLocalizations.of(context)!.acid)),
           TableCell(child: Text(wineEvidence.acid.toString())),

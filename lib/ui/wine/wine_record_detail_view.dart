@@ -1,12 +1,14 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wine_app/app/app_functions.dart';
 import 'package:wine_app/app/app_preferences.dart';
 import 'package:wine_app/app/dependency_injection.dart';
 import 'package:wine_app/bloc/wine/wine_cubit.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:wine_app/const/app_values.dart';
 import 'package:wine_app/model/base/wine_model.dart';
+import 'package:wine_app/model/base/wine_record_model.dart';
 import 'package:wine_app/ui/widgets/app_buttons.dart';
 import 'package:wine_app/ui/widgets/app_date_picker.dart';
 import 'package:wine_app/ui/widgets/app_loading_indicator.dart';
@@ -29,6 +31,7 @@ class WineRecordDetailView extends StatefulWidget {
 }
 
 class _WineRecordDetailViewState extends State<WineRecordDetailView> {
+  final TextEditingController _titleController = TextEditingController();
   final TextEditingController _freeSulfureController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
@@ -42,8 +45,11 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
   late List<WineRecordTypeModel> wineRecordTypeList;
   late double defaultFreeSulfure;
   late double defaultLiquidSulfur;
+
   double sulfirizationBy = 0;
   double dosage = 0;
+  String title = "";
+  String data = "";
 
   @override
   void initState() {
@@ -58,10 +64,12 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
       selectedWineRecordType = wineRecord!.wineRecordType;
       _dateController.text = wineRecord!.date.toIso8601String();
       _noteController.text = wineRecord!.note ?? "";
+      _titleController.text = wineRecord!.title ?? "";
 
-      if (wineRecord!.freeSulfure != null) {
-        _freeSulfureController.text = wineRecord!.freeSulfure!.toStringAsFixed(0);
-        _freeSulfureCalculate(double.parse(_freeSulfureController.text));
+      if (wineRecord!.wineRecordType.id == WineRecordType.measurementFreeSulfure.getId()) {
+        String value = WineRecordFreeSulfure.fromJson(wineRecord!.data).freeSulfure.toStringAsFixed(2);
+        _freeSulfureController.text = value;
+        _freeSulfureCalculate(double.parse(value));
       }
     }
 
@@ -82,6 +90,7 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
   void dispose() {
     _dateController.dispose();
     _noteController.dispose();
+    _titleController.dispose();
     _freeSulfureController.dispose();
     super.dispose();
   }
@@ -121,21 +130,35 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
                       iconButtonType: IconButtonType.save,
                       onPress: () {
                         if (_formKey.currentState!.validate()) {
-                          wineRecord != null
-                              ? wineCubit.updateWineRecord(
-                                  wineRecord!.id,
-                                  selectedWineRecordType!.id,
-                                  DateTime.parse(_dateController.text),
-                                  double.tryParse(_freeSulfureController.text),
-                                  _noteController.text,
-                                )
-                              : wineCubit.createWineRecord(
-                                  wineEvidenceId,
-                                  selectedWineRecordType!.id,
-                                  DateTime.parse(_dateController.text),
-                                  double.tryParse(_freeSulfureController.text),
-                                  _noteController.text,
-                                );
+                          if (WineRecordType.measurementFreeSulfure.getId() == selectedWineRecordType!.id) {
+                            data = WineRecordFreeSulfure(
+                              freeSulfure: double.parse(_freeSulfureController.text),
+                              volume: widget.wineEvidence.volume,
+                              requiredSulphurisation: defaultFreeSulfure,
+                              liquidSulfur: defaultLiquidSulfur,
+                              sulfurizationBy: sulfirizationBy,
+                              liquidSulfurDosage: double.parse(dosage.toStringAsFixed(2)),
+                            ).toJson();
+                          }
+                          if (wineRecord != null) {
+                            wineCubit.updateWineRecord(
+                              wineRecord!.id,
+                              selectedWineRecordType!.id,
+                              DateTime.parse(_dateController.text),
+                              _titleController.text,
+                              data,
+                              _noteController.text,
+                            );
+                          } else {
+                            wineCubit.createWineRecord(
+                              wineEvidenceId,
+                              selectedWineRecordType!.id,
+                              DateTime.parse(_dateController.text),
+                              _titleController.text,
+                              data,
+                              _noteController.text,
+                            );
+                          }
                         }
                       },
                     );
@@ -182,15 +205,26 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
           ),
           const SizedBox(height: AppMargin.m20),
           _freeSulfure(),
+          _otherRecord(),
           const SizedBox(height: AppMargin.m20),
           AppTextFormField(
             controller: _noteController,
             label: AppLocalizations.of(context)!.note,
             inputType: InputType.note,
           ),
+          const SizedBox(height: AppMargin.m20),
+          _otherInfo(),
         ],
       ),
     );
+  }
+
+  Widget _otherInfo() {
+    if (widget.wineRecord != null) {
+      return AppTextWithValue(text: AppLocalizations.of(context)!.created, value: appFormatDate(widget.wineRecord!.createdAt));
+    } else {
+      return Container();
+    }
   }
 
   Widget _freeSulfure() {
@@ -213,9 +247,30 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
                 Column(
                   children: [
                     AppTextWithValue(text: AppLocalizations.of(context)!.sulfurizationBy, value: sulfirizationBy.toStringAsFixed(0)),
-                    AppTextWithValue(text: AppLocalizations.of(context)!.liquidSulfurDosage, value: dosage.toStringAsFixed(2), unit: AppUnits.mililiter),
+                    AppTextWithValue(
+                        text: AppLocalizations.of(context)!.liquidSulfurDosage, value: dosage.toStringAsFixed(2), unit: AppUnits.mililiter),
                   ],
                 )
+              ],
+            )
+          : Container();
+    } else {
+      return Container();
+    }
+  }
+
+  Widget _otherRecord() {
+    if (selectedWineRecordType != null) {
+      return selectedWineRecordType!.id == 7
+          ? Column(
+              children: [
+                AppTextFormField(
+                  controller: _titleController,
+                  label: AppLocalizations.of(context)!.title,
+                  isRequired: true,
+                  inputType: InputType.title,
+                ),
+                const SizedBox(height: AppMargin.m10),
               ],
             )
           : Container();

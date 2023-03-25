@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:wine_app/model/base/project_model.dart';
+import 'package:wine_app/model/base/wine_record_model.dart';
 
 class WineModel {
   int id;
@@ -216,90 +217,4 @@ class WineClassificationModel {
   String toJson() => json.encode(toMap());
 
   factory WineClassificationModel.fromJson(String source) => WineClassificationModel.fromMap(json.decode(source));
-}
-
-class WineRecordModel {
-  int id;
-  int wineEvidenceId;
-  WineRecordTypeModel wineRecordType;
-  DateTime date;
-  double? freeSulfure;
-  String? note;
-  DateTime createdAt;
-  DateTime? updatedAt;
-  WineRecordModel({
-    required this.id,
-    required this.wineEvidenceId,
-    required this.wineRecordType,
-    required this.date,
-    this.freeSulfure,
-    required this.note,
-    required this.createdAt,
-    this.updatedAt,
-  });
-
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'wine_evidence_id': wineEvidenceId,
-      'wine_record_type': wineRecordType.toMap(),
-      'date': date.millisecondsSinceEpoch,
-      'free_sulfure': freeSulfure,
-      'note': note,
-      'created_at': createdAt.millisecondsSinceEpoch,
-      'updated_at': updatedAt?.millisecondsSinceEpoch,
-    };
-  }
-
-  factory WineRecordModel.fromMap(Map<String, dynamic> map) {
-    return WineRecordModel(
-      id: map['id']?.toInt() ?? 0,
-      wineEvidenceId: map['wine_evidence_id']?.toInt() ?? 0,
-      wineRecordType: WineRecordTypeModel.fromMap(map['wine_record_type']),
-      date: DateTime.parse(map['date']),
-      freeSulfure: map['free_sulfure']?.toDouble(),
-      note: map['note'],
-      createdAt: DateTime.parse(map['created_at']),
-      updatedAt: map['updated_at'] != null ? DateTime.parse(map['updated_at']) : null,
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory WineRecordModel.fromJson(String source) => WineRecordModel.fromMap(json.decode(source));
-}
-
-class WineRecordTypeModel {
-  int id;
-  String title;
-  String code;
-  String color;
-  WineRecordTypeModel({
-    required this.id,
-    required this.title,
-    required this.code,
-    required this.color,
-  });
-
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'title': title,
-      'code': code,
-      'color': color,
-    };
-  }
-
-  factory WineRecordTypeModel.fromMap(Map<String, dynamic> map) {
-    return WineRecordTypeModel(
-      id: map['id']?.toInt() ?? 0,
-      title: map['title'] ?? '',
-      code: map['code'] ?? '',
-      color: map['color'] ?? '',
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory WineRecordTypeModel.fromJson(String source) => WineRecordTypeModel.fromMap(json.decode(source));
 }

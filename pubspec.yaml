@@ -39,6 +39,7 @@ dependencies:
   device_info: ^2.0.3
   intl: ^0.17.0 # Format date and numbers
   flutter_localization: ^0.1.10 # Translations
+  quantity_input: ^1.0.2 # Plus and minus buttons for numbers
 
   # API plugins
   dio: ^4.0.6

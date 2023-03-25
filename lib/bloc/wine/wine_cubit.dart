@@ -6,6 +6,7 @@ import 'package:wine_app/api/api_result_handler.dart';
 import 'package:wine_app/app/app_preferences.dart';
 import 'package:wine_app/app/dependency_injection.dart';
 import 'package:wine_app/model/base/wine_model.dart';
+import 'package:wine_app/model/base/wine_record_model.dart';
 import 'package:wine_app/repository/wine_repository.dart';
 
 part 'wine_state.dart';
@@ -154,6 +155,16 @@ class WineCubit extends Cubit<WineState> {
     }
   }
 
+  void updateWineEvidenceVolume(int wineEvidenceId, double volume) async {
+    emit(WineLoadingState());
+    ApiResults apiResults = await WineRepository().updateWineEvidenceVolume(wineEvidenceId, volume);
+    if (apiResults is ApiSuccess) {
+      emit(WineEvidenceSuccessState());
+    } else if (apiResults is ApiFailure) {
+      emit(WineFailureState(apiResults.message));
+    }
+  }
+
   void getWineEvidenceList() async {
     emit(WineLoadingState());
     ApiResults apiResults = await WineRepository().getWineEvidenceList(appPreferences.getProject()!.id);
@@ -192,13 +203,21 @@ class WineCubit extends Cubit<WineState> {
     }
   }
 
-  void updateWineRecord(int wineRecordId, int wineRecordTypeId, DateTime date, double? freeSulfure, String? note) async {
+  void updateWineRecord(
+    int wineRecordId,
+    int wineRecordTypeId,
+    DateTime date,
+    String? title,
+    String? data,
+    String? note,
+  ) async {
     emit(WineLoadingState());
     ApiResults apiResults = await WineRepository().updateWineRecord(
       wineRecordId,
       wineRecordTypeId,
       date.toIso8601String(),
-      freeSulfure,
+      title,
+      data,
       note,
     );
     if (apiResults is ApiSuccess) {
@@ -208,13 +227,21 @@ class WineCubit extends Cubit<WineState> {
     }
   }
 
-  void createWineRecord(int wineEvidenceId, int wineRecordTypeId, DateTime date, double? freeSulfure, String? note) async {
+  void createWineRecord(
+    int wineEvidenceId,
+    int wineRecordTypeId,
+    DateTime date,
+    String? title,
+    String? data,
+    String? note,
+  ) async {
     emit(WineLoadingState());
     ApiResults apiResults = await WineRepository().createWineRecord(
       wineEvidenceId,
       wineRecordTypeId,
       date.toIso8601String(),
-      freeSulfure,
+      title,
+      data,
       note,
     );
     if (apiResults is ApiSuccess) {

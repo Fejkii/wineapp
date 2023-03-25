@@ -95,8 +95,8 @@
     "measuredFreeSulfur": "Measured Free Sulfure",
     "liquidSulfur": "Liquid Sulfure",
     "requiredSulphurisation": "Required sulphurisation",
-    "sulfurizationBy": "Sulfurization by",
-    "liquidSulfurDosage": "Liquid sulfur dosage",
+    "sulfurizationBy": "Sulfurization recommended",
+    "liquidSulfurDosage": "Recommended dosage of liquid sulfur",
     "vineyards": "Vineyards",
     "changeTheme": "Change dark or light theme",
     "changeLanguage": "Select language"
