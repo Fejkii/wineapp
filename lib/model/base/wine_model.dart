@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:wine_app/model/base/project_model.dart';
-import 'package:wine_app/model/base/wine_record_model.dart';
 
 class WineModel {
   int id;

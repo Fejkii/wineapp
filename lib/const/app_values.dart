@@ -50,4 +50,5 @@ class AppUnits {
   static const String liter = "l";
   static const String mililiter = "ml";
   static const String percent = "%";
+  static const String squareMeter = "m\u00B2";
 }

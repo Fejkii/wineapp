@@ -5,16 +5,17 @@ import 'package:wine_app/app/dependency_injection.dart';
 import 'package:wine_app/bloc/vineyard/vineyard_cubit.dart';
 import 'package:wine_app/const/app_values.dart';
 import 'package:wine_app/model/base/vineyard_model.dart';
+import 'package:wine_app/model/base/vineyard_record_model.dart';
 import 'package:wine_app/ui/vineyard/vineyard_record_detail_view.dart';
 import 'package:wine_app/ui/widgets/app_list_view.dart';
 import 'package:wine_app/ui/widgets/app_loading_indicator.dart';
 import 'package:wine_app/ui/widgets/app_toast_messages.dart';
 
 class VineyardRecordListView extends StatefulWidget {
-  final int vineyardId;
+  final VineyardModel vineyard;
   const VineyardRecordListView({
     Key? key,
-    required this.vineyardId,
+    required this.vineyard,
   }) : super(key: key);
 
   @override
@@ -33,7 +34,7 @@ class _VineyardRecordListViewState extends State<VineyardRecordListView> {
   }
 
   void _getData() {
-    vineyardCubit.getVineyardRecordList(widget.vineyardId);
+    vineyardCubit.getVineyardRecordList(widget.vineyard.id);
   }
 
   @override
@@ -69,9 +70,8 @@ class _VineyardRecordListViewState extends State<VineyardRecordListView> {
       itemBody: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(vineyardRecordList[index].title),
-          Text(vineyardRecordList[index].vineyardRecordType.title),
           Text(appFormatDate(vineyardRecordList[index].date, dateOnly: true)),
+          Text(vineyardRecordList[index].title ?? vineyardRecordList[index].vineyardRecordType.title),
         ],
       ),
       onTap: () {
@@ -79,7 +79,7 @@ class _VineyardRecordListViewState extends State<VineyardRecordListView> {
           context,
           MaterialPageRoute(
             builder: (context) => VineyardRecordDetailView(
-              vineyardId: widget.vineyardId,
+              vineyard: widget.vineyard,
               vineyardRecord: vineyardRecordList[index],
             ),
           ),

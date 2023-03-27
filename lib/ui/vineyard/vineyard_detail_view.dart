@@ -25,6 +25,7 @@ class VineyardDetailView extends StatefulWidget {
 
 class _VineyardDetailViewState extends State<VineyardDetailView> {
   final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _areaController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   final VineyardCubit vineyardCubit = instance<VineyardCubit>();
   final AppPreferences appPreferences = instance<AppPreferences>();
@@ -35,6 +36,7 @@ class _VineyardDetailViewState extends State<VineyardDetailView> {
     vineyard = widget.vineyard;
     if (vineyard != null) {
       _titleController.text = vineyard!.title;
+      _areaController.text = vineyard!.area?.toString() ?? "0";
     }
     super.initState();
   }
@@ -42,6 +44,7 @@ class _VineyardDetailViewState extends State<VineyardDetailView> {
   @override
   void dispose() {
     _titleController.dispose();
+    _areaController.dispose();
     super.dispose();
   }
 
@@ -75,13 +78,8 @@ class _VineyardDetailViewState extends State<VineyardDetailView> {
                       onPress: () {
                         if (_formKey.currentState!.validate()) {
                           vineyard != null
-                              ? vineyardCubit.updateVineyard(
-                                  vineyard!.id,
-                                  _titleController.text,
-                                )
-                              : vineyardCubit.createVineyard(
-                                  _titleController.text,
-                                );
+                              ? vineyardCubit.updateVineyard(vineyard!.id, _titleController.text, double.tryParse(_areaController.text))
+                              : vineyardCubit.createVineyard(_titleController.text, double.tryParse(_areaController.text));
                         }
                       },
                     );
@@ -118,6 +116,12 @@ class _VineyardDetailViewState extends State<VineyardDetailView> {
             controller: _titleController,
             label: AppLocalizations.of(context)!.title,
             isRequired: true,
+          ),
+          const SizedBox(height: AppMargin.m20),
+          AppTextFormField(
+            controller: _areaController,
+            label: AppLocalizations.of(context)!.area,
+            inputType: InputType.number,
           ),
         ],
       ),

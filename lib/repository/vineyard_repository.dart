@@ -15,12 +15,14 @@ class VineyardRepository {
   Future<ApiResults> createVineyard(
     int projectId,
     String title,
+    double? area,
   ) async {
     return instance<ApiFactory>().postMethod(
       endpoint: ApiEndpoints.vineyardUrl,
       data: {
         'project_id': projectId,
         'title': title,
+        'area': area,
       },
     );
   }
@@ -28,12 +30,14 @@ class VineyardRepository {
   Future<ApiResults> updateVineyard(
     int vineyardId,
     String title,
+    double? area,
   ) async {
     return instance<ApiFactory>().putMethod(
       endpoint: ApiEndpoints.vineyardUrl,
       identificator: vineyardId,
       data: {
         'title': title,
+        'area': area,
       },
     );
   }

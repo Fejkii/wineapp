@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 class BaseResponse {
@@ -66,4 +67,35 @@ class BaseErrorResponse {
   String toJson() => json.encode(toMap());
 
   factory BaseErrorResponse.fromJson(String source) => BaseErrorResponse.fromMap(json.decode(source));
+}
+
+class SummaryResponse {
+  dynamic data;
+  int count;
+  int? sum;
+  SummaryResponse({
+    required this.data,
+    required this.count,
+    this.sum,
+  });
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'data': data,
+      'count': count,
+      'sum': sum,
+    };
+  }
+
+  factory SummaryResponse.fromMap(Map<String, dynamic> map) {
+    return SummaryResponse(
+      data: map['data'] as dynamic,
+      count: map['count'] as int,
+      sum: map['sum'] != null ? map['sum'] as int : null,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory SummaryResponse.fromJson(String source) => SummaryResponse.fromMap(json.decode(source) as Map<String, dynamic>);
 }

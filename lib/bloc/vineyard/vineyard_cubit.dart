@@ -5,6 +5,7 @@ import 'package:wine_app/api/api_result_handler.dart';
 import 'package:wine_app/app/app_preferences.dart';
 import 'package:wine_app/app/dependency_injection.dart';
 import 'package:wine_app/model/base/vineyard_model.dart';
+import 'package:wine_app/model/base/vineyard_record_model.dart';
 import 'package:wine_app/repository/vineyard_repository.dart';
 
 part 'vineyard_state.dart';
@@ -28,9 +29,9 @@ class VineyardCubit extends Cubit<VineyardState> {
     }
   }
 
-  void createVineyard(String title) async {
+  void createVineyard(String title, double? area) async {
     emit(VineyardLoadingState());
-    ApiResults apiResults = await VineyardRepository().createVineyard(appPreferences.getProject()!.id, title);
+    ApiResults apiResults = await VineyardRepository().createVineyard(appPreferences.getProject()!.id, title, area);
     if (apiResults is ApiSuccess) {
       emit(VineyardSuccessState());
     } else if (apiResults is ApiFailure) {
@@ -38,9 +39,9 @@ class VineyardCubit extends Cubit<VineyardState> {
     }
   }
 
-  void updateVineyard(int vineyardId, String title) async {
+  void updateVineyard(int vineyardId, String title, double? area) async {
     emit(VineyardLoadingState());
-    ApiResults apiResults = await VineyardRepository().updateVineyard(vineyardId, title);
+    ApiResults apiResults = await VineyardRepository().updateVineyard(vineyardId, title, area);
     if (apiResults is ApiSuccess) {
       emit(VineyardSuccessState());
     } else if (apiResults is ApiFailure) {

@@ -97,6 +97,8 @@ enum WineRecordType {
   proteinWithdrawal,
   filtering,
   withdrawal,
+  fermentation,
+  pressing,
   others,
 }
 
@@ -115,19 +117,14 @@ extension WineRecordTypeExtension on WineRecordType {
         return 5;
       case WineRecordType.withdrawal:
         return 6;
+      case WineRecordType.fermentation:
+        return 7;
+      case WineRecordType.pressing:
+        return 8;
       case WineRecordType.others:
-        return 7;
+        return 9;
       default:
-        return 7;
-    }
-  }
-
-  dynamic getEntityFromJson(String json) {
-    switch (this) {
-      case WineRecordType.measurementFreeSulfure:
-        return WineRecordFreeSulfure.fromJson(json);
-      default:
-        return WineRecordModel.fromJson(json);
+        return 9;
     }
   }
 }

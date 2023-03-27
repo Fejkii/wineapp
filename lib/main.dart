@@ -15,6 +15,7 @@ import 'package:wine_app/bloc/theme/settings_cubit.dart';
 import 'package:wine_app/bloc/user/user_cubit.dart';
 import 'package:wine_app/bloc/user_project/user_project_cubit.dart';
 import 'package:wine_app/bloc/vineyard/vineyard_cubit.dart';
+import 'package:wine_app/bloc/vineyard_wine/vineyard_wine_cubit.dart';
 import 'package:wine_app/bloc/wine/wine_cubit.dart';
 import 'package:wine_app/const/app_routes.dart';
 import 'package:wine_app/services/language_service.dart';
@@ -62,6 +63,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider<UserProjectCubit>(create: (context) => instance<UserProjectCubit>()),
         BlocProvider<WineCubit>(create: (context) => instance<WineCubit>()),
         BlocProvider<VineyardCubit>(create: (context) => instance<VineyardCubit>()),
+        BlocProvider<VineyardWineCubit>(create: (context) => instance<VineyardWineCubit>()),
       ],
       child: BlocBuilder<SettingsCubit, SettingsState>(
         builder: (context, state) {

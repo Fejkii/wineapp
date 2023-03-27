@@ -180,8 +180,10 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
+          const SizedBox(height: AppMargin.m10),
           AppDatePicker(
             controller: _dateController,
+            setIcon: true,
           ),
           const SizedBox(height: AppMargin.m20),
           DropdownSearch<WineRecordTypeModel>(
@@ -203,7 +205,6 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
             selectedItem: selectedWineRecordType,
             clearButtonProps: const ClearButtonProps(isVisible: true),
           ),
-          const SizedBox(height: AppMargin.m20),
           _freeSulfure(),
           _otherRecord(),
           const SizedBox(height: AppMargin.m20),
@@ -229,9 +230,10 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
 
   Widget _freeSulfure() {
     if (selectedWineRecordType != null) {
-      return selectedWineRecordType!.id == 1
+      return selectedWineRecordType!.id == WineRecordType.measurementFreeSulfure.getId()
           ? Column(
               children: [
+                const SizedBox(height: AppMargin.m20),
                 AppTextFormField(
                   controller: _freeSulfureController,
                   label: AppLocalizations.of(context)!.measuredFreeSulfur,
@@ -261,16 +263,16 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
 
   Widget _otherRecord() {
     if (selectedWineRecordType != null) {
-      return selectedWineRecordType!.id == 7
+      return selectedWineRecordType!.id == WineRecordType.others.getId()
           ? Column(
               children: [
+                const SizedBox(height: AppMargin.m20),
                 AppTextFormField(
                   controller: _titleController,
                   label: AppLocalizations.of(context)!.title,
                   isRequired: true,
                   inputType: InputType.title,
                 ),
-                const SizedBox(height: AppMargin.m10),
               ],
             )
           : Container();

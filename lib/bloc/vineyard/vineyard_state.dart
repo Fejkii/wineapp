@@ -30,5 +30,4 @@ class VineyardRecordListSuccessState extends VineyardState {
   const VineyardRecordListSuccessState(this.vineyardRecordList);
 }
 
-class VineyardRecordTypeListSuccessState extends VineyardState {
-}
+class VineyardRecordTypeListSuccessState extends VineyardState {}

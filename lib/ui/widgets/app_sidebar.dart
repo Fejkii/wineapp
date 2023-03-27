@@ -46,7 +46,7 @@ class AppSidebar extends StatelessWidget {
               ),
               ListTile(
                 leading: const Icon(Icons.person),
-                title: Text(AppLocalizations.of(context)!.user),
+                title: Text(AppLocalizations.of(context)!.profile),
                 onTap: () {
                   Navigator.popAndPushNamed(context, AppRoutes.userRoute);
                 },
@@ -58,6 +58,7 @@ class AppSidebar extends StatelessWidget {
                   Navigator.popAndPushNamed(context, AppRoutes.projectRoute);
                 },
               ),
+              const Divider(),
               ListTile(
                 leading: const Icon(Icons.nature),
                 title: Text(AppLocalizations.of(context)!.wines),

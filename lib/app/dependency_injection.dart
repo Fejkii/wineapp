@@ -9,6 +9,7 @@ import 'package:wine_app/bloc/theme/settings_cubit.dart';
 import 'package:wine_app/bloc/user/user_cubit.dart';
 import 'package:wine_app/bloc/user_project/user_project_cubit.dart';
 import 'package:wine_app/bloc/vineyard/vineyard_cubit.dart';
+import 'package:wine_app/bloc/vineyard_wine/vineyard_wine_cubit.dart';
 import 'package:wine_app/bloc/wine/wine_cubit.dart';
 import 'package:wine_app/services/navigator_service.dart';
 
@@ -32,4 +33,5 @@ Future<void> initAppDependences() async {
   instance.registerLazySingleton<UserProjectCubit>(() => UserProjectCubit());
   instance.registerLazySingleton<WineCubit>(() => WineCubit());
   instance.registerLazySingleton<VineyardCubit>(() => VineyardCubit());
+  instance.registerLazySingleton<VineyardWineCubit>(() => VineyardWineCubit());
 }

@@ -45,7 +45,7 @@ class _WineEvidenceDetailViewState extends State<WineEvidenceDetailView> {
   @override
   void initState() {
     wineClassificationList = appPreferences.getWineClassificationList() ?? [];
-    wineList = appPreferences.getWineList() ?? [];
+    wineList = appPreferences.getWineBaseList() ?? [];
     selectedWine = null;
     selectedWineClassification = null;
     wineEvidence = null;

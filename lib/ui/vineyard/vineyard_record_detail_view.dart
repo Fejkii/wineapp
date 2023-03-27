@@ -7,6 +7,7 @@ import 'package:wine_app/bloc/vineyard/vineyard_cubit.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:wine_app/const/app_values.dart';
 import 'package:wine_app/model/base/vineyard_model.dart';
+import 'package:wine_app/model/base/vineyard_record_model.dart';
 import 'package:wine_app/ui/widgets/app_buttons.dart';
 import 'package:wine_app/ui/widgets/app_date_picker.dart';
 import 'package:wine_app/ui/widgets/app_loading_indicator.dart';
@@ -15,11 +16,11 @@ import 'package:wine_app/ui/widgets/app_text_form_field.dart';
 import 'package:wine_app/ui/widgets/app_toast_messages.dart';
 
 class VineyardRecordDetailView extends StatefulWidget {
-  final int vineyardId;
+  final VineyardModel vineyard;
   final VineyardRecordModel? vineyardRecord;
   const VineyardRecordDetailView({
     Key? key,
-    required this.vineyardId,
+    required this.vineyard,
     this.vineyardRecord,
   }) : super(key: key);
 
@@ -31,11 +32,13 @@ class _VineyardRecordDetailViewState extends State<VineyardRecordDetailView> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
+  final TextEditingController _ratioController = TextEditingController();
+  final TextEditingController _amountSprayController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   final AppPreferences appPreferences = instance<AppPreferences>();
   final VineyardCubit vineyardCubit = instance<VineyardCubit>();
 
-  late int vineyardId;
+  late VineyardModel vineyard;
   late VineyardRecordModel? vineyardRecord;
   late VineyardRecordTypeModel? selectedVineyardRecordType;
   late List<VineyardRecordTypeModel> vineyardRecordTypeList;
@@ -43,16 +46,20 @@ class _VineyardRecordDetailViewState extends State<VineyardRecordDetailView> {
   @override
   void initState() {
     vineyardRecordTypeList = appPreferences.getVineyardRecordTypeList() ?? [];
-    vineyardId = widget.vineyardId;
+    vineyard = widget.vineyard;
     vineyardRecord = null;
     selectedVineyardRecordType = null;
     if (widget.vineyardRecord != null) {
       vineyardRecord = widget.vineyardRecord;
       selectedVineyardRecordType = vineyardRecord!.vineyardRecordType;
-      _titleController.text = vineyardRecord!.title;
+      _titleController.text = vineyardRecord!.title ?? "";
       _dateController.text = vineyardRecord!.date.toIso8601String();
-      _noteController.text = vineyardRecord!.note;
+      _noteController.text = vineyardRecord!.note ?? "";
+      if (vineyardRecord!.vineyardRecordType.id == VineyardRecordType.spraying.getId()) {
+        _ratioController.text = "";
+      }
     }
+
     super.initState();
   }
 
@@ -71,7 +78,7 @@ class _VineyardRecordDetailViewState extends State<VineyardRecordDetailView> {
         return AppScaffoldLayout(
           body: _form(context),
           appBar: AppBar(
-            title: Text(vineyardRecord != null ? vineyardRecord!.title : AppLocalizations.of(context)!.addRecord),
+            title: Text(vineyardRecord != null ? vineyardRecord!.vineyardRecordType.title : AppLocalizations.of(context)!.addRecord),
             actions: [
               BlocConsumer<VineyardCubit, VineyardState>(
                 listener: (context, state) {
@@ -102,7 +109,7 @@ class _VineyardRecordDetailViewState extends State<VineyardRecordDetailView> {
                                   _noteController.text,
                                 )
                               : vineyardCubit.createVineyardRecord(
-                                  vineyardId,
+                                  vineyard.id,
                                   selectedVineyardRecordType!.id,
                                   _titleController.text,
                                   DateTime.parse(_dateController.text),
@@ -129,6 +136,12 @@ class _VineyardRecordDetailViewState extends State<VineyardRecordDetailView> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
+          const SizedBox(height: AppMargin.m10),
+          AppDatePicker(
+            controller: _dateController,
+            setIcon: true,
+          ),
+          const SizedBox(height: AppMargin.m20),
           DropdownSearch<VineyardRecordTypeModel>(
             popupProps: const PopupProps.menu(showSelectedItems: false, showSearchBox: true),
             items: vineyardRecordTypeList,
@@ -142,23 +155,14 @@ class _VineyardRecordDetailViewState extends State<VineyardRecordDetailView> {
             ),
             onChanged: (VineyardRecordTypeModel? value) {
               setState(() {
-                selectedVineyardRecordType = value!;
+                selectedVineyardRecordType = value;
               });
             },
             selectedItem: selectedVineyardRecordType,
             clearButtonProps: const ClearButtonProps(isVisible: true),
           ),
-          const SizedBox(height: AppMargin.m20),
-          AppTextFormField(
-            controller: _titleController,
-            label: AppLocalizations.of(context)!.title,
-            isRequired: true,
-            inputType: InputType.title,
-          ),
-          const SizedBox(height: AppMargin.m20),
-          AppDatePicker(
-            controller: _dateController,
-          ),
+          _sprayingRecord(),
+          _otherRecord(),
           const SizedBox(height: AppMargin.m20),
           AppTextFormField(
             controller: _noteController,
@@ -168,5 +172,67 @@ class _VineyardRecordDetailViewState extends State<VineyardRecordDetailView> {
         ],
       ),
     );
+  }
+
+  Widget _sprayingRecord() {
+    if (selectedVineyardRecordType != null) {
+      return selectedVineyardRecordType!.id == VineyardRecordType.spraying.getId()
+          ? Column(
+              children: [
+                const SizedBox(height: AppMargin.m20),
+                AppTextFormField(
+                  controller: _titleController,
+                  label: "Název postřiku",
+                  isRequired: true,
+                  inputType: InputType.title,
+                ),
+                const SizedBox(height: AppMargin.m20),
+                Row(
+                  children: [
+                    Flexible(
+                      child: AppTextFormField(
+                        controller: _amountSprayController,
+                        label: "Postřik",
+                        isRequired: true,
+                        inputType: InputType.number,
+                      ),
+                    ),
+                    const SizedBox(width: AppMargin.m20),
+                    Flexible(
+                      child: AppTextFormField(
+                        controller: _ratioController,
+                        label: "Voda",
+                        isRequired: true,
+                        inputType: InputType.number,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            )
+          : Container();
+    } else {
+      return Container();
+    }
+  }
+
+  Widget _otherRecord() {
+    if (selectedVineyardRecordType != null) {
+      return selectedVineyardRecordType!.id == VineyardRecordType.others.getId()
+          ? Column(
+              children: [
+                AppTextFormField(
+                  controller: _titleController,
+                  label: AppLocalizations.of(context)!.title,
+                  isRequired: true,
+                  inputType: InputType.title,
+                ),
+                const SizedBox(height: AppMargin.m10),
+              ],
+            )
+          : Container();
+    } else {
+      return Container();
+    }
   }
 }

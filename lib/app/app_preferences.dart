@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wine_app/model/base/project_model.dart';
 import 'package:wine_app/model/base/project_settings_model.dart';
 import 'package:wine_app/model/base/user_model.dart';
-import 'package:wine_app/model/base/vineyard_model.dart';
+import 'package:wine_app/model/base/vineyard_record_model.dart';
 import 'package:wine_app/model/base/wine_model.dart';
 import 'package:wine_app/model/base/wine_record_model.dart';
 import 'package:wine_app/services/language_service.dart';
@@ -165,7 +165,7 @@ class AppPreferences {
     await _sharedPreferences.setString(AppPreferencesKeys.wines.name, wines);
   }
 
-  List<WineBaseModel>? getWineList() {
+  List<WineBaseModel>? getWineBaseList() {
     List<WineBaseModel> wineList = [];
     (jsonDecode(_sharedPreferences.getString(AppPreferencesKeys.wines.name)!)).forEach((element) {
       wineList.add(WineBaseModel.fromMap(element));
