@@ -118,6 +118,7 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
                           ? AppToastMessage().showToastMsg(AppLocalizations.of(context)!.updatedSuccessfully, ToastStates.success)
                           : AppToastMessage().showToastMsg(AppLocalizations.of(context)!.createdSuccessfully, ToastStates.success);
                     });
+                    Navigator.pop(context);
                   } else if (state is WineFailureState) {
                     AppToastMessage().showToastMsg(state.errorMessage, ToastStates.error);
                   }

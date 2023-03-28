@@ -82,6 +82,7 @@ class _VineyardWineDetailViewState extends State<VineyardWineDetailView> {
                           ? AppToastMessage().showToastMsg(AppLocalizations.of(context)!.updatedSuccessfully, ToastStates.success)
                           : AppToastMessage().showToastMsg(AppLocalizations.of(context)!.createdSuccessfully, ToastStates.success);
                     });
+                    Navigator.pop(context);
                   } else if (state is VineyardWineFailureState) {
                     AppToastMessage().showToastMsg(state.errorMessage, ToastStates.error);
                   }

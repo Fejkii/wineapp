@@ -9,7 +9,7 @@ import 'package:wine_app/ui/widgets/app_list_view.dart';
 import 'package:wine_app/ui/widgets/app_loading_indicator.dart';
 import 'package:wine_app/ui/widgets/app_scaffold_layout.dart';
 import 'package:wine_app/ui/widgets/app_toast_messages.dart';
-import 'package:wine_app/ui/wine/wine_view.dart';
+import 'package:wine_app/ui/wine/wine_detail_view.dart';
 
 class WineListView extends StatefulWidget {
   const WineListView({super.key});
@@ -45,16 +45,16 @@ class _WineListViewState extends State<WineListView> {
         return AppScaffoldLayout(
           body: _wineList(),
           appBar: AppBar(
-            title:  Text(AppLocalizations.of(context)!.wines),
+            title: Text(AppLocalizations.of(context)!.wines),
             actions: [
               IconButton(
                 onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const WineView(wine: null),
+                      builder: (context) => const WineDetailView(wine: null),
                     ),
-                  );
+                  ).then((value) => _getData());
                 },
                 icon: const Icon(Icons.add),
               ),
@@ -100,7 +100,7 @@ class _WineListViewState extends State<WineListView> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => WineView(wine: wineList[index]),
+            builder: (context) => WineDetailView(wine: wineList[index]),
           ),
         ).then((value) => _getData());
       },

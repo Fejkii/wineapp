@@ -123,7 +123,7 @@ class WineEvidenceModel {
   double alcohol;
   double acid;
   double sugar;
-  String note;
+  String? note;
   DateTime createdAt;
   DateTime? updatedAt;
   WineEvidenceModel({
@@ -137,7 +137,7 @@ class WineEvidenceModel {
     required this.alcohol,
     required this.acid,
     required this.sugar,
-    required this.note,
+    this.note,
     required this.createdAt,
     this.updatedAt,
   });

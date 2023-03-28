@@ -1,7 +1,5 @@
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wine_app/app/app_preferences.dart';
 import 'package:wine_app/app/dependency_injection.dart';
 import 'package:wine_app/bloc/wine/wine_cubit.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -13,32 +11,28 @@ import 'package:wine_app/ui/widgets/app_scaffold_layout.dart';
 import 'package:wine_app/ui/widgets/app_text_form_field.dart';
 import 'package:wine_app/ui/widgets/app_toast_messages.dart';
 
-class WineView extends StatefulWidget {
-  final WineModel? wine;
-  const WineView({
+class WineVarietyDetailView extends StatefulWidget {
+  final WineVarietyModel? wineVariety;
+  const WineVarietyDetailView({
     Key? key,
-    this.wine,
+    this.wineVariety,
   }) : super(key: key);
 
   @override
-  State<WineView> createState() => _WineViewState();
+  State<WineVarietyDetailView> createState() => _WineVarietyDetailViewState();
 }
 
-class _WineViewState extends State<WineView> {
+class _WineVarietyDetailViewState extends State<WineVarietyDetailView> {
   final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _codeController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   WineCubit wineCubit = instance<WineCubit>();
-  AppPreferences appPreferences = instance<AppPreferences>();
-  late List<WineVarietyModel> wineVarietyList;
-  late WineVarietyModel? selectedWineVariety;
 
   @override
   void initState() {
-    wineVarietyList = appPreferences.getWineVarietyList() ?? [];
-    selectedWineVariety = null;
-    if (widget.wine != null) {
-      _titleController.text = widget.wine!.title;
-      selectedWineVariety = widget.wine!.wineVariety;
+    if (widget.wineVariety != null) {
+      _titleController.text = widget.wineVariety!.title;
+      _codeController.text = widget.wineVariety!.code;
     }
     super.initState();
   }
@@ -46,6 +40,7 @@ class _WineViewState extends State<WineView> {
   @override
   void dispose() {
     _titleController.dispose();
+    _codeController.dispose();
     super.dispose();
   }
 
@@ -56,16 +51,17 @@ class _WineViewState extends State<WineView> {
         return AppScaffoldLayout(
           body: _form(context),
           appBar: AppBar(
-            title: Text(widget.wine != null ? widget.wine!.title : AppLocalizations.of(context)!.createWine),
+            title: Text(widget.wineVariety != null ? widget.wineVariety!.title : AppLocalizations.of(context)!.createWineVariety),
             actions: [
               BlocConsumer<WineCubit, WineState>(
                 listener: (context, state) {
-                  if (state is WineSuccessState) {
+                  if (state is WineVarietySuccessState) {
                     setState(() {
-                      widget.wine != null
+                      widget.wineVariety != null
                           ? AppToastMessage().showToastMsg(AppLocalizations.of(context)!.updatedSuccessfully, ToastStates.success)
                           : AppToastMessage().showToastMsg(AppLocalizations.of(context)!.createdSuccessfully, ToastStates.success);
                     });
+                    Navigator.pop(context);
                   } else if (state is WineFailureState) {
                     AppToastMessage().showToastMsg(state.errorMessage, ToastStates.error);
                   }
@@ -78,9 +74,9 @@ class _WineViewState extends State<WineView> {
                       iconButtonType: IconButtonType.save,
                       onPress: (() {
                         if (_formKey.currentState!.validate()) {
-                          widget.wine != null
-                              ? wineCubit.updateWine(widget.wine!.id, selectedWineVariety!.id, _titleController.text)
-                              : wineCubit.createWine(_titleController.text, selectedWineVariety!.id);
+                          widget.wineVariety != null
+                              ? wineCubit.updateWineVariety(widget.wineVariety!.id, _titleController.text, _codeController.text)
+                              : wineCubit.createWineVariety(_titleController.text, _codeController.text);
                         }
                       }),
                     );
@@ -102,37 +98,19 @@ class _WineViewState extends State<WineView> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
+          const SizedBox(height: 10),
           AppTextFormField(
             controller: _titleController,
-            label: AppLocalizations.of(context)!.title,
-            inputType: InputType.title,
             isRequired: true,
-            icon: Icons.abc,
+            label: AppLocalizations.of(context)!.title,
+          ),
+          const SizedBox(height: 20),
+          AppTextFormField(
+            controller: _codeController,
+            isRequired: true,
+            label: AppLocalizations.of(context)!.code,
           ),
           const SizedBox(height: AppMargin.m20),
-          DropdownSearch<WineVarietyModel>(
-            popupProps: const PopupProps.menu(showSelectedItems: false, showSearchBox: true),
-            items: wineVarietyList,
-            itemAsString: (WineVarietyModel wv) => wv.title,
-            dropdownDecoratorProps: DropDownDecoratorProps(
-              dropdownSearchDecoration: InputDecoration(
-                labelText: AppLocalizations.of(context)!.wineVarieties,
-                hintText: AppLocalizations.of(context)!.wineVarietySelect,
-              ),
-            ),
-            onChanged: (WineVarietyModel? value) {
-              setState(() {
-                selectedWineVariety = value!;
-              });
-            },
-            selectedItem: selectedWineVariety,
-            validator: (WineVarietyModel? i) {
-              if (i == null) return 'required filed';
-              return null;
-            },
-            clearButtonProps: const ClearButtonProps(isVisible: true),
-            autoValidateMode: AutovalidateMode.onUserInteraction,
-          ),
         ],
       ),
     );

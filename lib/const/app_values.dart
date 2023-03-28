@@ -44,7 +44,11 @@ class AppConstant {
   static const DateTime? NULL_DATE = null;
 }
 
-enum ToastStates { success, error, warning }
+enum ToastStates {
+  success,
+  error,
+  warning,
+}
 
 class AppUnits {
   static const String liter = "l";

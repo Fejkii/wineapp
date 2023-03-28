@@ -59,7 +59,7 @@ class _WineEvidenceDetailViewState extends State<WineEvidenceDetailView> {
       _alcoholController.text = wineEvidence!.alcohol.toString();
       _acidController.text = wineEvidence!.acid.toString();
       _sugarController.text = wineEvidence!.sugar.toString();
-      _noteController.text = wineEvidence!.note;
+      _noteController.text = wineEvidence!.note ?? "";
     }
     super.initState();
   }
@@ -93,6 +93,7 @@ class _WineEvidenceDetailViewState extends State<WineEvidenceDetailView> {
                           ? AppToastMessage().showToastMsg(AppLocalizations.of(context)!.updatedSuccessfully, ToastStates.success)
                           : AppToastMessage().showToastMsg(AppLocalizations.of(context)!.createdSuccessfully, ToastStates.success);
                     });
+                    Navigator.pop(context);
                   } else if (state is WineFailureState) {
                     AppToastMessage().showToastMsg(state.errorMessage, ToastStates.error);
                   }

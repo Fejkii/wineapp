@@ -10,7 +10,7 @@ import 'package:wine_app/ui/widgets/app_list_view.dart';
 import 'package:wine_app/ui/widgets/app_loading_indicator.dart';
 import 'package:wine_app/ui/widgets/app_scaffold_layout.dart';
 import 'package:wine_app/ui/widgets/app_toast_messages.dart';
-import 'package:wine_app/ui/wine/wine_variety_view.dart';
+import 'package:wine_app/ui/wine/wine_variety_detail_view.dart';
 
 class WineVarietyListView extends StatefulWidget {
   const WineVarietyListView({super.key});
@@ -26,13 +26,17 @@ class _WineVarietyListViewState extends State<WineVarietyListView> {
   @override
   void initState() {
     wineVarietyList = [];
-    wineCubit.getWineVarietyList(instance<AppPreferences>().getProject()!.id);
+    _getData();
     super.initState();
   }
 
   @override
   void dispose() {
     super.dispose();
+  }
+
+  void _getData() {
+    wineCubit.getWineVarietyList(instance<AppPreferences>().getProject()!.id);
   }
 
   @override
@@ -49,9 +53,9 @@ class _WineVarietyListViewState extends State<WineVarietyListView> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const WineVarietyView(),
+                      builder: (context) => const WineVarietyDetailView(),
                     ),
-                  );
+                  ).then((value) => _getData());
                 },
                 icon: const Icon(Icons.add),
               ),
@@ -94,9 +98,9 @@ class _WineVarietyListViewState extends State<WineVarietyListView> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => WineVarietyView(wineVariety: wineVarietyList[index]),
+            builder: (context) => WineVarietyDetailView(wineVariety: wineVarietyList[index]),
           ),
-        );
+        ).then((value) => _getData());
       },
     );
   }

@@ -90,10 +90,7 @@ class _WineEvidenceViewState extends State<WineEvidenceView> {
             AppIconButton(
               iconButtonType: IconButtonType.save,
               onPress: () {
-                wineCubit.updateWineEvidenceVolume(
-                  wineEvidence.id,
-                  wineVolume.toDouble()
-                );
+                wineCubit.updateWineEvidenceVolume(wineEvidence.id, wineVolume.toDouble());
               },
             ),
           ],
@@ -147,7 +144,7 @@ class _WineEvidenceViewState extends State<WineEvidenceView> {
         if (wineEvidence.note != AppConstant.EMPTY)
           TableRow(children: [
             TableCell(child: Text(AppLocalizations.of(context)!.note)),
-            TableCell(child: Text(wineEvidence.note)),
+            TableCell(child: Text(wineEvidence.note!)),
           ]),
       ],
     );
