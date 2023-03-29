@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class AppMargin {
   static const double m5 = 5.0;
   static const double m10 = 10.0;
@@ -51,8 +54,14 @@ enum ToastStates {
 }
 
 class AppUnits {
-  static const String liter = "l";
-  static const String mililiter = "ml";
+  static const String miliLiter = "ml";
   static const String percent = "%";
   static const String squareMeter = "m\u00B2";
+  static const String gramPerOneLiter = "g/1l";
+
+  String liter(TextEditingController controller, BuildContext context) {
+    return controller.text != ""
+        ? AppLocalizations.of(context)!.unitLiter(double.parse(controller.text))
+        : AppLocalizations.of(context)!.unitLiter(0);
+  }
 }

@@ -85,13 +85,13 @@
     "wineClassification": "Wine Classification",
     "createWineVariety": "New Wine Varietiy",
     "wineEvidence": "Wine Evidence",
-    "wineQuantity": "Amount of wine in l",
+    "wineQuantity": "Amount of wine",
     "vineyardWineQuantity": "Number of headers",
     "vineyardWines": "Overview of headers",
     "year": "Year of manufacture",
-    "alcohol": "Alcohol in %",
-    "acid": "Acid in g for 1l",
-    "sugar": "Residual sugar in g for 1l",
+    "alcohol": "Alcohol",
+    "acid": "Acid",
+    "sugar": "Residual sugar",
     "note": "Note",
     "addRecord": "Add Record",
     "wineRecordType": "Wine Record type",
@@ -104,5 +104,15 @@
     "liquidSulfurDosage": "Recommended dosage of liquid sulfur",
     "vineyards": "Vineyards",
     "changeTheme": "Change dark or light theme",
-    "changeLanguage": "Select language"
+    "changeLanguage": "Select language",
+    "@units": {},
+    "unitLiter": "{count, plural, ={liters} =0{liters} =1{liter} =2{liters} =3{liters} =4{liters} other{liters}}",
+    "@unitLiter": {
+        "description": "A plural message",
+        "placeholders": {
+            "count": {
+                "type": "num?"
+            }
+        }
+    }
 }

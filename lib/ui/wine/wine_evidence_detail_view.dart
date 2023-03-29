@@ -228,6 +228,7 @@ class _WineEvidenceDetailViewState extends State<WineEvidenceDetailView> {
             label: AppLocalizations.of(context)!.wineQuantity,
             isRequired: true,
             keyboardType: TextInputType.number,
+            unit: AppUnits().liter(_volumeController, context),
           ),
           const SizedBox(height: AppMargin.m20),
           AppTextFormField(
@@ -241,18 +242,21 @@ class _WineEvidenceDetailViewState extends State<WineEvidenceDetailView> {
             controller: _alcoholController,
             label: AppLocalizations.of(context)!.alcohol,
             keyboardType: TextInputType.number,
+            unit: AppUnits.percent,
           ),
           const SizedBox(height: AppMargin.m20),
           AppTextFormField(
             controller: _acidController,
             label: AppLocalizations.of(context)!.acid,
             keyboardType: TextInputType.number,
+            unit: AppUnits.gramPerOneLiter,
           ),
           const SizedBox(height: AppMargin.m20),
           AppTextFormField(
             controller: _sugarController,
             label: AppLocalizations.of(context)!.sugar,
             keyboardType: TextInputType.number,
+            unit: AppUnits.gramPerOneLiter,
           ),
           const SizedBox(height: AppMargin.m20),
           AppTextFormField(

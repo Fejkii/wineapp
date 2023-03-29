@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:wine_app/app/app_functions.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import 'package:wine_app/app/app_functions.dart';
 
 enum InputType {
   email,
@@ -21,6 +22,7 @@ class AppTextFormField extends StatefulWidget {
   final bool? isRequired;
   final String? errorMessage;
   final IconData? icon;
+  final String? unit;
   final Function(String)? onChange;
 
   const AppTextFormField({
@@ -32,6 +34,7 @@ class AppTextFormField extends StatefulWidget {
     this.isRequired = false,
     this.errorMessage,
     this.icon,
+    this.unit,
     this.onChange,
   }) : super(key: key);
 
@@ -52,6 +55,19 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
             _obscured ? Icons.visibility_rounded : Icons.visibility_off_rounded,
             size: 24,
           ),
+        ),
+      );
+    }
+    return null;
+  }
+
+  Widget? showUnit() {
+    if (widget.unit != null) {
+      return Padding(
+        padding: const EdgeInsets.fromLTRB(0, 12, 0, 0),
+        child: Text(
+          widget.unit!,
+          style: const TextStyle(fontSize: 16),
         ),
       );
     }
@@ -102,7 +118,7 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
               )
             : null,
         isDense: true,
-        suffixIcon: showPasswordIcon(),
+        suffixIcon: widget.unit != null ? showUnit() : showPasswordIcon(),
       ),
       maxLines: widget.inputType == InputType.note ? 3 : 1,
       validator: (value) {

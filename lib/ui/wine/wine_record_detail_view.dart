@@ -35,6 +35,9 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
   final TextEditingController _freeSulfureController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
+  final TextEditingController _volumeController = TextEditingController();
+  final TextEditingController _requiredSulphurisationController = TextEditingController();
+  final TextEditingController _liquidSulfurController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   final AppPreferences appPreferences = instance<AppPreferences>();
   final WineCubit wineCubit = instance<WineCubit>();
@@ -59,6 +62,10 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
     wineEvidenceId = widget.wineEvidence.id;
     wineRecord = null;
     selectedWineRecordType = null;
+    _requiredSulphurisationController.text = defaultFreeSulfure.toStringAsFixed(0);
+    _liquidSulfurController.text = defaultLiquidSulfur.toStringAsFixed(0);
+    _volumeController.text = widget.wineEvidence.volume.toStringAsFixed(0);
+
     if (widget.wineRecord != null) {
       wineRecord = widget.wineRecord;
       selectedWineRecordType = wineRecord!.wineRecordType;
@@ -67,22 +74,23 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
       _titleController.text = wineRecord!.title ?? "";
 
       if (wineRecord!.wineRecordType.id == WineRecordType.measurementFreeSulfure.getId()) {
-        String value = WineRecordFreeSulfure.fromJson(wineRecord!.data).freeSulfure.toStringAsFixed(2);
-        _freeSulfureController.text = value;
-        _freeSulfureCalculate(double.parse(value));
+        double freeSulfure = WineRecordFreeSulfure.fromJson(wineRecord!.data).freeSulfure;
+        double volume = WineRecordFreeSulfure.fromJson(wineRecord!.data).volume;
+        double requiredSulphurisation = WineRecordFreeSulfure.fromJson(wineRecord!.data).requiredSulphurisation;
+        double liquidSulfur = WineRecordFreeSulfure.fromJson(wineRecord!.data).liquidSulfur;
+        _freeSulfureCalculate(volume, freeSulfure, requiredSulphurisation, liquidSulfur);
+        _volumeController.text = volume.toStringAsFixed(0);
+        _freeSulfureController.text = freeSulfure.toStringAsFixed(0);
+        _requiredSulphurisationController.text = requiredSulphurisation.toStringAsFixed(0);
+        _liquidSulfurController.text = liquidSulfur.toStringAsFixed(0);
       }
     }
 
-    _freeSulfureController.addListener(() {
-      setState(() {
-        if (_freeSulfureController.text != "") {
-          _freeSulfureCalculate(double.parse(_freeSulfureController.text));
-        } else {
-          sulfirizationBy = 0;
-          dosage = 0;
-        }
-      });
-    });
+    _freeSulfureListener(_volumeController);
+    _freeSulfureListener(_freeSulfureController);
+    _freeSulfureListener(_requiredSulphurisationController);
+    _freeSulfureListener(_liquidSulfurController);
+
     super.initState();
   }
 
@@ -92,13 +100,37 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
     _noteController.dispose();
     _titleController.dispose();
     _freeSulfureController.dispose();
+    _requiredSulphurisationController.dispose();
+    _liquidSulfurController.dispose();
+    _volumeController.dispose();
     super.dispose();
   }
 
-  void _freeSulfureCalculate(double value) {
-    double sulfirization = appPreferences.getProjectSettings()!.defaultFreeSulfur - value;
+  void _freeSulfureListener(TextEditingController controller) {
+    controller.addListener(() {
+      setState(() {
+        if (_volumeController.text != "" &&
+            _freeSulfureController.text != "" &&
+            _requiredSulphurisationController.text != "" &&
+            _liquidSulfurController.text != "") {
+          _freeSulfureCalculate(
+            double.parse(_volumeController.text),
+            double.parse(_freeSulfureController.text),
+            double.parse(_requiredSulphurisationController.text),
+            double.parse(_liquidSulfurController.text),
+          );
+        } else {
+          sulfirizationBy = 0;
+          dosage = 0;
+        }
+      });
+    });
+  }
+
+  void _freeSulfureCalculate(double volume, double measuredSulfure, double requiredSulphurisation, double liquidSulfur) {
+    double sulfirization = requiredSulphurisation - measuredSulfure;
     sulfirizationBy = sulfirization > 0 ? sulfirization : 0;
-    dosage = widget.wineEvidence.volume * (0.01 * sulfirizationBy) * (10 / defaultLiquidSulfur);
+    dosage = volume * (0.01 * sulfirizationBy) * (10 / liquidSulfur);
   }
 
   @override
@@ -135,8 +167,8 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
                             data = WineRecordFreeSulfure(
                               freeSulfure: double.parse(_freeSulfureController.text),
                               volume: widget.wineEvidence.volume,
-                              requiredSulphurisation: defaultFreeSulfure,
-                              liquidSulfur: defaultLiquidSulfur,
+                              requiredSulphurisation: double.parse(_requiredSulphurisationController.text),
+                              liquidSulfur: double.parse(_liquidSulfurController.text),
                               sulfurizationBy: sulfirizationBy,
                               liquidSulfurDosage: double.parse(dosage.toStringAsFixed(2)),
                             ).toJson();
@@ -243,16 +275,74 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
                   keyboardType: TextInputType.number,
                 ),
                 const SizedBox(height: AppMargin.m10),
-                AppTextWithValue(text: AppLocalizations.of(context)!.wineQuantity, value: widget.wineEvidence.volume, unit: AppUnits.liter),
-                AppTextWithValue(text: AppLocalizations.of(context)!.requiredSulphurisation, value: defaultFreeSulfure.toStringAsFixed(0)),
-                AppTextWithValue(
-                    text: AppLocalizations.of(context)!.liquidSulfur, value: defaultLiquidSulfur.toStringAsFixed(0), unit: AppUnits.percent),
-                Column(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    AppTextWithValue(text: AppLocalizations.of(context)!.sulfurizationBy, value: sulfirizationBy.toStringAsFixed(0)),
-                    AppTextWithValue(
-                        text: AppLocalizations.of(context)!.liquidSulfurDosage, value: dosage.toStringAsFixed(2), unit: AppUnits.mililiter),
+                    Flexible(
+                      child: AppTextWithValue(
+                        text: AppLocalizations.of(context)!.wineQuantity,
+                        value: "",
+                      ),
+                    ),
+                    Flexible(
+                      child: AppTextFormField(
+                          controller: _volumeController,
+                          isRequired: true,
+                          label: "",
+                          keyboardType: TextInputType.number,
+                          unit: AppUnits().liter(_volumeController, context)),
+                    ),
                   ],
+                ),
+                const SizedBox(height: AppMargin.m10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(
+                      child: AppTextWithValue(
+                        text: AppLocalizations.of(context)!.requiredSulphurisation,
+                        value: "",
+                      ),
+                    ),
+                    Flexible(
+                      child: AppTextFormField(
+                        controller: _requiredSulphurisationController,
+                        isRequired: true,
+                        label: "",
+                        keyboardType: TextInputType.number,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: AppMargin.m10),
+                Row(
+                  children: [
+                    Flexible(
+                      child: AppTextWithValue(
+                        text: AppLocalizations.of(context)!.liquidSulfur,
+                        value: "",
+                      ),
+                    ),
+                    Flexible(
+                      child: AppTextFormField(
+                        controller: _liquidSulfurController,
+                        isRequired: true,
+                        label: "",
+                        keyboardType: TextInputType.number,
+                        unit: AppUnits.percent,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: AppMargin.m10),
+                AppTextWithValue(
+                  text: AppLocalizations.of(context)!.sulfurizationBy,
+                  value: sulfirizationBy.toStringAsFixed(0),
+                ),
+                AppTextWithValue(
+                  text: AppLocalizations.of(context)!.liquidSulfurDosage,
+                  value: dosage.toStringAsFixed(1),
+                  unit: AppUnits.miliLiter,
                 )
               ],
             )

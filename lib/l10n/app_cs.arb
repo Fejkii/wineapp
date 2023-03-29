@@ -85,13 +85,13 @@
     "wineClassification": "Klasifikace vína",
     "createWineVariety": "Vytvořit odrůdu vína",
     "wineEvidence": "Evidence vín",
-    "wineQuantity": "Množství vína v l",
+    "wineQuantity": "Množství vína",
     "vineyardWineQuantity": "Počet hlaviček",
     "vineyardWines": "Přehled hlaviček",
     "year": "Rok výroby",
-    "alcohol": "Alokohol v %",
-    "acid": "Kyseliny v g na 1l",
-    "sugar": "Zbytkový cukr g na 1l",
+    "alcohol": "Alokohol",
+    "acid": "Kyseliny",
+    "sugar": "Zbytkový cukr",
     "note": "Poznámka",
     "addRecord": "Přidat záznam",
     "wineRecordType": "Typ záznamu vín",
@@ -104,5 +104,15 @@
     "liquidSulfurDosage": "Doporučené dávkování tekuté síry",
     "vineyards": "Vinohrady",
     "changeTheme": "Změnit světlý nebo tmavý režim",
-    "changeLanguage": "Změnit jazyk"
+    "changeLanguage": "Změnit jazyk",
+    "@units": {},
+    "unitLiter": "{count, plural, ={litrů} =0{litrů} =1{litr} =2{litry} =3{litry} =4{litry} other{litrů}}",
+    "@unitLiter": {
+        "description": "A plural message",
+        "placeholders": {
+            "count": {
+                "type": "num"
+            }
+        }
+    }
 }

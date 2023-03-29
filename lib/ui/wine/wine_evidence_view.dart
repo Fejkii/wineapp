@@ -90,6 +90,7 @@ class _WineEvidenceViewState extends State<WineEvidenceView> {
             AppIconButton(
               iconButtonType: IconButtonType.save,
               onPress: () {
+                wineEvidence.volume = wineVolume.toDouble();
                 wineCubit.updateWineEvidenceVolume(wineEvidence.id, wineVolume.toDouble());
               },
             ),

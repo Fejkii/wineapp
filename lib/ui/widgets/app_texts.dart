@@ -7,7 +7,7 @@ class AppTitleText extends StatelessWidget {
   const AppTitleText({
     required this.text,
     Key? key,
-    this.size = 25,
+    this.size = 22,
     this.color,
   }) : super(key: key);
 
@@ -30,7 +30,7 @@ class AppContentTitleText extends StatelessWidget {
   const AppContentTitleText({
     Key? key,
     required this.text,
-    this.size = 16,
+    this.size = 15,
   }) : super(key: key);
 
   @override
@@ -51,7 +51,7 @@ class AppContentText extends StatelessWidget {
   const AppContentText({
     Key? key,
     required this.text,
-    this.size = 16,
+    this.size = 15,
   }) : super(key: key);
 
   @override
@@ -90,7 +90,7 @@ class AppTextWithValue extends StatelessWidget {
         Text(
           content,
           style: const TextStyle(
-            fontSize: 16,
+            fontSize: 15,
             fontWeight: FontWeight.bold,
           ),
         ),
