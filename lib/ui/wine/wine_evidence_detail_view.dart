@@ -110,24 +110,24 @@ class _WineEvidenceDetailViewState extends State<WineEvidenceDetailView> {
                               ? wineCubit.updateWineEvidence(
                                   wineEvidence!.id,
                                   selectedWine!.id,
-                                  selectedWineClassification!.id,
+                                  selectedWineClassification != null ? selectedWineClassification!.id : null,
                                   _titleController.text,
                                   double.parse(_volumeController.text),
                                   int.parse(_yearController.text),
-                                  double.parse(_alcoholController.text),
-                                  double.parse(_acidController.text),
-                                  double.parse(_sugarController.text),
+                                  double.tryParse(_alcoholController.text),
+                                  double.tryParse(_acidController.text),
+                                  double.tryParse(_sugarController.text),
                                   _noteController.text,
                                 )
                               : wineCubit.createWineEvidence(
                                   selectedWine!.id,
-                                  selectedWineClassification!.id,
+                                  selectedWineClassification != null ? selectedWineClassification!.id : null,
                                   _titleController.text,
                                   double.parse(_volumeController.text),
                                   int.parse(_yearController.text),
-                                  double.parse(_alcoholController.text),
-                                  double.parse(_acidController.text),
-                                  double.parse(_sugarController.text),
+                                  double.tryParse(_alcoholController.text),
+                                  double.tryParse(_acidController.text),
+                                  double.tryParse(_sugarController.text),
                                   _noteController.text,
                                 );
                         }
@@ -189,16 +189,16 @@ class _WineEvidenceDetailViewState extends State<WineEvidenceDetailView> {
           DropdownSearch<WineBaseModel>(
             popupProps: const PopupProps.menu(showSelectedItems: false, showSearchBox: true),
             items: wineList,
-            itemAsString: (WineBaseModel wc) => wc.title,
+            itemAsString: (WineBaseModel wine) => wine.title,
             dropdownDecoratorProps: DropDownDecoratorProps(
               dropdownSearchDecoration: InputDecoration(
-                labelText: AppLocalizations.of(context)!.wines,
+                labelText: AppLocalizations.of(context)!.wine,
                 hintText: AppLocalizations.of(context)!.selectInSelectBox,
               ),
             ),
-            onChanged: (WineBaseModel? value) {
+            onChanged: (WineBaseModel? wine) {
               setState(() {
-                selectedWine = value!;
+                selectedWine = wine!;
               });
             },
             selectedItem: selectedWine,
@@ -207,16 +207,16 @@ class _WineEvidenceDetailViewState extends State<WineEvidenceDetailView> {
           DropdownSearch<WineClassificationModel>(
             popupProps: const PopupProps.menu(showSelectedItems: false, showSearchBox: true),
             items: wineClassificationList,
-            itemAsString: (WineClassificationModel wc) => wc.title,
+            itemAsString: (WineClassificationModel wineClassification) => wineClassification.title,
             dropdownDecoratorProps: DropDownDecoratorProps(
               dropdownSearchDecoration: InputDecoration(
                 labelText: AppLocalizations.of(context)!.wineClassification,
                 hintText: AppLocalizations.of(context)!.selectInSelectBox,
               ),
             ),
-            onChanged: (WineClassificationModel? value) {
+            onChanged: (WineClassificationModel? wineClassification) {
               setState(() {
-                selectedWineClassification = value!;
+                selectedWineClassification = wineClassification!;
               });
             },
             selectedItem: selectedWineClassification,
