@@ -6,6 +6,7 @@ import 'package:wine_app/bloc/wine/wine_cubit.dart';
 import 'package:wine_app/const/app_values.dart';
 import 'package:wine_app/model/base/wine_model.dart';
 import 'package:wine_app/model/base/wine_record_model.dart';
+import 'package:wine_app/ui/theme/app_colors.dart';
 import 'package:wine_app/ui/widgets/app_list_view.dart';
 import 'package:wine_app/ui/widgets/app_loading_indicator.dart';
 import 'package:wine_app/ui/widgets/app_toast_messages.dart';
@@ -96,6 +97,7 @@ class _WineRecordListState extends State<WineRecordList> {
           ),
         ).then((value) => _getData());
       },
+      itemColor: wineRecordList[index].isInProgress == true ? AppColors.lightGreen : null,
     );
   }
 }

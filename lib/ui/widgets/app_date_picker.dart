@@ -5,14 +5,14 @@ class AppDatePicker extends StatefulWidget {
   final TextEditingController controller;
   final String? label;
   final DateTime? initDate;
-  final bool? isRequired;
+  final bool? fillDate;
   final bool? setIcon;
   const AppDatePicker({
     Key? key,
     required this.controller,
     this.label,
     this.initDate,
-    this.isRequired,
+    this.fillDate,
     this.setIcon,
   }) : super(key: key);
 
@@ -32,7 +32,9 @@ class _AppDatePickerState extends State<AppDatePicker> {
     if (widget.initDate != null) {
       selectedDate = widget.initDate!;
     }
-    widget.controller.text = selectedDate.toString();
+    if (widget.fillDate == null || widget.fillDate == true) {
+      widget.controller.text = selectedDate.toString();
+    }
   }
 
   @override

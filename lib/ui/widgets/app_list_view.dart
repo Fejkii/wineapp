@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+
 import 'package:wine_app/const/app_values.dart';
 import 'package:wine_app/ui/theme/app_colors.dart';
 import 'package:wine_app/ui/widgets/app_texts.dart';
@@ -43,11 +44,13 @@ class AppListViewItem extends StatelessWidget {
   final Widget itemBody;
   final Function()? onTap;
   final Function(BuildContext?)? onDelete;
+  final Color? itemColor;
   const AppListViewItem({
     Key? key,
     required this.itemBody,
     this.onTap,
     this.onDelete,
+    this.itemColor,
   }) : super(key: key);
 
   @override
@@ -70,6 +73,7 @@ class AppListViewItem extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         child: Card(
+          color: itemColor,
           child: Center(
             heightFactor: 2.5,
             child: Container(

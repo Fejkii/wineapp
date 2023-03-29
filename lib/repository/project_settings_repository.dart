@@ -3,7 +3,7 @@ import 'package:wine_app/api/api_result_handler.dart';
 import 'package:wine_app/app/dependency_injection.dart';
 import 'package:wine_app/const/api_endpoints.dart';
 
-class ProjectsettingsRepository {
+class ProjectSettingsRepository {
   Future<ApiResults> updateProjectSettings(
     int projectSettingsId,
     double defaultFreeSulfur,

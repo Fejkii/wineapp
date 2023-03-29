@@ -15,7 +15,7 @@ class ProjectSettingsCubit extends Cubit<ProjectSettingsState> {
 
   void getProjectSettings(int projectId) async {
     emit(ProjectSettingsLoadingState());
-    ApiResults apiResults = await ProjectsettingsRepository().getProjectSettings(projectId);
+    ApiResults apiResults = await ProjectSettingsRepository().getProjectSettings(projectId);
     if (apiResults is ApiSuccess) {
       ProjectSettingsModel projectSettings = ProjectSettingsModel.fromMap(apiResults.data);
       await appPreferences.setProjectSettings(projectSettings);
@@ -27,9 +27,13 @@ class ProjectSettingsCubit extends Cubit<ProjectSettingsState> {
 
   void updateProjectSettings(int projectsettingsId, double defaultFreeSulfur, double defaultLiquidSulfur) async {
     emit(ProjectSettingsLoadingState());
-    ApiResults apiResults = await ProjectsettingsRepository().updateProjectSettings(projectsettingsId, defaultFreeSulfur, defaultLiquidSulfur);
+    ApiResults apiResults = await ProjectSettingsRepository().updateProjectSettings(projectsettingsId, defaultFreeSulfur, defaultLiquidSulfur);
     if (apiResults is ApiSuccess) {
-      await appPreferences.setProjectSettings(ProjectSettingsModel(id: projectsettingsId, projectId: appPreferences.getProject()!.id, defaultFreeSulfur: defaultFreeSulfur, defaultLiquidSulfur: defaultLiquidSulfur));
+      await appPreferences.setProjectSettings(ProjectSettingsModel(
+          id: projectsettingsId,
+          projectId: appPreferences.getProject()!.id,
+          defaultFreeSulfur: defaultFreeSulfur,
+          defaultLiquidSulfur: defaultLiquidSulfur));
       emit(ProjectSettingsSuccessState());
     } else if (apiResults is ApiFailure) {
       emit(ProjectSettingsFailureState(apiResults.message));

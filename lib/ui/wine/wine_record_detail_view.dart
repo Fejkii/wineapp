@@ -34,6 +34,7 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _freeSulfureController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
+  final TextEditingController _dateToController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
   final TextEditingController _volumeController = TextEditingController();
   final TextEditingController _requiredSulphurisationController = TextEditingController();
@@ -48,6 +49,7 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
   late List<WineRecordTypeModel> wineRecordTypeList;
   late double defaultFreeSulfure;
   late double defaultLiquidSulfur;
+  late bool _isInProgress;
 
   double sulfirizationBy = 0;
   double dosage = 0;
@@ -65,6 +67,7 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
     _requiredSulphurisationController.text = defaultFreeSulfure.toStringAsFixed(0);
     _liquidSulfurController.text = defaultLiquidSulfur.toStringAsFixed(0);
     _volumeController.text = widget.wineEvidence.volume.toStringAsFixed(0);
+    _isInProgress = false;
 
     if (widget.wineRecord != null) {
       wineRecord = widget.wineRecord;
@@ -84,6 +87,11 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
         _requiredSulphurisationController.text = requiredSulphurisation.toStringAsFixed(0);
         _liquidSulfurController.text = liquidSulfur.toStringAsFixed(0);
       }
+
+      if (wineRecord!.wineRecordType.id == WineRecordType.fermentation.getId()) {
+        _dateToController.text = wineRecord!.dateTo != null ? wineRecord!.dateTo!.toIso8601String() : "";
+        _isInProgress = wineRecord!.isInProgress != null ? wineRecord!.isInProgress! : false;
+      }
     }
 
     _freeSulfureListener(_volumeController);
@@ -97,6 +105,7 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
   @override
   void dispose() {
     _dateController.dispose();
+    _dateToController.dispose();
     _noteController.dispose();
     _titleController.dispose();
     _freeSulfureController.dispose();
@@ -178,6 +187,8 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
                               wineRecord!.id,
                               selectedWineRecordType!.id,
                               DateTime.parse(_dateController.text),
+                              _isInProgress,
+                              DateTime.tryParse(_dateToController.text),
                               _titleController.text,
                               data,
                               _noteController.text,
@@ -187,6 +198,8 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
                               wineEvidenceId,
                               selectedWineRecordType!.id,
                               DateTime.parse(_dateController.text),
+                              _isInProgress,
+                              DateTime.tryParse(_dateToController.text),
                               _titleController.text,
                               data,
                               _noteController.text,
@@ -239,6 +252,7 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
             clearButtonProps: const ClearButtonProps(isVisible: true),
           ),
           _freeSulfure(),
+          _fermentation(),
           _otherRecord(),
           const SizedBox(height: AppMargin.m20),
           AppTextFormField(
@@ -344,6 +358,41 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
                   value: dosage.toStringAsFixed(1),
                   unit: AppUnits.miliLiter,
                 )
+              ],
+            )
+          : Container();
+    } else {
+      return Container();
+    }
+  }
+
+  Widget _fermentation() {
+    if (selectedWineRecordType != null) {
+      return selectedWineRecordType!.id == WineRecordType.fermentation.getId()
+          ? Column(
+              children: [
+                const SizedBox(height: AppMargin.m20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(AppLocalizations.of(context)!.inProgress),
+                    Switch(
+                      value: _isInProgress,
+                      onChanged: (value) {
+                        setState(() {
+                          _isInProgress = !_isInProgress;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+                const SizedBox(height: AppMargin.m20),
+                AppDatePicker(
+                  controller: _dateToController,
+                  label: AppLocalizations.of(context)!.dateTo,
+                  fillDate: false,
+                  setIcon: true,
+                ),
               ],
             )
           : Container();

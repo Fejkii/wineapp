@@ -20,6 +20,7 @@ class AppColors {
   static Color lightBlue = Colors.blue[200]!;
   static Color blueAcctent = Colors.blueAccent;
   static Color green = Colors.green;
+  static Color lightGreen = Colors.lightGreen;
 
   static Color error = Colors.redAccent;
 }

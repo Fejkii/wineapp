@@ -5,6 +5,8 @@ class WineRecordModel {
   int wineEvidenceId;
   WineRecordTypeModel wineRecordType;
   DateTime date;
+  bool? isInProgress;
+  DateTime? dateTo;
   String? note;
   String? title;
   dynamic data;
@@ -15,9 +17,11 @@ class WineRecordModel {
     required this.wineEvidenceId,
     required this.wineRecordType,
     required this.date,
-    required this.title,
+    this.isInProgress,
+    this.dateTo,
+    this.note,
+    this.title,
     required this.data,
-    required this.note,
     required this.createdAt,
     this.updatedAt,
   });
@@ -28,9 +32,11 @@ class WineRecordModel {
       'wine_evidence_id': wineEvidenceId,
       'wine_record_type': wineRecordType.toMap(),
       'date': date.millisecondsSinceEpoch,
+      'is_in_rogress': isInProgress,
+      'date_to': dateTo?.millisecondsSinceEpoch,
+      'note': note,
       'title': title,
       'data': data,
-      'note': note,
       'created_at': createdAt.millisecondsSinceEpoch,
       'updated_at': updatedAt?.millisecondsSinceEpoch,
     };
@@ -42,9 +48,11 @@ class WineRecordModel {
       wineEvidenceId: map['wine_evidence_id']?.toInt() ?? 0,
       wineRecordType: WineRecordTypeModel.fromMap(map['wine_record_type']),
       date: DateTime.parse(map['date']),
+      isInProgress: map['is_in_progress'],
+      dateTo: map['date_to'] != null ? DateTime.parse(map['date_to']) : null,
+      note: map['note'],
       title: map['title'],
       data: map['data'],
-      note: map['note'],
       createdAt: DateTime.parse(map['created_at']),
       updatedAt: map['updated_at'] != null ? DateTime.parse(map['updated_at']) : null,
     );
