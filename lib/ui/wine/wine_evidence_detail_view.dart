@@ -198,10 +198,15 @@ class _WineEvidenceDetailViewState extends State<WineEvidenceDetailView> {
             ),
             onChanged: (WineBaseModel? wine) {
               setState(() {
-                selectedWine = wine!;
+                selectedWine = wine;
               });
             },
             selectedItem: selectedWine,
+            validator: (WineBaseModel? item) {
+              if (item == null) return AppLocalizations.of(context)!.inputEmpty;
+              return null;
+            },
+            autoValidateMode: AutovalidateMode.onUserInteraction,
             clearButtonProps: const ClearButtonProps(isVisible: true),
           ),
           DropdownSearch<WineClassificationModel>(

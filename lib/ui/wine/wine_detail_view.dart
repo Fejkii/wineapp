@@ -123,12 +123,12 @@ class _WineDetailViewState extends State<WineDetailView> {
             ),
             onChanged: (WineVarietyModel? value) {
               setState(() {
-                selectedWineVariety = value!;
+                selectedWineVariety = value;
               });
             },
             selectedItem: selectedWineVariety,
-            validator: (WineVarietyModel? i) {
-              if (i == null) return 'required filed';
+            validator: (WineVarietyModel? wineVariety) {
+              if (wineVariety == null) return AppLocalizations.of(context)!.inputEmpty;
               return null;
             },
             clearButtonProps: const ClearButtonProps(isVisible: true),

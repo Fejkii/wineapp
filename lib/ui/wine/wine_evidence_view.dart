@@ -123,15 +123,15 @@ class _WineEvidenceViewState extends State<WineEvidenceView> {
       children: [
         TableRow(children: [
           TableCell(child: Text(AppLocalizations.of(context)!.acid)),
-          TableCell(child: Text(wineEvidence.acid.toString())),
+          TableCell(child: Text(wineEvidence.acid != null ? wineEvidence.acid.toString() : AppLocalizations.of(context)!.undefinied)),
         ]),
         TableRow(children: [
           TableCell(child: Text(AppLocalizations.of(context)!.sugar)),
-          TableCell(child: Text(wineEvidence.sugar.toString())),
+          TableCell(child: Text(wineEvidence.sugar != null ? wineEvidence.sugar.toString() : AppLocalizations.of(context)!.undefinied)),
         ]),
         TableRow(children: [
           TableCell(child: Text(AppLocalizations.of(context)!.alcohol)),
-          TableCell(child: Text(wineEvidence.alcohol.toString())),
+          TableCell(child: Text(wineEvidence.alcohol != null ? wineEvidence.alcohol.toString() : AppLocalizations.of(context)!.undefinied)),
         ]),
         TableRow(children: [
           TableCell(child: Text(AppLocalizations.of(context)!.created)),
@@ -142,7 +142,7 @@ class _WineEvidenceViewState extends State<WineEvidenceView> {
             TableCell(child: Text(AppLocalizations.of(context)!.updated)),
             TableCell(child: Text(appFormatDate(wineEvidence.updatedAt!))),
           ]),
-        if (wineEvidence.note != AppConstant.EMPTY)
+        if (wineEvidence.note != null && wineEvidence.note != AppConstant.EMPTY)
           TableRow(children: [
             TableCell(child: Text(AppLocalizations.of(context)!.note)),
             TableCell(child: Text(wineEvidence.note!)),

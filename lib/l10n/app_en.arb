@@ -20,7 +20,7 @@
     "code": "Code",
     "titleError": "Invalid title",
     "valueError": "Invalid value",
-    "inputEmpty": "Please enter some value",
+    "inputEmpty": "Required field",
     "selectInSelectBox": "Select some value",
     "selectBoxEmpty": "Please slect some value",
     "emptyData": "No Result Found",
@@ -107,6 +107,7 @@
     "vineyards": "Vineyards",
     "changeTheme": "Change dark or light theme",
     "changeLanguage": "Select language",
+    "undefinied": "Undefinied",
     "@units": {},
     "unitLiter": "{count, plural, ={liters} =0{liters} =1{liter} =2{liters} =3{liters} =4{liters} other{liters}}",
     "@unitLiter": {

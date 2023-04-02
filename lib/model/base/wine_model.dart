@@ -116,13 +116,13 @@ class WineEvidenceModel {
   int id;
   int projectId;
   WineBaseModel wine;
-  WineClassificationModel wineClassification;
+  WineClassificationModel? wineClassification;
   String title;
   double volume;
   int year;
-  double alcohol;
-  double acid;
-  double sugar;
+  double? alcohol;
+  double? acid;
+  double? sugar;
   String? note;
   DateTime createdAt;
   DateTime? updatedAt;
@@ -130,24 +130,24 @@ class WineEvidenceModel {
     required this.id,
     required this.projectId,
     required this.wine,
-    required this.wineClassification,
+    this.wineClassification,
     required this.title,
     required this.volume,
     required this.year,
-    required this.alcohol,
-    required this.acid,
-    required this.sugar,
+    this.alcohol,
+    this.acid,
+    this.sugar,
     this.note,
     required this.createdAt,
     this.updatedAt,
   });
 
   Map<String, dynamic> toMap() {
-    return {
+    return <String, dynamic>{
       'id': id,
       'project_id': projectId,
       'wine': wine.toMap(),
-      'wine_classification': wineClassification.toMap(),
+      'wine_classification': wineClassification?.toMap(),
       'title': title,
       'volume': volume,
       'year': year,
@@ -156,23 +156,24 @@ class WineEvidenceModel {
       'sugar': sugar,
       'note': note,
       'created_at': createdAt.millisecondsSinceEpoch,
-      'updatedAt': updatedAt?.millisecondsSinceEpoch,
+      'updated_at': updatedAt?.millisecondsSinceEpoch,
     };
   }
 
   factory WineEvidenceModel.fromMap(Map<String, dynamic> map) {
     return WineEvidenceModel(
-      id: map['id']?.toInt() ?? 0,
-      projectId: map['project_id']?.toInt() ?? 0,
-      wine: WineBaseModel.fromMap(map['wine']),
-      wineClassification: WineClassificationModel.fromMap(map['wine_classification']),
-      title: map['title'] ?? '',
+      id: map['id'] as int,
+      projectId: map['project_id'] as int,
+      wine: WineBaseModel.fromMap(map['wine'] as Map<String, dynamic>),
+      wineClassification:
+          map['wine_classification'] != null ? WineClassificationModel.fromMap(map['wine_classification'] as Map<String, dynamic>) : null,
+      title: map['title'] as String,
       volume: map['volume']?.toDouble() ?? 0.0,
-      year: map['year']?.toInt() ?? 0,
-      alcohol: map['alcohol']?.toDouble() ?? 0.0,
-      acid: map['acid']?.toDouble() ?? 0.0,
-      sugar: map['sugar']?.toDouble() ?? 0.0,
-      note: map['note'] ?? '',
+      year: map['year'] as int,
+      alcohol: map['alcohol'] != null ? map['alcohol']?.toDouble() ?? 0.0 : null,
+      acid: map['acid'] != null ? map['acid']?.toDouble() ?? 0.0 : null,
+      sugar: map['sugar'] != null ? map['sugar']?.toDouble() ?? 0.0 : null,
+      note: map['note'] != null ? map['note'] as String : null,
       createdAt: DateTime.parse(map['created_at']),
       updatedAt: map['updated_at'] != null ? DateTime.parse(map['updated_at']) : null,
     );
@@ -180,7 +181,7 @@ class WineEvidenceModel {
 
   String toJson() => json.encode(toMap());
 
-  factory WineEvidenceModel.fromJson(String source) => WineEvidenceModel.fromMap(json.decode(source));
+  factory WineEvidenceModel.fromJson(String source) => WineEvidenceModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }
 
 class WineClassificationModel {

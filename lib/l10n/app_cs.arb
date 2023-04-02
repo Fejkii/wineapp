@@ -20,7 +20,7 @@
     "code": "Kód",
     "titleError": "Neplatný titulek",
     "valueError": "Neplatná hodnota",
-    "inputEmpty": "Prosím vyplnit hodnotu",
+    "inputEmpty": "Povinná položka",
     "selectInSelectBox": "Vyber hodnotu",
     "selectBoxEmpty": "Prosím vyber hodnotu",
     "emptyData": "Žádné výsledky",
@@ -107,6 +107,7 @@
     "vineyards": "Vinohrady",
     "changeTheme": "Změnit světlý nebo tmavý režim",
     "changeLanguage": "Změnit jazyk",
+    "undefinied" : "Nedefinováno",
     "@units": {},
     "unitLiter": "{count, plural, ={litrů} =0{litrů} =1{litr} =2{litry} =3{litry} =4{litry} other{litrů}}",
     "@unitLiter": {

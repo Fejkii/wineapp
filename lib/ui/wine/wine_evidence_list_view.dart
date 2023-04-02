@@ -47,7 +47,7 @@ class _WineEvidenceListViewState extends State<WineEvidenceListView> {
           body: _list(),
           hasSidebar: true,
           appBar: AppBar(
-            title:  Text(AppLocalizations.of(context)!.wineEvidence),
+            title: Text(AppLocalizations.of(context)!.wineEvidence),
             actions: [
               IconButton(
                 onPressed: () {
@@ -56,7 +56,7 @@ class _WineEvidenceListViewState extends State<WineEvidenceListView> {
                     MaterialPageRoute(
                       builder: (context) => const WineEvidenceDetailView(),
                     ),
-                  );
+                  ).then((value) => _getData());
                 },
                 icon: const Icon(Icons.add),
               ),
