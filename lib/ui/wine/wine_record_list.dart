@@ -81,7 +81,7 @@ class _WineRecordListState extends State<WineRecordList> {
       itemBody: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(appFormatDate(wineRecordList[index].date, dateOnly: true)),
+          Text(appFormatDateTime(wineRecordList[index].date, dateOnly: true)),
           Text(title),
           Text(value),
         ],

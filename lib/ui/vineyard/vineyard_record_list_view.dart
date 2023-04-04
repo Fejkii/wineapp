@@ -70,7 +70,7 @@ class _VineyardRecordListViewState extends State<VineyardRecordListView> {
       itemBody: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(appFormatDate(vineyardRecordList[index].date, dateOnly: true)),
+          Text(appFormatDateTime(vineyardRecordList[index].date, dateOnly: true)),
           Text(vineyardRecordList[index].title ?? vineyardRecordList[index].vineyardRecordType.title),
         ],
       ),

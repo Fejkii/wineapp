@@ -72,7 +72,6 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
     if (widget.wineRecord != null) {
       wineRecord = widget.wineRecord;
       selectedWineRecordType = wineRecord!.wineRecordType;
-      _dateController.text = wineRecord!.date.toIso8601String();
       _noteController.text = wineRecord!.note ?? "";
       _titleController.text = wineRecord!.title ?? "";
 
@@ -186,9 +185,9 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
                             wineCubit.updateWineRecord(
                               wineRecord!.id,
                               selectedWineRecordType!.id,
-                              DateTime.parse(_dateController.text),
+                              appToDateTime(_dateController.text)!,
                               _isInProgress,
-                              DateTime.tryParse(_dateToController.text),
+                              appToDateTime(_dateToController.text),
                               _titleController.text,
                               data,
                               _noteController.text,
@@ -197,9 +196,9 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
                             wineCubit.createWineRecord(
                               wineEvidenceId,
                               selectedWineRecordType!.id,
-                              DateTime.parse(_dateController.text),
+                              appToDateTime(_dateController.text)!,
                               _isInProgress,
-                              DateTime.tryParse(_dateToController.text),
+                              appToDateTime(_dateToController.text),
                               _titleController.text,
                               data,
                               _noteController.text,
@@ -229,6 +228,7 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
           const SizedBox(height: AppMargin.m10),
           AppDatePicker(
             controller: _dateController,
+            initDate: wineRecord?.date,
             setIcon: true,
           ),
           const SizedBox(height: AppMargin.m20),
@@ -248,6 +248,11 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
                 selectedWineRecordType = value;
               });
             },
+            validator: (WineRecordTypeModel? item) {
+              if (item == null) return AppLocalizations.of(context)!.inputEmpty;
+              return null;
+            },
+            autoValidateMode: AutovalidateMode.onUserInteraction,
             selectedItem: selectedWineRecordType,
             clearButtonProps: const ClearButtonProps(isVisible: true),
           ),
@@ -269,7 +274,7 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
 
   Widget _otherInfo() {
     if (widget.wineRecord != null) {
-      return AppTextWithValue(text: AppLocalizations.of(context)!.created, value: appFormatDate(widget.wineRecord!.createdAt));
+      return AppTextWithValue(text: AppLocalizations.of(context)!.created, value: appFormatDateTime(widget.wineRecord!.createdAt, dateOnly: false));
     } else {
       return Container();
     }
@@ -390,7 +395,8 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
                 AppDatePicker(
                   controller: _dateToController,
                   label: AppLocalizations.of(context)!.dateTo,
-                  fillDate: false,
+                  initDate: wineRecord?.dateTo,
+                  fillTodayDate: false,
                   setIcon: true,
                 ),
               ],

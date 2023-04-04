@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:wine_app/app/app_functions.dart';
+import 'package:wine_app/app/app_preferences.dart';
+import 'package:wine_app/app/dependency_injection.dart';
 
 class AppDatePicker extends StatefulWidget {
   final TextEditingController controller;
   final String? label;
   final DateTime? initDate;
-  final bool? fillDate;
+  final bool? fillTodayDate;
   final bool? setIcon;
   const AppDatePicker({
     Key? key,
     required this.controller,
     this.label,
     this.initDate,
-    this.fillDate,
+    this.fillTodayDate,
     this.setIcon,
   }) : super(key: key);
 
@@ -21,19 +24,19 @@ class AppDatePicker extends StatefulWidget {
 }
 
 class _AppDatePickerState extends State<AppDatePicker> {
-  late DateTime selectedDate;
+  late DateTime todayDate;
   DateTime firstDate = DateTime(2000);
   DateTime lastDate = DateTime(2100);
 
   @override
   void initState() {
     super.initState();
-    selectedDate = DateTime.now();
+    todayDate = DateTime.now();
     if (widget.initDate != null) {
-      selectedDate = widget.initDate!;
+      widget.controller.text = appFormatDateTime(widget.initDate!, dateOnly: true);
     }
-    if (widget.fillDate == null || widget.fillDate == true) {
-      widget.controller.text = selectedDate.toString();
+    if (widget.fillTodayDate != false) {
+      widget.controller.text = appFormatDateTime(todayDate, dateOnly: true);
     }
   }
 
@@ -48,21 +51,23 @@ class _AppDatePickerState extends State<AppDatePicker> {
       ),
       readOnly: true,
       onTap: () async {
-        DateTime? pickedDate = await showDatePicker(
+        await showDatePicker(
+          locale: Locale(instance<AppPreferences>().getAppLanguage()),
           context: context,
-          initialDate: selectedDate,
+          initialDate: todayDate,
           firstDate: firstDate,
           lastDate: lastDate,
           confirmText: AppLocalizations.of(context)!.ok,
           cancelText: AppLocalizations.of(context)!.cancel,
           helpText: AppLocalizations.of(context)!.selectDate,
-        );
-
-        if (pickedDate != null) {
-          setState(() {
-            widget.controller.text = pickedDate.toString();
-          });
-        }
+        ).then((value) {
+          if (value != null) {
+            setState(() {
+              widget.controller.text = appFormatDateTime(value, dateOnly: true);
+            });
+          }
+          return null;
+        });
       },
     );
   }

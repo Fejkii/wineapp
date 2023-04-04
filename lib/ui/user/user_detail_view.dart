@@ -123,17 +123,17 @@ class _UserDetailViewState extends State<UserDetailView> {
       children: [
         TableRow(children: [
           TableCell(child: Text(AppLocalizations.of(context)!.created)),
-          TableCell(child: Text(appFormatDate(user.createdAt, dateOnly: true))),
+          TableCell(child: Text(appFormatDateTime(user.createdAt, dateOnly: true))),
         ]),
         TableRow(children: [
           TableCell(child: Text(AppLocalizations.of(context)!.updated)),
-          TableCell(child: Text(user.updatedAt != null ? appFormatDate(user.updatedAt!, dateOnly: true) : AppConstant.EMPTY)),
+          TableCell(child: Text(user.updatedAt != null ? appFormatDateTime(user.updatedAt!, dateOnly: true) : AppConstant.EMPTY)),
         ]),
         TableRow(children: [
           TableCell(child: Text(AppLocalizations.of(context)!.emailVerification)),
           TableCell(
               child: Text(user.emailVarificationAt != null
-                  ? appFormatDate(user.emailVarificationAt!, dateOnly: true)
+                  ? appFormatDateTime(user.emailVarificationAt!, dateOnly: true)
                   : AppLocalizations.of(context)!.emailNotVerification)),
         ]),
       ],

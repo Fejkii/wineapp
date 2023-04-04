@@ -161,9 +161,9 @@ class _WineEvidenceDetailViewState extends State<WineEvidenceDetailView> {
     if (wineEvidence != null) {
       return Column(
         children: [
-          Text("${AppLocalizations.of(context)!.created}: ${appFormatDate(wineEvidence!.createdAt)}"),
+          Text("${AppLocalizations.of(context)!.created}: ${appFormatDateTime(wineEvidence!.createdAt)}"),
           Text(wineEvidence!.updatedAt != null
-              ? "${AppLocalizations.of(context)!.updated}: ${appFormatDate(wineEvidence!.updatedAt!)}"
+              ? "${AppLocalizations.of(context)!.updated}: ${appFormatDateTime(wineEvidence!.updatedAt!)}"
               : AppConstant.EMPTY),
         ],
       );

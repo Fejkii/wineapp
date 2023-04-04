@@ -2,6 +2,9 @@ import 'dart:io';
 
 import 'package:device_info/device_info.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
+import 'package:wine_app/app/app_preferences.dart';
+import 'package:wine_app/app/dependency_injection.dart';
 import 'package:wine_app/const/api_endpoints.dart';
 import 'package:wine_app/model/base/device_info_model.dart';
 
@@ -52,16 +55,16 @@ bool isDoubleValid(String value) {
   return RegExp(r"^(-?)(0|([1-9][0-9]*))(\\.[0-9]+)?$").hasMatch(value);
 }
 
-String appFormatDate(DateTime time, {bool dateOnly = false}) {
-  String year = time.year.toString();
-  String month = time.month.toString();
-  String day = time.day.toString();
-  String hour = time.hour.toString().padLeft(2, '0');
-  String minute = time.minute.toString().padLeft(2, '0');
-
-  if (dateOnly == false) {
-    return "$day. $month. $year - $hour:$minute";
+String appFormatDateTime(DateTime dateTime, {bool dateOnly = false}) {
+  if (dateOnly) {
+    return DateFormat.yMMMd(instance<AppPreferences>().getAppLanguage()).format(dateTime);
   }
+  return DateFormat.yMMMd(instance<AppPreferences>().getAppLanguage()).add_Hms().format(dateTime);
+}
 
-  return "$day. $month. $year";
+DateTime? appToDateTime(String dateTime) {
+  if (dateTime != "") {
+    return DateFormat.yMMMd(instance<AppPreferences>().getAppLanguage()).parse(dateTime);
+  }
+  return null;
 }

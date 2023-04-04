@@ -135,12 +135,12 @@ class _WineEvidenceViewState extends State<WineEvidenceView> {
         ]),
         TableRow(children: [
           TableCell(child: Text(AppLocalizations.of(context)!.created)),
-          TableCell(child: Text(appFormatDate(wineEvidence.createdAt))),
+          TableCell(child: Text(appFormatDateTime(wineEvidence.createdAt))),
         ]),
         if (wineEvidence.updatedAt != null)
           TableRow(children: [
             TableCell(child: Text(AppLocalizations.of(context)!.updated)),
-            TableCell(child: Text(appFormatDate(wineEvidence.updatedAt!))),
+            TableCell(child: Text(appFormatDateTime(wineEvidence.updatedAt!))),
           ]),
         if (wineEvidence.note != null && wineEvidence.note != AppConstant.EMPTY)
           TableRow(children: [
