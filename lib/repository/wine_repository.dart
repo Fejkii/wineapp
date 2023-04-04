@@ -112,7 +112,7 @@ class WineRepository {
     double volume,
   ) async {
     return instance<ApiFactory>().putMethod(
-      endpoint: ApiEndpoints.wineEvidenceUrl,
+      endpoint: "${ApiEndpoints.wineEvidenceUrl}/${ApiEndpoints.volumeUrl}/",
       identificator: wineEvidenceId,
       data: {
         'volume': volume,

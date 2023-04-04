@@ -230,6 +230,7 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
           AppDatePicker(
             controller: _dateController,
             initDate: wineRecord?.date,
+            fillTodayDate: true,
             setIcon: true,
           ),
           const SizedBox(height: AppMargin.m20),

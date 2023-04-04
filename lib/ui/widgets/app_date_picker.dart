@@ -32,11 +32,11 @@ class _AppDatePickerState extends State<AppDatePicker> {
   void initState() {
     super.initState();
     todayDate = DateTime.now();
-    if (widget.initDate != null) {
-      widget.controller.text = appFormatDateTime(widget.initDate!, dateOnly: true);
-    }
     if (widget.fillTodayDate != false) {
       widget.controller.text = appFormatDateTime(todayDate, dateOnly: true);
+    }
+    if (widget.initDate != null) {
+      widget.controller.text = appFormatDateTime(widget.initDate!, dateOnly: true);
     }
   }
 

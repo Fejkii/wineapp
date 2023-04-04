@@ -22,6 +22,7 @@ class ApiEndpoints {
   static const String wineVarietyUrl = "wineVariety";
   static const String wineClassificationUrl = "wineClassification";
   static const String wineEvidenceUrl = "wineEvidence";
+  static const String volumeUrl = "volume";
   static const String wineRecordUrl = "wineRecord";
   static const String wineRecordTypeUrl = "wineRecordType";
 }

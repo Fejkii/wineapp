@@ -46,6 +46,7 @@ class _VineyardViewState extends State<VineyardView> {
     vineyardCubit.getVineyard(vineyard.id);
     vineyardWineCubit.getVineyardWineSummary(vineyard.id);
     vineyardCubit.getVineyardRecordList(vineyard.id);
+    vineyardCubit.getVineyardRecordTypeList();
   }
 
   @override
