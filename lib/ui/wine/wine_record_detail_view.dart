@@ -54,7 +54,6 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
   double sulfirizationBy = 0;
   double dosage = 0;
   String title = "";
-  String data = "";
 
   @override
   void initState() {
@@ -171,7 +170,9 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
                       iconButtonType: IconButtonType.save,
                       onPress: () {
                         if (_formKey.currentState!.validate()) {
+                          String data = "";
                           if (WineRecordType.measurementFreeSulfure.getId() == selectedWineRecordType!.id) {
+                            _titleController.text = "";
                             data = WineRecordFreeSulfure(
                               freeSulfure: double.parse(_freeSulfureController.text),
                               volume: widget.wineEvidence.volume,

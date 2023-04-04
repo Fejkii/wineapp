@@ -1,6 +1,7 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wine_app/app/app_functions.dart';
 import 'package:wine_app/app/app_preferences.dart';
 import 'package:wine_app/app/dependency_injection.dart';
 import 'package:wine_app/bloc/vineyard/vineyard_cubit.dart';
@@ -13,6 +14,7 @@ import 'package:wine_app/ui/widgets/app_date_picker.dart';
 import 'package:wine_app/ui/widgets/app_loading_indicator.dart';
 import 'package:wine_app/ui/widgets/app_scaffold_layout.dart';
 import 'package:wine_app/ui/widgets/app_text_form_field.dart';
+import 'package:wine_app/ui/widgets/app_texts.dart';
 import 'package:wine_app/ui/widgets/app_toast_messages.dart';
 
 class VineyardRecordDetailView extends StatefulWidget {
@@ -31,9 +33,11 @@ class VineyardRecordDetailView extends StatefulWidget {
 class _VineyardRecordDetailViewState extends State<VineyardRecordDetailView> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
+  final TextEditingController _dateToController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
-  final TextEditingController _ratioController = TextEditingController();
+  final TextEditingController _sprayNameController = TextEditingController();
   final TextEditingController _amountSprayController = TextEditingController();
+  final TextEditingController _amountWaterController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   final AppPreferences appPreferences = instance<AppPreferences>();
   final VineyardCubit vineyardCubit = instance<VineyardCubit>();
@@ -42,6 +46,7 @@ class _VineyardRecordDetailViewState extends State<VineyardRecordDetailView> {
   late VineyardRecordModel? vineyardRecord;
   late VineyardRecordTypeModel? selectedVineyardRecordType;
   late List<VineyardRecordTypeModel> vineyardRecordTypeList;
+  late bool _isInProgress;
 
   @override
   void initState() {
@@ -49,6 +54,8 @@ class _VineyardRecordDetailViewState extends State<VineyardRecordDetailView> {
     vineyard = widget.vineyard;
     vineyardRecord = null;
     selectedVineyardRecordType = null;
+    _isInProgress = false;
+
     if (widget.vineyardRecord != null) {
       vineyardRecord = widget.vineyardRecord;
       selectedVineyardRecordType = vineyardRecord!.vineyardRecordType;
@@ -56,7 +63,9 @@ class _VineyardRecordDetailViewState extends State<VineyardRecordDetailView> {
       _dateController.text = vineyardRecord!.date.toIso8601String();
       _noteController.text = vineyardRecord!.note ?? "";
       if (vineyardRecord!.vineyardRecordType.id == VineyardRecordType.spraying.getId()) {
-        _ratioController.text = "";
+        _sprayNameController.text = VineyardRecordSpraying.fromJson(vineyardRecord!.data).sprayName;
+        _amountSprayController.text = VineyardRecordSpraying.fromJson(vineyardRecord!.data).amountSpray.toStringAsFixed(1);
+        _amountWaterController.text = VineyardRecordSpraying.fromJson(vineyardRecord!.data).amountWater.toStringAsFixed(1);
       }
     }
 
@@ -67,7 +76,11 @@ class _VineyardRecordDetailViewState extends State<VineyardRecordDetailView> {
   void dispose() {
     _titleController.dispose();
     _dateController.dispose();
+    _dateToController.dispose();
     _noteController.dispose();
+    _sprayNameController.dispose();
+    _amountSprayController.dispose();
+    _amountWaterController.dispose();
     super.dispose();
   }
 
@@ -101,21 +114,38 @@ class _VineyardRecordDetailViewState extends State<VineyardRecordDetailView> {
                       iconButtonType: IconButtonType.save,
                       onPress: () {
                         if (_formKey.currentState!.validate()) {
-                          vineyardRecord != null
-                              ? vineyardCubit.updateVineyardRecord(
-                                  vineyardRecord!.id,
-                                  selectedVineyardRecordType!.id,
-                                  _titleController.text,
-                                  DateTime.parse(_dateController.text),
-                                  _noteController.text,
-                                )
-                              : vineyardCubit.createVineyardRecord(
-                                  vineyard.id,
-                                  selectedVineyardRecordType!.id,
-                                  _titleController.text,
-                                  DateTime.parse(_dateController.text),
-                                  _noteController.text,
-                                );
+                          String data = "";
+                          if (VineyardRecordType.spraying.getId() == selectedVineyardRecordType!.id) {
+                            _titleController.text = "";
+                            data = VineyardRecordSpraying(
+                              sprayName: _sprayNameController.text,
+                              amountSpray: double.parse(_amountSprayController.text),
+                              amountWater: double.parse(_amountWaterController.text),
+                            ).toJson();
+                          }
+                          if (vineyardRecord != null) {
+                            vineyardCubit.updateVineyardRecord(
+                              vineyardRecord!.id,
+                              selectedVineyardRecordType!.id,
+                              appToDateTime(_dateController.text)!,
+                              _isInProgress,
+                              appToDateTime(_dateToController.text),
+                              _titleController.text,
+                              data,
+                              _noteController.text,
+                            );
+                          } else {
+                            vineyardCubit.createVineyardRecord(
+                              vineyard.id,
+                              selectedVineyardRecordType!.id,
+                              appToDateTime(_dateController.text)!,
+                              _isInProgress,
+                              appToDateTime(_dateToController.text),
+                              _titleController.text,
+                              data,
+                              _noteController.text,
+                            );
+                          }
                         }
                       },
                     );
@@ -182,27 +212,36 @@ class _VineyardRecordDetailViewState extends State<VineyardRecordDetailView> {
               children: [
                 const SizedBox(height: AppMargin.m20),
                 AppTextFormField(
-                  controller: _titleController,
-                  label: "Název postřiku",
+                  controller: _sprayNameController,
+                  label: AppLocalizations.of(context)!.sprayName,
                   isRequired: true,
                   inputType: InputType.title,
                 ),
                 const SizedBox(height: AppMargin.m20),
+                AppContentTitleText(text: AppLocalizations.of(context)!.ratio),
+                const SizedBox(height: AppMargin.m10),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Flexible(
                       child: AppTextFormField(
                         controller: _amountSprayController,
-                        label: "Postřik",
+                        label: AppLocalizations.of(context)!.spray,
                         isRequired: true,
                         inputType: InputType.number,
                       ),
                     ),
                     const SizedBox(width: AppMargin.m20),
+                    const AppContentText(
+                      text: "/",
+                      size: 25,
+                    ),
+                    const SizedBox(width: AppMargin.m20),
                     Flexible(
                       child: AppTextFormField(
-                        controller: _ratioController,
-                        label: "Voda",
+                        controller: _amountWaterController,
+                        label: AppLocalizations.of(context)!.water,
                         isRequired: true,
                         inputType: InputType.number,
                       ),
@@ -222,6 +261,7 @@ class _VineyardRecordDetailViewState extends State<VineyardRecordDetailView> {
       return selectedVineyardRecordType!.id == VineyardRecordType.others.getId()
           ? Column(
               children: [
+                const SizedBox(height: AppMargin.m20),
                 AppTextFormField(
                   controller: _titleController,
                   label: AppLocalizations.of(context)!.title,

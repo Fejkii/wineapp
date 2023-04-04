@@ -76,16 +76,22 @@ class VineyardCubit extends Cubit<VineyardState> {
   void updateVineyardRecord(
     int vineyardRecordId,
     int vineyardRecordTypeId,
-    String title,
     DateTime date,
+    bool? isInProgress,
+    DateTime? dateTo,
+    String? title,
+    String? data,
     String? note,
   ) async {
     emit(VineyardLoadingState());
     ApiResults apiResults = await VineyardRepository().updateVineyardRecord(
       vineyardRecordId,
       vineyardRecordTypeId,
-      title,
       date.toIso8601String(),
+      isInProgress,
+      dateTo?.toIso8601String(),
+      title,
+      data,
       note,
     );
     if (apiResults is ApiSuccess) {
@@ -98,16 +104,22 @@ class VineyardCubit extends Cubit<VineyardState> {
   void createVineyardRecord(
     int vineyardId,
     int vineyardRecordTypeId,
-    String title,
     DateTime date,
+    bool? isInProgress,
+    DateTime? dateTo,
+    String? title,
+    String? data,
     String? note,
   ) async {
     emit(VineyardLoadingState());
     ApiResults apiResults = await VineyardRepository().createVineyardRecord(
       vineyardId,
       vineyardRecordTypeId,
-      title,
       date.toIso8601String(),
+      isInProgress,
+      dateTo?.toIso8601String(),
+      title,
+      data,
       note,
     );
     if (apiResults is ApiSuccess) {

@@ -52,8 +52,11 @@ class VineyardRepository {
   Future<ApiResults> updateVineyardRecord(
     int vineyardRecordId,
     int vineyardRecordTypeId,
-    String title,
     String date,
+    bool? isInProgress,
+    String? dateTo,
+    String? title,
+    String? data,
     String? note,
   ) async {
     return instance<ApiFactory>().putMethod(
@@ -61,8 +64,11 @@ class VineyardRepository {
       identificator: vineyardRecordId,
       data: {
         "vineyard_record_type_id": vineyardRecordTypeId,
-        "title": title,
         "date": date,
+        "is_in_progress": isInProgress,
+        "date_to": dateTo,
+        "title": title,
+        "data": data,
         "note": note,
       },
     );
@@ -71,8 +77,11 @@ class VineyardRepository {
   Future<ApiResults> createVineyardRecord(
     int vineyardId,
     int vineyardRecordTypeId,
-    String title,
     String date,
+    bool? isInProgress,
+    String? dateTo,
+    String? title,
+    String? data,
     String? note,
   ) async {
     return instance<ApiFactory>().postMethod(
@@ -80,8 +89,11 @@ class VineyardRepository {
       data: {
         "vineyard_id": vineyardId,
         "vineyard_record_type_id": vineyardRecordTypeId,
-        "title": title,
         "date": date,
+        "is_in_progress": isInProgress,
+        "date_to": dateTo,
+        "title": title,
+        "data": data,
         "note": note,
       },
     );

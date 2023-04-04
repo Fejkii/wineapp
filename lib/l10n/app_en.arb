@@ -108,6 +108,10 @@
     "changeTheme": "Change dark or light theme",
     "changeLanguage": "Select language",
     "undefinied": "Undefinied",
+    "sprayName": "Name of spray",
+    "ratio": "Ratio",
+    "spray": "Spray",
+    "water": "Water",
     "@units": {},
     "unitLiter": "{count, plural, ={liters} =0{liters} =1{liter} =2{liters} =3{liters} =4{liters} other{liters}}",
     "@unitLiter": {

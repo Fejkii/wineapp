@@ -108,6 +108,10 @@
     "changeTheme": "Změnit světlý nebo tmavý režim",
     "changeLanguage": "Změnit jazyk",
     "undefinied" : "Nedefinováno",
+    "sprayName" : "Název postřiku",
+    "ratio" : "Poměr",
+    "spray" : "Postřik",
+    "water" : "Voda",
     "@units": {},
     "unitLiter": "{count, plural, ={litrů} =0{litrů} =1{litr} =2{litry} =3{litry} =4{litry} other{litrů}}",
     "@unitLiter": {

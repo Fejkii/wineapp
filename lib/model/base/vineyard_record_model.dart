@@ -43,24 +43,28 @@ class VineyardRecordModel {
   int id;
   int? vineyardId;
   int? vineyardWineId;
-  DateTime date;
   VineyardRecordTypeModel vineyardRecordType;
-  String? title;
-  String? data;
+  DateTime date;
+  bool? isInProgress;
+  DateTime? dateTo;
   String? note;
+  String? title;
+  dynamic data;
   DateTime createdAt;
   DateTime? updatedAt;
   VineyardRecordModel({
     required this.id,
     this.vineyardId,
     this.vineyardWineId,
-    required this.date,
     required this.vineyardRecordType,
-    this.title,
-    this.data,
+    required this.date,
+    this.isInProgress,
+    this.dateTo,
     this.note,
+    this.title,
+    required this.data,
     required this.createdAt,
-    required this.updatedAt,
+    this.updatedAt,
   });
 
   Map<String, dynamic> toMap() {
@@ -68,11 +72,13 @@ class VineyardRecordModel {
       'id': id,
       'vineyard_id': vineyardId,
       'vineyard_wine_id': vineyardWineId,
-      'date': date.millisecondsSinceEpoch,
       'vineyard_record_type': vineyardRecordType.toMap(),
+      'date': date.millisecondsSinceEpoch,
+      'is_in_rogress': isInProgress,
+      'date_to': dateTo?.millisecondsSinceEpoch,
+      'note': note,
       'title': title,
       'data': data,
-      'note': note,
       'created_at': createdAt.millisecondsSinceEpoch,
       'updated_at': updatedAt?.millisecondsSinceEpoch,
     };
@@ -83,11 +89,13 @@ class VineyardRecordModel {
       id: map['id'] as int,
       vineyardId: map['vineyard_id'] != null ? map['vineyard_id'] as int : null,
       vineyardWineId: map['vineyard_wine_id'] != null ? map['vineyard_wine_id'] as int : null,
-      date: DateTime.parse(map['date']),
       vineyardRecordType: VineyardRecordTypeModel.fromMap(map['vineyard_record_type'] as Map<String, dynamic>),
-      title: map['title'] != null ? map['title'] as String : null,
-      data: map['data'] != null ? map['data'] as String : null,
-      note: map['note'] != null ? map['note'] as String : null,
+      date: DateTime.parse(map['date']),
+      isInProgress: map['is_in_progress'],
+      dateTo: map['date_to'] != null ? DateTime.parse(map['date_to']) : null,
+      note: map['note'],
+      title: map['title'],
+      data: map['data'],
       createdAt: DateTime.parse(map['created_at']),
       updatedAt: map['updated_at'] != null ? DateTime.parse(map['updated_at']) : null,
     );
@@ -134,24 +142,28 @@ class VineyardRecordTypeModel {
 }
 
 class VineyardRecordSpraying {
-  String title;
-  String ratio;
+  String sprayName;
+  double amountSpray;
+  double amountWater;
   VineyardRecordSpraying({
-    required this.title,
-    required this.ratio,
+    required this.sprayName,
+    required this.amountSpray,
+    required this.amountWater,
   });
 
   Map<String, dynamic> toMap() {
     return {
-      'title': title,
-      'ratio': ratio,
+      'sprayName': sprayName,
+      'amountSpray': amountSpray,
+      'amountWater': amountWater,
     };
   }
 
   factory VineyardRecordSpraying.fromMap(Map<String, dynamic> map) {
     return VineyardRecordSpraying(
-      title: map['title'] ?? '',
-      ratio: map['ratio'] ?? '',
+      sprayName: map['sprayName'] ?? '',
+      amountSpray: map['amountSpray']?.toDouble() ?? 0.0,
+      amountWater: map['amountWater']?.toDouble() ?? 0.0,
     );
   }
 
