@@ -241,6 +241,7 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
             dropdownDecoratorProps: DropDownDecoratorProps(
               dropdownSearchDecoration: InputDecoration(
                 border: const OutlineInputBorder(),
+                contentPadding: const EdgeInsets.all(10),
                 labelText: AppLocalizations.of(context)!.wineRecordType,
                 hintText: AppLocalizations.of(context)!.selectInSelectBox,
               ),

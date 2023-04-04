@@ -192,6 +192,8 @@ class _WineEvidenceDetailViewState extends State<WineEvidenceDetailView> {
             itemAsString: (WineBaseModel wine) => wine.title,
             dropdownDecoratorProps: DropDownDecoratorProps(
               dropdownSearchDecoration: InputDecoration(
+                border: const OutlineInputBorder(),
+                contentPadding: const EdgeInsets.all(10),
                 labelText: AppLocalizations.of(context)!.wine,
                 hintText: AppLocalizations.of(context)!.selectInSelectBox,
               ),
@@ -209,12 +211,15 @@ class _WineEvidenceDetailViewState extends State<WineEvidenceDetailView> {
             autoValidateMode: AutovalidateMode.onUserInteraction,
             clearButtonProps: const ClearButtonProps(isVisible: true),
           ),
+          const SizedBox(height: AppMargin.m20),
           DropdownSearch<WineClassificationModel>(
             popupProps: const PopupProps.menu(showSelectedItems: false, showSearchBox: true),
             items: wineClassificationList,
             itemAsString: (WineClassificationModel wineClassification) => wineClassification.title,
             dropdownDecoratorProps: DropDownDecoratorProps(
               dropdownSearchDecoration: InputDecoration(
+                border: const OutlineInputBorder(),
+                contentPadding: const EdgeInsets.all(10),
                 labelText: AppLocalizations.of(context)!.wineClassification,
                 hintText: AppLocalizations.of(context)!.selectInSelectBox,
               ),

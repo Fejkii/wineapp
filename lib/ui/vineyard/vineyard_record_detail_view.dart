@@ -180,6 +180,7 @@ class _VineyardRecordDetailViewState extends State<VineyardRecordDetailView> {
             dropdownDecoratorProps: DropDownDecoratorProps(
               dropdownSearchDecoration: InputDecoration(
                 border: const OutlineInputBorder(),
+                contentPadding: const EdgeInsets.all(10),
                 labelText: AppLocalizations.of(context)!.vineyardRecordType,
                 hintText: AppLocalizations.of(context)!.selectInSelectBox,
               ),

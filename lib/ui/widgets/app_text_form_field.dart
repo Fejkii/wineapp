@@ -64,7 +64,7 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
   Widget? showUnit() {
     if (widget.unit != null) {
       return Padding(
-        padding: const EdgeInsets.fromLTRB(0, 12, 0, 0),
+        padding: const EdgeInsets.fromLTRB(0, 14, 0, 0),
         child: Text(
           widget.unit!,
           style: const TextStyle(fontSize: 16),
@@ -111,6 +111,7 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
       decoration: InputDecoration(
         labelText: widget.label,
         border: const OutlineInputBorder(),
+        contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         prefixIcon: iconData != null
             ? Icon(
                 iconData,

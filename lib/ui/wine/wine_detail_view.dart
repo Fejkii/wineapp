@@ -117,6 +117,8 @@ class _WineDetailViewState extends State<WineDetailView> {
             itemAsString: (WineVarietyModel wv) => wv.title,
             dropdownDecoratorProps: DropDownDecoratorProps(
               dropdownSearchDecoration: InputDecoration(
+                border: const OutlineInputBorder(),
+                contentPadding: const EdgeInsets.all(10),
                 labelText: AppLocalizations.of(context)!.wineVarieties,
                 hintText: AppLocalizations.of(context)!.wineVarietySelect,
               ),

@@ -47,6 +47,7 @@ class _AppDatePickerState extends State<AppDatePicker> {
       decoration: InputDecoration(
         prefixIcon: widget.setIcon != null ? const Icon(Icons.calendar_today, size: 20) : null,
         labelText: widget.label != null ? widget.label! : AppLocalizations.of(context)!.date,
+        contentPadding: const EdgeInsets.all(0),
         border: const OutlineInputBorder(),
       ),
       readOnly: true,
