@@ -49,6 +49,7 @@ class _WineEvidenceDetailViewState extends State<WineEvidenceDetailView> {
     selectedWine = null;
     selectedWineClassification = null;
     wineEvidence = null;
+
     if (widget.wineEvidence != null) {
       wineEvidence = widget.wineEvidence;
       _titleController.text = wineEvidence!.title;

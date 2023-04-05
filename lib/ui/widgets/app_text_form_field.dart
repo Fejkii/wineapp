@@ -8,7 +8,8 @@ enum InputType {
   password,
   title,
   note,
-  number,
+  double,
+  integer,
 }
 
 class AppTextFormField extends StatefulWidget {
@@ -96,7 +97,10 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
         case InputType.title:
           iconData = Icons.title;
           break;
-        case InputType.number:
+        case InputType.double:
+          iconData = Icons.numbers;
+          break;
+        case InputType.integer:
           iconData = Icons.numbers;
           break;
         default:
@@ -144,8 +148,13 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
               return AppLocalizations.of(context)!.titleError;
             }
             break;
-          case InputType.number:
+          case InputType.double:
             if (value != null && value.isNotEmpty && !isDoubleValid(value)) {
+              return AppLocalizations.of(context)!.valueError;
+            }
+            break;
+          case InputType.integer:
+            if (value != null && value.isNotEmpty && !isIntegerValid(value)) {
               return AppLocalizations.of(context)!.valueError;
             }
             break;

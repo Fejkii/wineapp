@@ -91,7 +91,7 @@ class _VineyardViewState extends State<VineyardView> {
               MaterialPageRoute(
                 builder: (context) => VineyardWineListView(vineyardId: vineyard.id),
               ),
-            );
+            ).then((value) => _getData());
           },
         ),
         const SizedBox(height: AppMargin.m20),

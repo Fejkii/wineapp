@@ -52,7 +52,11 @@ bool isTitleValid(String title) {
 }
 
 bool isDoubleValid(String value) {
-  return RegExp(r"^(-?)(0|([1-9][0-9]*))(\\.[0-9]+)?$").hasMatch(value);
+  return RegExp(r"^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$").hasMatch(value);
+}
+
+bool isIntegerValid(String value) {
+  return RegExp(r"^[+-]?([0-9]+)$").hasMatch(value);
 }
 
 String appFormatDateTime(DateTime dateTime, {bool dateOnly = false}) {

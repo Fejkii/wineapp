@@ -161,7 +161,7 @@ class _VineyardWineDetailViewState extends State<VineyardWineDetailView> {
           AppTextFormField(
             controller: _quantityController,
             label: AppLocalizations.of(context)!.vineyardWineQuantity,
-            inputType: InputType.number,
+            inputType: InputType.integer,
           ),
           const SizedBox(height: AppMargin.m20),
           AppTextFormField(

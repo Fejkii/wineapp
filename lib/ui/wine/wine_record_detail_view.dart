@@ -293,7 +293,7 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
                   controller: _freeSulfureController,
                   label: AppLocalizations.of(context)!.measuredFreeSulfur,
                   isRequired: true,
-                  inputType: InputType.number,
+                  inputType: InputType.double,
                   keyboardType: TextInputType.number,
                 ),
                 const SizedBox(height: AppMargin.m10),

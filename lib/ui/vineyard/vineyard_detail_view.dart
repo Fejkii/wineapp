@@ -122,7 +122,7 @@ class _VineyardDetailViewState extends State<VineyardDetailView> {
           AppTextFormField(
             controller: _areaController,
             label: AppLocalizations.of(context)!.area,
-            inputType: InputType.number,
+            inputType: InputType.double,
           ),
         ],
       ),
