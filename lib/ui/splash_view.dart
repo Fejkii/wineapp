@@ -29,13 +29,10 @@ class _SplashViewState extends State<SplashView> {
     super.initState();
     if (appPreferences.hasUserProject()) {
       int projectId = appPreferences.getProject()!.id;
-
       projectSettingsCubit.getProjectSettings(projectId);
       wineCubit.getWineVarietyList(projectId);
       wineCubit.getWineClassificationList();
-      wineCubit.getWineRecordTypeList();
       wineCubit.getWineList();
-      vineyardCubit.getVineyardRecordTypeList();
     }
     _startDelay();
   }

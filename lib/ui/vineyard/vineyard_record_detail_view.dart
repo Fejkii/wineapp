@@ -44,13 +44,13 @@ class _VineyardRecordDetailViewState extends State<VineyardRecordDetailView> {
 
   late VineyardModel vineyard;
   late VineyardRecordModel? vineyardRecord;
-  late VineyardRecordTypeModel? selectedVineyardRecordType;
-  late List<VineyardRecordTypeModel> vineyardRecordTypeList;
+  late VineyardRecordType? selectedVineyardRecordType;
+  late List<VineyardRecordType> vineyardRecordTypeList;
   late bool _isInProgress;
 
   @override
   void initState() {
-    vineyardRecordTypeList = appPreferences.getVineyardRecordTypeList() ?? [];
+    vineyardRecordTypeList = VineyardRecordType.values.map((e) => e).toList();
     vineyard = widget.vineyard;
     vineyardRecord = null;
     selectedVineyardRecordType = null;
@@ -58,14 +58,14 @@ class _VineyardRecordDetailViewState extends State<VineyardRecordDetailView> {
 
     if (widget.vineyardRecord != null) {
       vineyardRecord = widget.vineyardRecord;
-      selectedVineyardRecordType = vineyardRecord!.vineyardRecordType;
+      selectedVineyardRecordType = VineyardRecordType.values.firstWhere((wrt) => wrt.getId() == vineyardRecord!.vineyardRecordType.id);
       _titleController.text = vineyardRecord!.title ?? "";
       _dateController.text = vineyardRecord!.date.toIso8601String();
       _noteController.text = vineyardRecord!.note ?? "";
       if (vineyardRecord!.vineyardRecordType.id == VineyardRecordType.spraying.getId()) {
         _sprayNameController.text = VineyardRecordSpraying.fromJson(vineyardRecord!.data).sprayName;
-        _amountSprayController.text = VineyardRecordSpraying.fromJson(vineyardRecord!.data).amountSpray.toStringAsFixed(1);
-        _amountWaterController.text = VineyardRecordSpraying.fromJson(vineyardRecord!.data).amountWater.toStringAsFixed(1);
+        _amountSprayController.text = VineyardRecordSpraying.fromJson(vineyardRecord!.data).amountSpray.toStringAsFixed(0);
+        _amountWaterController.text = VineyardRecordSpraying.fromJson(vineyardRecord!.data).amountWater.toStringAsFixed(0);
       }
     }
 
@@ -115,7 +115,7 @@ class _VineyardRecordDetailViewState extends State<VineyardRecordDetailView> {
                       onPress: () {
                         if (_formKey.currentState!.validate()) {
                           String data = "";
-                          if (VineyardRecordType.spraying.getId() == selectedVineyardRecordType!.id) {
+                          if (VineyardRecordType.spraying == selectedVineyardRecordType) {
                             _titleController.text = "";
                             data = VineyardRecordSpraying(
                               sprayName: _sprayNameController.text,
@@ -126,7 +126,7 @@ class _VineyardRecordDetailViewState extends State<VineyardRecordDetailView> {
                           if (vineyardRecord != null) {
                             vineyardCubit.updateVineyardRecord(
                               vineyardRecord!.id,
-                              selectedVineyardRecordType!.id,
+                              selectedVineyardRecordType!.getId(),
                               appToDateTime(_dateController.text)!,
                               _isInProgress,
                               appToDateTime(_dateToController.text),
@@ -137,7 +137,7 @@ class _VineyardRecordDetailViewState extends State<VineyardRecordDetailView> {
                           } else {
                             vineyardCubit.createVineyardRecord(
                               vineyard.id,
-                              selectedVineyardRecordType!.id,
+                              selectedVineyardRecordType!.getId(),
                               appToDateTime(_dateController.text)!,
                               _isInProgress,
                               appToDateTime(_dateToController.text),
@@ -173,10 +173,10 @@ class _VineyardRecordDetailViewState extends State<VineyardRecordDetailView> {
             setIcon: true,
           ),
           const SizedBox(height: AppMargin.m20),
-          DropdownSearch<VineyardRecordTypeModel>(
+          DropdownSearch<VineyardRecordType>(
             popupProps: const PopupProps.menu(showSelectedItems: false, showSearchBox: true),
             items: vineyardRecordTypeList,
-            itemAsString: (VineyardRecordTypeModel wc) => wc.title,
+            itemAsString: (VineyardRecordType vrt) => vrt.getTranslate(context),
             dropdownDecoratorProps: DropDownDecoratorProps(
               dropdownSearchDecoration: InputDecoration(
                 border: const OutlineInputBorder(),
@@ -185,7 +185,7 @@ class _VineyardRecordDetailViewState extends State<VineyardRecordDetailView> {
                 hintText: AppLocalizations.of(context)!.selectInSelectBox,
               ),
             ),
-            onChanged: (VineyardRecordTypeModel? value) {
+            onChanged: (VineyardRecordType? value) {
               setState(() {
                 selectedVineyardRecordType = value;
               });
@@ -208,7 +208,7 @@ class _VineyardRecordDetailViewState extends State<VineyardRecordDetailView> {
 
   Widget _sprayingRecord() {
     if (selectedVineyardRecordType != null) {
-      return selectedVineyardRecordType!.id == VineyardRecordType.spraying.getId()
+      return selectedVineyardRecordType == VineyardRecordType.spraying
           ? Column(
               children: [
                 const SizedBox(height: AppMargin.m20),
@@ -259,7 +259,7 @@ class _VineyardRecordDetailViewState extends State<VineyardRecordDetailView> {
 
   Widget _otherRecord() {
     if (selectedVineyardRecordType != null) {
-      return selectedVineyardRecordType!.id == VineyardRecordType.others.getId()
+      return selectedVineyardRecordType == VineyardRecordType.others
           ? Column(
               children: [
                 const SizedBox(height: AppMargin.m20),

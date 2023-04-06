@@ -72,9 +72,10 @@ class _WineRecordListState extends State<WineRecordList> {
   }
 
   Widget _itemBuilder(BuildContext context, int index) {
+    WineRecordType wineRecordType = WineRecordType.values.firstWhere((wrt) => wrt.getId() == wineRecordList[index].wineRecordType.id);
     dynamic value = "";
-    String title = wineRecordList[index].title ?? wineRecordList[index].wineRecordType.title;
-    if (wineRecordList[index].wineRecordType.id == WineRecordType.measurementFreeSulfure.getId()) {
+    String title = wineRecordType.getTranslate(context);
+    if (wineRecordType == WineRecordType.measurementFreeSulfure) {
       value = WineRecordFreeSulfure.fromJson(wineRecordList[index].data).freeSulfure.toStringAsFixed(0);
     }
     return AppListViewItem(

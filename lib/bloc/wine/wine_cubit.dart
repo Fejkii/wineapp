@@ -120,17 +120,6 @@ class WineCubit extends Cubit<WineState> {
     }
   }
 
-  void getWineRecordTypeList() async {
-    emit(WineLoadingState());
-    ApiResults apiResults = await WineRepository().getWineRecordTypeList();
-    if (apiResults is ApiSuccess) {
-      await appPreferences.setWineRecordTypes(apiResults.data);
-      emit(WineRecordTypeListSuccessState());
-    } else if (apiResults is ApiFailure) {
-      emit(WineFailureState(apiResults.message));
-    }
-  }
-
   void createWineEvidence(
       int wineId, int? classificationId, String title, double volume, int year, double? alcohol, double? acid, double? sugar, String? note) async {
     emit(WineLoadingState());

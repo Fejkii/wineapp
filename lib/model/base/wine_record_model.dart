@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WineRecordModel {
   int id;
@@ -133,6 +135,31 @@ extension WineRecordTypeExtension on WineRecordType {
         return 9;
       default:
         return 9;
+    }
+  }
+
+  String getTranslate(BuildContext context) {
+    switch (this) {
+      case WineRecordType.measurementFreeSulfure:
+        return AppLocalizations.of(context)!.measurementFreeSulfure;
+      case WineRecordType.sulfurization:
+        return AppLocalizations.of(context)!.sulfurization;
+      case WineRecordType.measurementProteins:
+        return AppLocalizations.of(context)!.measurementProteins;
+      case WineRecordType.proteinWithdrawal:
+        return AppLocalizations.of(context)!.proteinWithdrawal;
+      case WineRecordType.filtering:
+        return AppLocalizations.of(context)!.filtering;
+      case WineRecordType.withdrawal:
+        return AppLocalizations.of(context)!.withdrawal;
+      case WineRecordType.fermentation:
+        return AppLocalizations.of(context)!.fermentation;
+      case WineRecordType.pressing:
+        return AppLocalizations.of(context)!.pressing;
+      case WineRecordType.others:
+        return AppLocalizations.of(context)!.others;
+      default:
+        return AppLocalizations.of(context)!.others;
     }
   }
 }

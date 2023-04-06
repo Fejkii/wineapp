@@ -119,7 +119,7 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
         prefixIcon: iconData != null
             ? Icon(
                 iconData,
-                size: 20,
+                size: 17,
               )
             : null,
         isDense: true,

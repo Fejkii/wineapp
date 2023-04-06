@@ -45,8 +45,8 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
 
   late int wineEvidenceId;
   late WineRecordModel? wineRecord;
-  late WineRecordTypeModel? selectedWineRecordType;
-  late List<WineRecordTypeModel> wineRecordTypeList;
+  late WineRecordType? selectedWineRecordType;
+  late List<WineRecordType> wineRecordTypeList;
   late double defaultFreeSulfure;
   late double defaultLiquidSulfur;
   late bool _isInProgress;
@@ -59,7 +59,7 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
   void initState() {
     defaultFreeSulfure = appPreferences.getProjectSettings()!.defaultFreeSulfur;
     defaultLiquidSulfur = appPreferences.getProjectSettings()!.defaultLiquidSulfur;
-    wineRecordTypeList = appPreferences.getWineRecordTypeList() ?? [];
+    wineRecordTypeList = WineRecordType.values.map((e) => e).toList();
     wineEvidenceId = widget.wineEvidence.id;
     wineRecord = null;
     selectedWineRecordType = null;
@@ -70,7 +70,7 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
 
     if (widget.wineRecord != null) {
       wineRecord = widget.wineRecord;
-      selectedWineRecordType = wineRecord!.wineRecordType;
+      selectedWineRecordType = WineRecordType.values.firstWhere((wrt) => wrt.getId() == wineRecord!.wineRecordType.id);
       _noteController.text = wineRecord!.note ?? "";
       _titleController.text = wineRecord!.title ?? "";
 
@@ -171,7 +171,7 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
                       onPress: () {
                         if (_formKey.currentState!.validate()) {
                           String data = "";
-                          if (WineRecordType.measurementFreeSulfure.getId() == selectedWineRecordType!.id) {
+                          if (WineRecordType.measurementFreeSulfure == selectedWineRecordType) {
                             _titleController.text = "";
                             data = WineRecordFreeSulfure(
                               freeSulfure: double.parse(_freeSulfureController.text),
@@ -185,7 +185,7 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
                           if (wineRecord != null) {
                             wineCubit.updateWineRecord(
                               wineRecord!.id,
-                              selectedWineRecordType!.id,
+                              selectedWineRecordType!.getId(),
                               appToDateTime(_dateController.text)!,
                               _isInProgress,
                               appToDateTime(_dateToController.text),
@@ -196,7 +196,7 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
                           } else {
                             wineCubit.createWineRecord(
                               wineEvidenceId,
-                              selectedWineRecordType!.id,
+                              selectedWineRecordType!.getId(),
                               appToDateTime(_dateController.text)!,
                               _isInProgress,
                               appToDateTime(_dateToController.text),
@@ -234,10 +234,10 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
             setIcon: true,
           ),
           const SizedBox(height: AppMargin.m20),
-          DropdownSearch<WineRecordTypeModel>(
+          DropdownSearch<WineRecordType>(
             popupProps: const PopupProps.menu(showSelectedItems: false, showSearchBox: true),
             items: wineRecordTypeList,
-            itemAsString: (WineRecordTypeModel wc) => wc.title,
+            itemAsString: (WineRecordType wrt) => wrt.getTranslate(context),
             dropdownDecoratorProps: DropDownDecoratorProps(
               dropdownSearchDecoration: InputDecoration(
                 border: const OutlineInputBorder(),
@@ -246,12 +246,12 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
                 hintText: AppLocalizations.of(context)!.selectInSelectBox,
               ),
             ),
-            onChanged: (WineRecordTypeModel? value) {
+            onChanged: (WineRecordType? value) {
               setState(() {
                 selectedWineRecordType = value;
               });
             },
-            validator: (WineRecordTypeModel? item) {
+            validator: (WineRecordType? item) {
               if (item == null) return AppLocalizations.of(context)!.inputEmpty;
               return null;
             },
@@ -285,7 +285,7 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
 
   Widget _freeSulfure() {
     if (selectedWineRecordType != null) {
-      return selectedWineRecordType!.id == WineRecordType.measurementFreeSulfure.getId()
+      return selectedWineRecordType == WineRecordType.measurementFreeSulfure
           ? Column(
               children: [
                 const SizedBox(height: AppMargin.m20),
@@ -376,7 +376,7 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
 
   Widget _fermentation() {
     if (selectedWineRecordType != null) {
-      return selectedWineRecordType!.id == WineRecordType.fermentation.getId()
+      return selectedWineRecordType == WineRecordType.fermentation
           ? Column(
               children: [
                 const SizedBox(height: AppMargin.m20),
@@ -412,7 +412,7 @@ class _WineRecordDetailViewState extends State<WineRecordDetailView> {
 
   Widget _otherRecord() {
     if (selectedWineRecordType != null) {
-      return selectedWineRecordType!.id == WineRecordType.others.getId()
+      return selectedWineRecordType == WineRecordType.others
           ? Column(
               children: [
                 const SizedBox(height: AppMargin.m20),

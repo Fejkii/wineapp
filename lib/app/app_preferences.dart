@@ -4,9 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wine_app/model/base/project_model.dart';
 import 'package:wine_app/model/base/project_settings_model.dart';
 import 'package:wine_app/model/base/user_model.dart';
-import 'package:wine_app/model/base/vineyard_record_model.dart';
 import 'package:wine_app/model/base/wine_model.dart';
-import 'package:wine_app/model/base/wine_record_model.dart';
 import 'package:wine_app/services/language_service.dart';
 
 enum AppPreferencesKeys {
@@ -171,31 +169,5 @@ class AppPreferences {
       wineList.add(WineBaseModel.fromMap(element));
     });
     return wineList;
-  }
-
-  Future<void> setWineRecordTypes(List wineRecordTypeList) async {
-    var wineRecordTypes = jsonEncode(wineRecordTypeList);
-    await _sharedPreferences.setString(AppPreferencesKeys.wineRecordTypes.name, wineRecordTypes);
-  }
-
-  List<WineRecordTypeModel>? getWineRecordTypeList() {
-    List<WineRecordTypeModel> wineRecordTypeList = [];
-    (jsonDecode(_sharedPreferences.getString(AppPreferencesKeys.wineRecordTypes.name)!)).forEach((element) {
-      wineRecordTypeList.add(WineRecordTypeModel.fromMap(element));
-    });
-    return wineRecordTypeList;
-  }
-
-  Future<void> setVineyardRecordTypes(List vineyardRecordTypeList) async {
-    var vineyardRecordTypes = jsonEncode(vineyardRecordTypeList);
-    await _sharedPreferences.setString(AppPreferencesKeys.vineyardRecordTypes.name, vineyardRecordTypes);
-  }
-
-  List<VineyardRecordTypeModel>? getVineyardRecordTypeList() {
-    List<VineyardRecordTypeModel> vineyardRecordTypeList = [];
-    (jsonDecode(_sharedPreferences.getString(AppPreferencesKeys.vineyardRecordTypes.name)!)).forEach((element) {
-      vineyardRecordTypeList.add(VineyardRecordTypeModel.fromMap(element));
-    });
-    return vineyardRecordTypeList;
   }
 }

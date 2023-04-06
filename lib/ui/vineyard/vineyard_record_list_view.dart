@@ -66,12 +66,14 @@ class _VineyardRecordListViewState extends State<VineyardRecordListView> {
   }
 
   Widget _itemBuilder(BuildContext context, int index) {
+    VineyardRecordType vineyardRecordType =
+        VineyardRecordType.values.firstWhere((wrt) => wrt.getId() == vineyardRecordList[index].vineyardRecordType.id);
     return AppListViewItem(
       itemBody: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(appFormatDateTime(vineyardRecordList[index].date, dateOnly: true)),
-          Text(vineyardRecordList[index].title ?? vineyardRecordList[index].vineyardRecordType.title),
+          Text(vineyardRecordList[index].title ?? vineyardRecordType.getTranslate(context)),
         ],
       ),
       onTap: () {

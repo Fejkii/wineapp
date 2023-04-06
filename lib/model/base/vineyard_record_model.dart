@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 enum VineyardRecordType {
   spraying,
   pleating,
@@ -12,7 +15,7 @@ enum VineyardRecordType {
   others,
 }
 
-extension WineRecordTypeExtension on VineyardRecordType {
+extension VineyardRecordTypeExtension on VineyardRecordType {
   int getId() {
     switch (this) {
       case VineyardRecordType.spraying:
@@ -35,6 +38,31 @@ extension WineRecordTypeExtension on VineyardRecordType {
         return 9;
       default:
         return 9;
+    }
+  }
+
+  String getTranslate(BuildContext context) {
+    switch (this) {
+      case VineyardRecordType.spraying:
+        return AppLocalizations.of(context)!.spraying;
+      case VineyardRecordType.pleating:
+        return AppLocalizations.of(context)!.pleating;
+      case VineyardRecordType.greenJobs:
+        return AppLocalizations.of(context)!.greenJobs;
+      case VineyardRecordType.plowing:
+        return AppLocalizations.of(context)!.plowing;
+      case VineyardRecordType.pickingGrapes:
+        return AppLocalizations.of(context)!.pickingGrapes;
+      case VineyardRecordType.cutting:
+        return AppLocalizations.of(context)!.cutting;
+      case VineyardRecordType.binding:
+        return AppLocalizations.of(context)!.binding;
+      case VineyardRecordType.fertilization:
+        return AppLocalizations.of(context)!.fertilization;
+      case VineyardRecordType.others:
+        return AppLocalizations.of(context)!.others;
+      default:
+        return AppLocalizations.of(context)!.others;
     }
   }
 }
