@@ -51,7 +51,7 @@ class WineRepository {
 
   Future<ApiResults> createWineEvidence(
     int projectId,
-    int wineId,
+    List<int> wines,
     int? classificationId,
     String title,
     double volume,
@@ -65,7 +65,7 @@ class WineRepository {
       endpoint: ApiEndpoints.wineEvidenceUrl,
       data: {
         'project_id': projectId,
-        'wine_id': wineId,
+        'wines': wines,
         'wine_classification_id': classificationId,
         'title': title,
         'volume': volume,
@@ -80,7 +80,7 @@ class WineRepository {
 
   Future<ApiResults> updateWineEvidence(
     int wineEvidenceId,
-    int wineId,
+    List<int> wines,
     int? classificationId,
     String title,
     double volume,
@@ -94,7 +94,7 @@ class WineRepository {
       endpoint: ApiEndpoints.wineEvidenceUrl,
       identificator: wineEvidenceId,
       data: {
-        'wine_id': wineId,
+        'wines': wines,
         'wine_classification_id': classificationId,
         'title': title,
         'volume': volume,

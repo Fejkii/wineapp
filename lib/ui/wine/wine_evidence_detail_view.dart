@@ -39,21 +39,25 @@ class _WineEvidenceDetailViewState extends State<WineEvidenceDetailView> {
   List<WineClassificationModel> wineClassificationList = [];
   List<WineBaseModel> wineList = [];
   WineClassificationModel? selectedWineClassification;
-  WineBaseModel? selectedWine;
+  late List<WineBaseModel> selectedWines;
   WineEvidenceModel? wineEvidence;
 
   @override
   void initState() {
     wineClassificationList = appPreferences.getWineClassificationList() ?? [];
     wineList = appPreferences.getWineBaseList() ?? [];
-    selectedWine = null;
+    selectedWines = [];
     selectedWineClassification = null;
     wineEvidence = null;
 
     if (widget.wineEvidence != null) {
       wineEvidence = widget.wineEvidence;
       _titleController.text = wineEvidence!.title;
-      selectedWine = wineEvidence!.wine;
+      if (wineEvidence!.wines.isNotEmpty) {
+        for (var element in wineEvidence!.wines) {
+          selectedWines.add(element.wine);
+        }
+      }
       selectedWineClassification = wineEvidence!.wineClassification;
       _volumeController.text = wineEvidence!.volume.toString();
       _yearController.text = wineEvidence!.year.toString();
@@ -110,7 +114,7 @@ class _WineEvidenceDetailViewState extends State<WineEvidenceDetailView> {
                           wineEvidence != null
                               ? wineCubit.updateWineEvidence(
                                   wineEvidence!.id,
-                                  selectedWine!.id,
+                                  selectedWines,
                                   selectedWineClassification != null ? selectedWineClassification!.id : null,
                                   _titleController.text,
                                   double.parse(_volumeController.text),
@@ -121,7 +125,7 @@ class _WineEvidenceDetailViewState extends State<WineEvidenceDetailView> {
                                   _noteController.text,
                                 )
                               : wineCubit.createWineEvidence(
-                                  selectedWine!.id,
+                                  selectedWines,
                                   selectedWineClassification != null ? selectedWineClassification!.id : null,
                                   _titleController.text,
                                   double.parse(_volumeController.text),
@@ -187,25 +191,30 @@ class _WineEvidenceDetailViewState extends State<WineEvidenceDetailView> {
             isRequired: true,
           ),
           const SizedBox(height: AppMargin.m20),
-          DropdownSearch<WineBaseModel>(
-            popupProps: const PopupProps.menu(showSelectedItems: false, showSearchBox: true),
+          DropdownSearch<WineBaseModel>.multiSelection(
+            popupProps: const PopupPropsMultiSelection.menu(
+              showSelectedItems: true,
+              interceptCallBacks: true,
+              showSearchBox: true,
+            ),
             items: wineList,
             itemAsString: (WineBaseModel wine) => wine.title,
+            compareFn: (item, selectedItem) => item.id == selectedItem.id,
             dropdownDecoratorProps: DropDownDecoratorProps(
               dropdownSearchDecoration: InputDecoration(
                 border: const OutlineInputBorder(),
                 contentPadding: const EdgeInsets.all(10),
-                labelText: AppLocalizations.of(context)!.wine,
+                labelText: AppLocalizations.of(context)!.wines,
                 hintText: AppLocalizations.of(context)!.selectInSelectBox,
               ),
             ),
-            onChanged: (WineBaseModel? wine) {
+            onChanged: (List<WineBaseModel> wines) {
               setState(() {
-                selectedWine = wine;
+                selectedWines = wines;
               });
             },
-            selectedItem: selectedWine,
-            validator: (WineBaseModel? item) {
+            selectedItems: selectedWines,
+            validator: (List<WineBaseModel>? item) {
               if (item == null) return AppLocalizations.of(context)!.inputEmpty;
               return null;
             },
@@ -238,6 +247,7 @@ class _WineEvidenceDetailViewState extends State<WineEvidenceDetailView> {
             controller: _volumeController,
             label: AppLocalizations.of(context)!.wineQuantity,
             isRequired: true,
+            inputType: InputType.double,
             keyboardType: TextInputType.number,
             unit: AppUnits().liter(_volumeController, context),
           ),
@@ -246,12 +256,14 @@ class _WineEvidenceDetailViewState extends State<WineEvidenceDetailView> {
             controller: _yearController,
             label: AppLocalizations.of(context)!.year,
             isRequired: true,
+            inputType: InputType.double,
             keyboardType: TextInputType.number,
           ),
           const SizedBox(height: AppMargin.m20),
           AppTextFormField(
             controller: _alcoholController,
             label: AppLocalizations.of(context)!.alcohol,
+            inputType: InputType.double,
             keyboardType: TextInputType.number,
             unit: AppUnits.percent,
           ),
@@ -259,6 +271,7 @@ class _WineEvidenceDetailViewState extends State<WineEvidenceDetailView> {
           AppTextFormField(
             controller: _acidController,
             label: AppLocalizations.of(context)!.acid,
+            inputType: InputType.double,
             keyboardType: TextInputType.number,
             unit: AppUnits.gramPerOneLiter,
           ),
@@ -266,6 +279,7 @@ class _WineEvidenceDetailViewState extends State<WineEvidenceDetailView> {
           AppTextFormField(
             controller: _sugarController,
             label: AppLocalizations.of(context)!.sugar,
+            inputType: InputType.double,
             keyboardType: TextInputType.number,
             unit: AppUnits.gramPerOneLiter,
           ),

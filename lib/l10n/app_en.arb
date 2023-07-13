@@ -130,12 +130,12 @@
     "binding": "Binding",
     "fertilization": "Fertilization",
     "@units": {},
-    "unitLiter": "{count, plural, ={liters} =0{liters} =1{liter} =2{liters} =3{liters} =4{liters} other{liters}}",
+    "unitLiter": "{count, plural, =0{liters} =1{liter} =2{liters} other{liters}}",
     "@unitLiter": {
         "description": "A plural message",
         "placeholders": {
             "count": {
-                "type": "num?"
+                "type": "num"
             }
         }
     }

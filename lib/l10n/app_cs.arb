@@ -130,7 +130,7 @@
     "binding": "Vázání",
     "fertilization": "Hnojení",
     "@units": {},
-    "unitLiter": "{count, plural, ={litrů} =0{litrů} =1{litr} =2{litry} =3{litry} =4{litry} other{litrů}}",
+    "unitLiter": "{count, plural, =0{litrů} =1{litr} =2{litry} other{litrů}}",
     "@unitLiter": {
         "description": "A plural message",
         "placeholders": {

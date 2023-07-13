@@ -46,9 +46,9 @@ class ApiFactory {
     if (kDebugMode) {
       dio.interceptors.add(PrettyDioLogger(
         requestHeader: false,
-        requestBody: true,
+        requestBody: false,
         responseHeader: false,
-        responseBody: true,
+        responseBody: false,
       ));
     }
 

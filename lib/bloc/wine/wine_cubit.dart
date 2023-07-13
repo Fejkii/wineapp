@@ -121,10 +121,33 @@ class WineCubit extends Cubit<WineState> {
   }
 
   void createWineEvidence(
-      int wineId, int? classificationId, String title, double volume, int year, double? alcohol, double? acid, double? sugar, String? note) async {
+    List<WineBaseModel> wines,
+    int? classificationId,
+    String title,
+    double volume,
+    int year,
+    double? alcohol,
+    double? acid,
+    double? sugar,
+    String? note,
+  ) async {
     emit(WineLoadingState());
-    ApiResults apiResults = await WineRepository()
-        .createWineEvidence(appPreferences.getProject()!.id, wineId, classificationId, title, volume, year, alcohol, acid, sugar, note);
+    List<int> wineIds = [];
+    for (var element in wines) {
+      wineIds.add(element.id);
+    }
+    ApiResults apiResults = await WineRepository().createWineEvidence(
+      appPreferences.getProject()!.id,
+      wineIds,
+      classificationId,
+      title,
+      volume,
+      year,
+      alcohol,
+      acid,
+      sugar,
+      note,
+    );
     if (apiResults is ApiSuccess) {
       emit(WineEvidenceSuccessState());
     } else if (apiResults is ApiFailure) {
@@ -132,11 +155,35 @@ class WineCubit extends Cubit<WineState> {
     }
   }
 
-  void updateWineEvidence(int wineEvidenceId, int wineId, int? classificationId, String title, double volume, int year, double? alcohol, double? acid,
-      double? sugar, String? note) async {
+  void updateWineEvidence(
+    int wineEvidenceId,
+    List<WineBaseModel> wines,
+    int? classificationId,
+    String title,
+    double volume,
+    int year,
+    double? alcohol,
+    double? acid,
+    double? sugar,
+    String? note,
+  ) async {
     emit(WineLoadingState());
-    ApiResults apiResults =
-        await WineRepository().updateWineEvidence(wineEvidenceId, wineId, classificationId, title, volume, year, alcohol, acid, sugar, note);
+    List<int> wineIds = [];
+    for (var element in wines) {
+      wineIds.add(element.id);
+    }
+    ApiResults apiResults = await WineRepository().updateWineEvidence(
+      wineEvidenceId,
+      wineIds,
+      classificationId,
+      title,
+      volume,
+      year,
+      alcohol,
+      acid,
+      sugar,
+      note,
+    );
     if (apiResults is ApiSuccess) {
       emit(WineEvidenceSuccessState());
     } else if (apiResults is ApiFailure) {
