@@ -123,6 +123,7 @@ class _VineyardDetailViewState extends State<VineyardDetailView> {
             controller: _areaController,
             label: AppLocalizations.of(context)!.area,
             inputType: InputType.double,
+            unit: AppUnits.squareMeter,
           ),
         ],
       ),

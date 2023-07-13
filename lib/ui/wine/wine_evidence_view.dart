@@ -73,7 +73,6 @@ class _WineEvidenceViewState extends State<WineEvidenceView> {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const SizedBox(height: AppMargin.m10),
         const SizedBox(height: AppMargin.m20),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -96,9 +95,13 @@ class _WineEvidenceViewState extends State<WineEvidenceView> {
             ),
           ],
         ),
-        const SizedBox(height: AppMargin.m20),
+        const SizedBox(height: AppMargin.m10),
         _otherInfo(),
         const SizedBox(height: AppMargin.m20),
+        const Divider(
+            // height: 10,
+            ),
+        const SizedBox(height: AppMargin.m10),
         AppButton(
           title: AppLocalizations.of(context)!.addRecord,
           buttonType: ButtonType.add,
