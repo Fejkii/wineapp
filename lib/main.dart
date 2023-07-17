@@ -28,7 +28,9 @@ import 'firebase_options.dart';
 void main() async {
   Bloc.observer = AppBlocObserver();
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await initAppDependences();
   await instance<AppPreferences>().initSP();
 
