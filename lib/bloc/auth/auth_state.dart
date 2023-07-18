@@ -10,11 +10,24 @@ abstract class AuthState extends Equatable {
 
 class AuthInitial extends AuthState {}
 
-class LoginState extends AuthState {
-  String userName;
-  String email;
-  LoginState({
+class LoggedInState extends AuthState {
+  final String userName;
+
+  const LoggedInState({
     required this.userName,
-    required this.email,
   });
+
+  @override
+  List<Object> get props => [];
+}
+
+class LoggedOutState extends AuthState {
+  final String userName;
+
+  const LoggedOutState({
+    required this.userName,
+  });
+
+  @override
+  List<Object> get props => [];
 }

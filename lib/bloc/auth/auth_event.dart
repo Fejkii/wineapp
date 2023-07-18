@@ -13,3 +13,14 @@ class GoogleLogin extends AuthEvent {
   @override
   List<Object> get props => [];
 }
+
+class LogOut extends AuthEvent {
+  final String userName;
+  
+  const LogOut({
+    required this.userName,
+  });
+
+  @override
+  List<Object> get props => [];
+}

@@ -8,6 +8,7 @@ import 'package:wine_app/bloc/vineyard/vineyard_cubit.dart';
 import 'package:wine_app/bloc/wine/wine_cubit.dart';
 import 'package:wine_app/const/app_routes.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:wine_app/ui/authentication/login_page.dart';
 import 'package:wine_app/ui/theme/app_colors.dart';
 
 class SplashView extends StatefulWidget {
@@ -48,15 +49,18 @@ class _SplashViewState extends State<SplashView> {
   }
 
   _goNext() {
-    if (appPreferences.isUserLoggedIn()) {
-      if (appPreferences.hasUserProject()) {
-        Navigator.pushNamedAndRemoveUntil(context, AppRoutes.homeRoute, (route) => false);
-      } else {
-        Navigator.pushNamedAndRemoveUntil(context, AppRoutes.createProjectRoute, (route) => false);
-      }
-    } else {
-      Navigator.pushNamedAndRemoveUntil(context, AppRoutes.loginRoute, (route) => false);
-    }
+    // TODO: DELETE
+    Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginPage()));
+    
+    // if (appPreferences.isUserLoggedIn()) {
+    //   if (appPreferences.hasUserProject()) {
+    //     Navigator.pushNamedAndRemoveUntil(context, AppRoutes.homeRoute, (route) => false);
+    //   } else {
+    //     Navigator.pushNamedAndRemoveUntil(context, AppRoutes.createProjectRoute, (route) => false);
+    //   }
+    // } else {
+    //   Navigator.pushNamedAndRemoveUntil(context, AppRoutes.loginRoute, (route) => false);
+    // }
   }
 
   @override
